@@ -21,7 +21,7 @@ export const routes: Routes = [
         loadComponent: () => import('./auth/home-index/home-index.component').then(m => m.HomeIndexComponent),
         children: [
           {
-            path:'create-posts',
+            path:'create-a-post',
             component: CreatePostsComponent
           },
           {

@@ -25,6 +25,10 @@
   margin: 0px 10px 10px 0px;
 }
 
+.nav-button-list-sub{
+  width: 200px;
+}
+
 .main-content{
   flex: 1;
   border-right: 2px solid black;
@@ -34,6 +38,7 @@
 
 ::ng-deep .p-divider {
   margin: 12px 0px 12px 0px;
+  align-items: flex-start;
 }
 
 

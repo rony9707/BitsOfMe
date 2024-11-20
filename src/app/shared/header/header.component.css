@@ -1,12 +1,10 @@
 :host {
   display: block;
+  height: 100%;
   background-color: var(--header-main-color);
   padding: 10px 0px 15px 10px;
 }
 
-header {
-  position: sticky;
-}
 
 header {
   display: flex;
@@ -15,6 +13,7 @@ header {
 }
 
 h1 {
+  position: relative;
   display: inline-block;
   cursor: default;
   font-family: "Doto", sans-serif;
@@ -28,11 +27,26 @@ h1 {
   color: var(--black);
 }
 
-h1:hover {
-  transition: color 0.3s ease-out;
+h1:hover{
   cursor: pointer;
-  color: var(--white);
 }
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0; 
+  left: 0; 
+  width: 0;
+  height: 2px; 
+  background-color: var(--black);
+  transition: width 0.3s ease-out, left 0.3s ease-out;
+}
+
+h1:hover::after {
+  width: 50%; 
+  left: 25%; 
+}
+
 
 
 @media(max-width:800px) {

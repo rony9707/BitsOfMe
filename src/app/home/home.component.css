@@ -1,0 +1,17 @@
+.home-main {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+.header {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.main-content {
+  height: 91vh;
+  flex-grow: 1;
+  overflow-y: auto;
+}
