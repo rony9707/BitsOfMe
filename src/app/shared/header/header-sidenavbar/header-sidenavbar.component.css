@@ -1,0 +1,48 @@
+.hamburger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(100%);
+  margin: 0px 15px 0px 0px;
+  width: 30px;
+  cursor: pointer;
+  display: none;
+}
+
+
+@media(max-width:800px) {
+  .hamburger {
+    display: block;
+  }
+
+  ::ng-deep .p-sidebar-icon {
+    /* Your custom styles here */
+    position: absolute;
+    right:0;
+    margin: 10px 10px 0px 0px;
+  }
+
+  ::ng-deep .p-sidebar-left{
+    width: 200px;
+  }
+
+  ::ng-deep .p-divider {
+    margin: 12px 0px 12px 0px;
+  }
+
+  ::ng-deep .p-sidebar {
+    background-color: var(--header-main-color);
+  }
+
+  ::ng-deep .p-divider-content {
+    background-color: var(--header-main-color);
+  }
+
+
+  
+
+
+ 
+  
+  
+}

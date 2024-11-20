@@ -1,0 +1,12 @@
+<!-- <button *ngFor="let item of items">
+  {{ item.name }}
+</button> -->
+
+
+
+@for (item of buttonList; track item.name) {
+  <button (click)="closeSidebar()">{{ item.hobbie }}</button> 
+} 
+@empty {
+  <li>There are no items.</li>
+}

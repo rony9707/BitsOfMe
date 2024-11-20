@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  background-color: var(--header-main-color);
+  padding: 10px 0px 15px 10px;
+}
+
+header {
+  position: sticky;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+h1 {
+  display: inline-block;
+  cursor: default;
+  font-family: "Doto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 0;
+  padding: 10px;
+  transition: color 0.3s ease-out;
+  color: var(--black);
+}
+
+h1:hover {
+  transition: color 0.3s ease-out;
+  cursor: pointer;
+  color: var(--white);
+}
+
+
+@media(max-width:800px) {
+  header {
+    display: block;
+    flex-direction: column;
+    position: unset;
+  }
+}

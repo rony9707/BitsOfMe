@@ -1,0 +1,11 @@
+:host{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.create-posts-main{
+  width: 60%;
+  border: 3px solid black;
+}

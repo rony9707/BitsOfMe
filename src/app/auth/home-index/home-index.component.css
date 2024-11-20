@@ -1,0 +1,56 @@
+.home-index-main{
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.home-sub-common{
+  position: sticky;
+  overflow-y: auto; 
+  height: 87vh;
+  padding: 10px;
+  transition: width 0.3s ease;
+}
+
+.enableScroll{
+  overflow-y: hidden;
+}
+
+.nav-button-lists{
+  flex: 0 0 250px;
+  border-right: 2px solid black;
+  padding: 10px;
+  margin: 0px 10px 10px 0px;
+}
+
+.main-content{
+  flex: 1;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  margin: 0px 10px 0px 10px;
+}
+
+::ng-deep .p-divider {
+  margin: 12px 0px 12px 0px;
+}
+
+
+
+@media(max-width:800px) {
+  .nav-button-lists{
+    display: none;
+  }
+
+  .enableScroll{
+    overflow-y: unset;
+  }
+
+  .main-content{
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    border-right: unset;
+    border-left: unset;
+  }
+}

@@ -1,0 +1,29 @@
+@if(windowWidth() < 800){ <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
+
+  <!-- Auth Buttons -->
+  <p-divider type="solid" />
+  <app-auth-buttons (closeSidebarEvent)="closeSidebar($event)"></app-auth-buttons>
+
+
+  <!-- Post Buttons -->
+  <p-divider align="center" type="solid">
+    <b>My Posts</b>
+  </p-divider>
+  <app-post-buttons (closeSidebarEvent)="closeSidebar($event)"></app-post-buttons>
+
+
+  <!-- Navigation Buttons -->
+  <p-divider align="center" type="solid">
+    <b>My Bits</b>
+  </p-divider>
+  <app-nav-buttons (closeSidebarEvent)="closeSidebar($event)"></app-nav-buttons>
+  <p-divider type="solid" />
+
+
+  </p-sidebar>
+  }
+
+
+  @if(sidebarVisible == false){
+  <img src="assets/SVG/hamburger.svg" (click)="sidebarVisible = true" class="hamburger" alt="hamburger_SVG">
+  }
