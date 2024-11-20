@@ -10,6 +10,7 @@ Angular CLI: 18.2.12
 Node: 18.20.4
 Package Manager: npm 7.5.6
 OS: win32 x64
+NPM: 7.5.6
 
 Angular: 18.2.12
 ... animations, cli, common, compiler, compiler-cli, core, forms
