@@ -8,6 +8,7 @@ button{
   border-radius: 5px;
   outline: none;
   background-color: var(--button-color-nav-main);
+  color:var(--black);
 }
 
 button:hover{

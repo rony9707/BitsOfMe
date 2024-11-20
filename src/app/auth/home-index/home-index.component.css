@@ -1,39 +1,40 @@
 .home-index-main{
-  width: 100%;
-  margin: 10px 0px 0px 0px;
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  flex: 1; /* Take the remaining space below the header */
+  margin-top: 80px; /* Same height as the header */
+  height: calc(100vh - 80px); /* Adjust height for header */
 }
 
-.home-sub-common{
-  position: sticky;
-  overflow-y: auto; 
-  height: 87vh;
-  padding: 10px;
-  transition: width 0.3s ease;
-}
 
 .enableScroll{
-  overflow-y: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .nav-button-lists{
-  flex: 0 0 250px;
-  border-right: 2px solid black;
-  padding: 10px;
-  margin: 0px 10px 10px 0px;
+  width: 250px; 
+  background-color: var(--main-background-color);
+  padding: 20px;
+  position: fixed; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 80px; 
+  height: calc(100vh - 80px); 
 }
+
 
 .nav-button-list-sub{
   width: 200px;
 }
 
 .main-content{
-  flex: 1;
-  border-right: 2px solid black;
-  border-left: 2px solid black;
-  margin: 0px 10px 0px 10px;
+  margin-left: 250px; /* Same width as sidebar */
+  padding: 20px;
+  background-color: var(--main-background-color);
+  overflow-y: scroll; /* Enable scrolling for main content */
+  height: calc(100vh - 80px); /* Adjust height for header */
+  box-sizing: border-box;
+  flex: 1; /* Take remaining width */
 }
 
 ::ng-deep .p-divider {
@@ -41,9 +42,17 @@
   align-items: flex-start;
 }
 
+::ng-deep .p-divider-content {
+  background-color: var(--main-background-color);
+}
 
 
 @media(max-width:800px) {
+
+  .home-index-main{
+    margin-top: 0px; /* Same height as the header */
+  }
+  
   .nav-button-lists{
     display: none;
   }

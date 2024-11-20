@@ -4,7 +4,7 @@
 @import "primeicons/primeicons.css";
 
 :root {
-  --main-background-color: #F5F5DC;
+  --main-background-color: #505050;
   --header-main-color:#FAF2D3;
   --white: white;
   --black: black;
@@ -16,6 +16,7 @@
   --footer-secondary-color:#87A2FF;
   --post-button-primary-color: #BFEA7C;
   --post-button-secondary-color: #9BCF53;
+  --main-content-color:#2f2f2f
 }
 
 
@@ -25,7 +26,7 @@
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  z-index: 0;
+  color:white;
 }
 
 
