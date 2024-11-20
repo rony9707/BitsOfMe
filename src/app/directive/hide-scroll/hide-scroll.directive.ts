@@ -10,12 +10,14 @@ export class HideScrollDirective {
   }
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.renderer.removeClass(this.element.nativeElement, 'enableScroll');
+    console.log('enter')
+    this.renderer.addClass(this.element.nativeElement, 'enableScroll');
   }
 
   // Listen to the mouseleave event
   @HostListener('mouseleave') onMouseLeave() {
-    this.renderer.addClass(this.element.nativeElement, 'enableScroll');
+    console.log('leave')
+    this.renderer.removeClass(this.element.nativeElement, 'enableScroll');
   }
 
 }

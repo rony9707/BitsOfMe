@@ -1,8 +1,9 @@
 .hamburger {
   position: absolute;
-  top: 0;
+  top: 50%;
+  /* Position the top of the element at 50% of the container */
   right: 0;
-  transform: translateY(100%);
+  transform: translateY(-50%);
   margin: 0px 15px 0px 0px;
   width: 30px;
   cursor: pointer;
@@ -31,11 +32,11 @@
   }
 
   ::ng-deep .p-sidebar {
-    background-color: var(--header-main-color);
+    background-color: var(--main-background-color);;
   }
 
   ::ng-deep .p-divider-content {
-    background-color: var(--header-main-color);
+    background-color: var(--main-background-color);;
   }
 
 

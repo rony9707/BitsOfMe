@@ -16,6 +16,7 @@ button {
   border-radius: 5px;
   outline: none;
   background-color: var(--post-button-primary-color);
+  color:var(--black);
 }
 
 button:hover {
