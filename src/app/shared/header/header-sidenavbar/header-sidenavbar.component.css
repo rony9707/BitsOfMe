@@ -17,7 +17,6 @@
   }
 
   ::ng-deep .p-sidebar-icon {
-    /* Your custom styles here */
     position: absolute;
     right:0;
     margin: 10px 10px 0px 0px;
@@ -39,7 +38,11 @@
     background-color: var(--main-background-color);;
   }
 
-
+  ::ng-deep .font-semibold {
+    position: absolute;
+    left:0;
+    margin: 10px 0px 0px 20px;
+  }
   
 
 

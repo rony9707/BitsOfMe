@@ -1,5 +1,9 @@
 @if(windowWidth() < 800){ <p-sidebar [(visible)]="sidebarVisible">
 
+  <ng-template pTemplate="header">
+    <span class="font-semibold text-xl">Sidebar</span>
+  </ng-template>
+
   <!-- Auth Buttons -->
   <p-divider type="solid" />
   <app-auth-buttons (closeSidebarEvent)="closeSidebar($event)"></app-auth-buttons>

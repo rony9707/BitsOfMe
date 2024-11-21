@@ -16,8 +16,11 @@
   --footer-secondary-color:#87A2FF;
   --post-button-primary-color: #BFEA7C;
   --post-button-secondary-color: #9BCF53;
-  --main-content-color:#2f2f2f
+  --main-content-color:#2f2f2f;
+  --scroll-hover-color:#373737;
+  --scroll-hover-stick-color:#b8b8b8;
 }
+
 
 
 *{
@@ -27,37 +30,4 @@
   font-weight: 500;
   font-style: normal;
   color:white;
-}
-
-
-body {
-  scrollbar-width: none; /* Options: auto, thin, none */
-  scrollbar-color: rgba(122, 122, 122, 0.333) transparent; /* thumb color | track color */
-}
-
-/* Optional: Hover effect (requires JavaScript) */
-body:hover {
-  scrollbar-color: #7f7e7e transparent; /* Change thumb color on hover */
-}
-
-
-body::-webkit-scrollbar {
-  width: .5vw;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: rgba(27, 27, 27, 0.333);
-  border-radius: 100px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background-color: #161212;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #5555;
-}
-
-body::-webkit-scrollbar-track:hover {
-  background-color: #d3d3d3;
 }
