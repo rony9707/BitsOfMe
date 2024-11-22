@@ -1,0 +1,62 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-text{
+  width: 98%;
+  color:black;
+  margin: 10px;
+  height: 100px;
+  resize: none;
+  background-color: var(--main-background-color);
+  border: none;
+  outline: none;
+  text-decoration: none;
+  color: white;
+}
+
+
+.post-text::placeholder {
+  color: #888;            /* Text color */
+  font-size: 16px;        /* Font size */
+  font-style: italic;     /* Italicize the placeholder text */
+  opacity: 1;             /* Default opacity (usually around 0.5) */
+}
+
+.extra-info{
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.visibility-select-box{
+  width: 130px;
+  background-color: var(--scroll-hover-color);
+  border:1px solid var(--scroll-hover-color);
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Change border color and add shadow on focus */
+.visibility-select-box:focus {
+  border-color: #a7a7a7;
+  box-shadow: 0 0 5px rgba(98, 98, 98, 0.5);
+}
+
+/* Style the dropdown options */
+.visibility-select-box option {
+  background-color: #444;
+  color: #999999;
+  
+}
+
+/* Add hover effect */
+.visibility-select-box:hover {
+  border-color: #555;
+}

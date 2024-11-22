@@ -1,0 +1,19 @@
+<textarea class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?"
+(blur)="onBlur()" (focus)="onFocus()"
+name="message" [(ngModel)]="message"></textarea>
+<div class="extra-info">
+  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption">
+    @for (option of selectBoxOptions; track option.hobbie) {
+    @if(option.name != 'music'){
+    <option [value]="option.hobbie">
+      {{ option.hobbie }}
+    </option>
+    }
+    }
+  </select>
+
+  <button (click) ="toggleEmojiPicker()"> 😀</button>
+  https://stackblitz.com/edit/angular-emojis?file=src%2Fapp%2Fapp.component.html
+  <emoji-mart class="emoji-mart"  *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"
+    title="Pick your emoji…"></emoji-mart>
+</div>

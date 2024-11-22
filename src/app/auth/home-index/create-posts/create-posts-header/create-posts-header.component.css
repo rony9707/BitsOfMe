@@ -1,0 +1,49 @@
+:host{
+  display: flex;
+  margin-top: 10px;
+}
+
+.profilepic{
+  margin: 5px 5px 5px 10px;
+}
+
+.user-fullname-and-visibility{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 5px 0px 5px 10px;
+}
+
+.visibility{
+  height: 30px;
+  width: 100px;
+}
+
+.visibility-select-box{
+  width: 100%;
+  background-color: var(--scroll-hover-color);
+  border:1px solid var(--scroll-hover-color);
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Change border color and add shadow on focus */
+.visibility-select-box:focus {
+  border-color: #a7a7a7;
+  box-shadow: 0 0 5px rgba(98, 98, 98, 0.5);
+}
+
+/* Style the dropdown options */
+.visibility-select-box option {
+  background-color: #444;
+  color: #999999;
+  
+}
+
+/* Add hover effect */
+.visibility-select-box:hover {
+  border-color: #555;
+}
