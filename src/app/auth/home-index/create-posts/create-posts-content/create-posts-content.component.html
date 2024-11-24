@@ -1,9 +1,34 @@
-<textarea class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?"
-(blur)="onBlur()" (focus)="onFocus()"
-name="message" [(ngModel)]="message"></textarea>
+<!-- TODO: Fix aligment of text and imagg -->
+
+<textarea class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
+  (input)="onInput($event)" name="message" [(ngModel)]="message" (input)="adjustHeight($event)"></textarea>
+
+  <div class="image-container">
+    <div *ngFor="let image of myImages" class="image-wrapper">
+      <!-- Uploaded image -->
+      <img [src]="image.uploadedImages" alt="Uploaded Image" />
+      
+      <!-- Title of the image -->
+      <div class="title-image">
+        {{ image.title }} <!-- Display the title for each image -->
+      </div>
+  
+      <!-- Close button -->
+      <img
+        class="remove-img-btn"
+        (click)="removeImage(image.uploadedImages)"
+        src="assets/SVG/close-btn.svg"
+        alt="CloseButton"
+      />
+    </div>
+  </div>
+  
+
+
+
 <div class="extra-info">
   <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption">
-    @for (option of selectBoxOptions; track option.hobbie) {
+    @for (option of selectBoxOptions(); track option.hobbie) {
     @if(option.name != 'music'){
     <option [value]="option.hobbie">
       {{ option.hobbie }}
@@ -12,8 +37,25 @@ name="message" [(ngModel)]="message"></textarea>
     }
   </select>
 
-  <button (click) ="toggleEmojiPicker()"> 😀</button>
-  https://stackblitz.com/edit/angular-emojis?file=src%2Fapp%2Fapp.component.html
-  <emoji-mart class="emoji-mart"  *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"
-    title="Pick your emoji…"></emoji-mart>
+  <div class="emoji-picker-class">
+
+    <label for="attach_img" style="display:grid;place-items:center">
+      <svg-attach-items class="attachFiles" pTooltip="Image" tooltipPosition="top"></svg-attach-items>
+    </label>
+    <input style="display:none" id="attach_img" type="file" accept="image/*" multiple
+      (change)="onImageUpload($event)" />
+
+    <button class="emoji-picker-btn" [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}"
+      pTooltip="Emoji" tooltipPosition="top" positionLeft="-3" (mouseenter)="showEmojiPicker() ? null : emojiRandom()"
+      (click)="toggleEmojiPicker()">{{emojiButton()}}</button>
+
+    @if(showEmojiPicker()==true){
+    <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
+    }
+
+  </div>
+
 </div>
+
+
+<!-- <div [innerHTML]="formattedMessage"></div> -->

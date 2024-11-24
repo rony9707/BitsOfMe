@@ -20,6 +20,7 @@
 }
 
 .visibility-select-box{
+  cursor: pointer;
   width: 100%;
   background-color: var(--scroll-hover-color);
   border:1px solid var(--scroll-hover-color);

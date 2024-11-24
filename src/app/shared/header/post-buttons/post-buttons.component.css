@@ -27,6 +27,16 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.selected{
+  transition: .3s ease-in;
+  border-radius: 1px;
+  background-color: var(--post-button-secondary-color);
+  color: var(--black);
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  outline: 3px solid rgb(20, 20, 20);
+}
+
 
 /* @media(max-width:800px) {
 

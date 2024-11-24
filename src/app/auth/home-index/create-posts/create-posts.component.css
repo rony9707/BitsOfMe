@@ -8,8 +8,10 @@
 .create-posts-main{
   width: 40%;
   border: 3px solid black;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
+  min-width: 500px;
 }
 
 .create-posts-title{
@@ -43,6 +45,7 @@
 
 @media(max-width:800px) {
   .create-posts-main{
-    width: 80%;
+    width: 95%;
+    min-width: unset;
   }
 }

@@ -14,7 +14,7 @@
   overflow-x: hidden;
   top: 80px; 
   height: calc(100vh - 80px);
-  scrollbar-color: var(--main-background-color) var(--main-background-color); 
+  scrollbar-color:  var(--main-background-color) var(--main-background-color); 
 }
 
 .nav-button-lists:hover{
@@ -69,8 +69,9 @@
   .main-content{
     width: 100%;
     margin: 0px 0px 0px 0px;
-    height: 100%;
+    height: calc(100vh - 80px); 
     border-right: unset;
     border-left: unset;
+    overflow-y: scroll; 
   }
 }
