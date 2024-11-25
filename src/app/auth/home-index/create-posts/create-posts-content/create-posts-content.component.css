@@ -27,13 +27,9 @@
 
 .post-text::placeholder {
   color: #888;
-  /* Text color */
   font-size: 16px;
-  /* Font size */
   font-style: italic;
-  /* Italicize the placeholder text */
   opacity: 1;
-  /* Default opacity (usually around 0.5) */
 }
 
 .extra-info {
@@ -57,20 +53,19 @@
 }
 
 
-/* Change border color and add shadow on focus */
 .visibility-select-box:focus {
   border-color: #a7a7a7;
   box-shadow: 0 0 5px rgba(98, 98, 98, 0.5);
 }
 
-/* Style the dropdown options */
+
 .visibility-select-box option {
   background-color: #444;
   color: #999999;
 
 }
 
-/* Add hover effect */
+
 .visibility-select-box:hover {
   border-color: #555;
 }
@@ -125,47 +120,49 @@
 
 a {
   color: inherit;
-  /* Inherit color from the parent element */
   text-decoration: none;
-  /* Remove underline */
   background-color: transparent;
-  /* Remove background color (if any) */
 }
-
 
 ::ng-deep .p-tooltip-text {
   color: rgb(180, 179, 179);
 }
 
 
-
 .image-container {
   display: flex;
-  /* Change from grid to flex for horizontal layout */
   gap: 15px;
-  /* Space between images */
   padding: 5px;
   width: 100%;
   overflow-x: auto;
-  /* Enable horizontal scrolling */
   overflow-y: hidden;
-  /* Prevent vertical overflow */
   white-space: nowrap;
-  /* Prevent wrapping of items */
   padding-top: 15px;
+}
+
+.image-border {
+  border: 5px solid var(--main-content-color);
+  width: 190px;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  transition: .3s;
+}
+
+.image-border:hover {
+  transform: scale(1.02);
+  transition: .3s;
 }
 
 .image-wrapper {
   flex: 0 0 auto;
-  /* Prevent items from shrinking or growing */
-  width: 200px;
-  /* Set a fixed width for images */
+  width: 180px;
   height: 100%;
   aspect-ratio: 1 / 1;
-  /* Maintain a square aspect ratio */
-  position: relative;
-  background-color: rgb(50, 50, 50);
-  padding-top: 5px;
+  background-color: rgb(118, 118, 118);
 }
 
 
@@ -176,20 +173,64 @@ img {
 }
 
 .title-image {
-  padding: 0px 5px 5px 5px;
+  padding: 7px 0px 7px 5px;
   font-size: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  width: 100%;
+  background-color: var(--main-content-color);;
+  display: flex;
+  align-items: center;
 }
 
 .remove-img-btn {
   position: absolute;
-  top: -12px;
+  top: -15px;
   right: -5px;
   cursor: pointer;
   width: 25px;
   height: 25px;
   z-index: 10;
+  background-color: var(--main-content-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post {
+  width: 90%;
+  padding: 10px 0;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #28a745, #218838);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effect */
+.post:hover {
+  background: linear-gradient(90deg, #218838, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Active Effect */
+.post:active {
+  transform: translateY(1px);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled Button */
+.post:disabled {
+  background: #ccc !important; /* Force the disabled color */
+  cursor: not-allowed;
+  box-shadow: none; /* Remove shadow for disabled state */
+  transform: none; /* Reset any transform effect */
 }

@@ -1,33 +1,37 @@
-<!-- TODO: Fix aligment of text and imagg -->
-
-<textarea class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
+<textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
   (input)="onInput($event)" name="message" [(ngModel)]="message" (input)="adjustHeight($event)"></textarea>
 
-  <div class="image-container">
-    <div *ngFor="let image of myImages" class="image-wrapper">
+<div class="image-container">
+
+  @for (image of myImages; track image) {
+  <div class="image-border">
+    <div class="image-wrapper">
       <!-- Uploaded image -->
       <img [src]="image.uploadedImages" alt="Uploaded Image" />
-      
-      <!-- Title of the image -->
-      <div class="title-image">
-        {{ image.title }} <!-- Display the title for each image -->
-      </div>
-  
-      <!-- Close button -->
-      <img
-        class="remove-img-btn"
-        (click)="removeImage(image.uploadedImages)"
-        src="assets/SVG/close-btn.svg"
-        alt="CloseButton"
-      />
     </div>
+    <!-- Title of the image -->
+    <div class="title-image">
+      {{ image.title }} <!-- Display the title for each image -->
+    </div>
+
+
+    <!-- Close button -->
+    <!-- <img rel="prefetch" class="remove-img-btn" (click)="removeImage(image.uploadedImages)" src="assets/SVG/close-btn.svg"
+      alt="CloseButton" /> -->
+    <app-close-button
+    class="remove-img-btn" (click)="removeImage(image.uploadedImages)"
+      alt="CloseButton"
+    ></app-close-button>
   </div>
-  
+  }
+
+</div>
+
 
 
 
 <div class="extra-info">
-  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption">
+  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"  (ngModelChange)="emitSelectedOption()" >
     @for (option of selectBoxOptions(); track option.hobbie) {
     @if(option.name != 'music'){
     <option [value]="option.hobbie">
@@ -57,5 +61,5 @@
 
 </div>
 
-
-<!-- <div [innerHTML]="formattedMessage"></div> -->
+<button [disabled]="!postContent.value.trim() && myImages.length === 0"
+ class="post" (click)="uploadPost()">Post</button>

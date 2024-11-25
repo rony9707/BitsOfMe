@@ -1,0 +1,21 @@
+:host {
+  background-color: var(--main-background-color);
+  width: 100%;
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+  display: flex;
+}
+
+.form-data-enter {
+  width: 50%;
+  background-color: aqua;
+  height: 100%;
+}
+
+
+@media(max-width:800px) {
+  :host {
+    margin-top: 0px;
+    height: 100%;
+  }
+}

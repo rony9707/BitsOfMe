@@ -7,11 +7,16 @@
 
 
   <div class="create-posts-header">
-    <app-create-posts-header></app-create-posts-header>
+    <app-create-posts-header  (visibilityChange)="onVisibilityChange($event)"></app-create-posts-header>
   </div>
 
 
   <div class="create-posts-content">
-    <app-create-posts-content></app-create-posts-content>
+    <app-create-posts-content
+     (postClicked)="onPostClicked()"
+     (postmessage)="handleMessage($event)"
+     (selectedFilesChange)="handleSelectedFiles($event)"
+     (selectedOptionChange)="handleSelectedOption($event)"
+    ></app-create-posts-content>
   </div>
 </div>

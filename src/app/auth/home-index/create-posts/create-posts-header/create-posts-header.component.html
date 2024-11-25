@@ -1,14 +1,14 @@
 <div class="profilepic">
-  <p-avatar 
-  image="https://primefaces.org/cdn/primeng/images/demo/avatar/walter.jpg"  
-  styleClass="mr-2" size="xlarge" shape="circle" />
+  <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/walter.jpg" styleClass="mr-2" size="xlarge"
+    shape="circle" />
 </div>
 <div class="user-fullname-and-visibility">
   <div class="user-fullname">
     Cat
   </div>
   <div class="visibility">
-    <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedVisibility">
+    <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedVisibility"
+      (ngModelChange)="onVisibilityChange()">
       <option *ngFor="let option of visibilityOptions" [value]="option.value">
         {{ option.label }}
       </option>
