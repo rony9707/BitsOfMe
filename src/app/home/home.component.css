@@ -15,30 +15,30 @@
 
 .content-wrapper {
   display: flex;
-  flex: 1; /* Take the remaining space below the header */
-  margin-top: 60px; /* Same height as the header */
-  height: calc(100vh - 60px); /* Adjust height for header */
+  flex: 1; 
+  margin-top: 60px; 
+  height: calc(100vh - 60px); 
 }
 
 .sidebar {
-  width: 250px; /* Sidebar width */
+  width: 250px; 
   background-color: #f4f4f4;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  position: fixed; /* Keeps sidebar fixed */
-  top: 60px; /* Offset to appear below the header */
-  height: calc(100vh - 60px); /* Adjust height for header */
-  overflow-y: auto; /* Scroll if content overflows */
+  position: fixed; 
+  top: 60px; 
+  height: calc(100vh - 60px); 
+  overflow-y: auto;
 }
 
 .main-content {
-  margin-left: 250px; /* Same width as sidebar */
+  margin-left: 250px; 
   padding: 20px;
   background-color: #fff;
-  overflow-y: auto; /* Enable scrolling for main content */
-  height: calc(100vh - 60px); /* Adjust height for header */
+  overflow-y: auto; 
+  height: calc(100vh - 60px); 
   box-sizing: border-box;
-  flex: 1; /* Take remaining width */
+  flex: 1; 
 }
 
 

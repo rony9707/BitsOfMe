@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { menuItems } from '../../BitsOfLifeData/bits-data';
 
+
 @Component({
   selector: 'app-nav-buttons',
   standalone: true,

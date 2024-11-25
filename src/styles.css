@@ -3,6 +3,8 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
+@import '@ctrl/ngx-emoji-mart/picker';
+
 :root {
   --main-background-color: #505050;
   --header-main-color:#FAF2D3;
@@ -15,9 +17,12 @@
   --footer-main-color:#243642;
   --footer-secondary-color:#87A2FF;
   --post-button-primary-color: #BFEA7C;
-  --post-button-secondary-color: #9BCF53;
-  --main-content-color:#2f2f2f
+  --post-button-secondary-color: #92d139;
+  --main-content-color:#2f2f2f;
+  --scroll-hover-color:#373737;
+  --scroll-hover-stick-color:#b8b8b8;
 }
+
 
 
 *{
@@ -26,38 +31,21 @@
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
+  scrollbar-width: thin;
   color:white;
 }
 
-
-body {
-  scrollbar-width: none; /* Options: auto, thin, none */
-  scrollbar-color: rgba(122, 122, 122, 0.333) transparent; /* thumb color | track color */
+/* CSS for embedding link */
+.embedded-link{
+  color:rgb(0, 0, 0);
+  background-color: rgb(177, 234, 255);
+  border-radius: 5px;
+  padding: 2px 2px 0px 2px;
 }
 
-/* Optional: Hover effect (requires JavaScript) */
-body:hover {
-  scrollbar-color: #7f7e7e transparent; /* Change thumb color on hover */
-}
-
-
-body::-webkit-scrollbar {
-  width: .5vw;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: rgba(27, 27, 27, 0.333);
-  border-radius: 100px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background-color: #161212;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #5555;
-}
-
-body::-webkit-scrollbar-track:hover {
-  background-color: #d3d3d3;
+/* CSS for Post uploaded images */
+.post-image{
+  width: 300px;
+  border-radius: 5px;
+  border: 2px solid var(--footer-main-color);
 }

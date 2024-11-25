@@ -9,3 +9,12 @@ export const menuItems = [
   { name: 'dancing', hobbie: 'Dancing'  },
   { name: 'cooking', hobbie: 'Cooking'  },
 ];
+
+
+export const emojis = [
+  '😊', '😁', '😃', '😄', '🙂', '🤗', // Smiling and Positive Emotions
+  '😂', '🤣', '😜', '😝', '😆',       // Laughter and Fun
+  '❤️', '💕', '💖', '💘', '💞', '❣️', // Love and Affection
+  '👍', '👏', '🙌', '👌', '🤝', '🙏',  // Support and Agreement
+  '😢', '😭', '🥺', '😔', '😞', '😩',  // Sadness and Concern
+];

@@ -6,6 +6,46 @@
 }
 
 .create-posts-main{
-  width: 60%;
+  width: 40%;
   border: 3px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+}
+
+.create-posts-title{
+  display: grid;
+  place-items: center;
+  padding: 15px 0px 15px 0px;
+  font-size: 1.5rem;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  margin: 0px 10px 0px 10px;
+}
+
+.divider::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px; /* Adjust position below the text */
+  height: 1px; /* Thickness of the divider */
+  background: #050505; /* Color of the divider */
+  z-index: 1; /* Ensure it appears behind the text */
+}
+
+.divider::after {
+  width: 100%; /* Full width */
+}
+
+@media(max-width:800px) {
+  .create-posts-main{
+    width: 95%;
+    min-width: unset;
+  }
 }

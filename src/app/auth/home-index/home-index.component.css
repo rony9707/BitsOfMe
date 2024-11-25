@@ -1,25 +1,24 @@
 .home-index-main{
   display: flex;
-  flex: 1; /* Take the remaining space below the header */
-  margin-top: 80px; /* Same height as the header */
-  height: calc(100vh - 80px); /* Adjust height for header */
+  flex: 1; 
+  margin-top: 80px; 
+  height: calc(100vh - 80px); 
 }
 
-
-.enableScroll{
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 
 .nav-button-lists{
   width: 250px; 
-  background-color: var(--main-background-color);
   padding: 20px;
   position: fixed; 
   overflow-y: auto;
   overflow-x: hidden;
   top: 80px; 
-  height: calc(100vh - 80px); 
+  height: calc(100vh - 80px);
+  scrollbar-color:  var(--main-background-color) var(--main-background-color); 
+}
+
+.nav-button-lists:hover{
+  scrollbar-color: var(--scroll-hover-color) var(--scroll-hover-stick-color); 
 }
 
 
@@ -28,14 +27,19 @@
 }
 
 .main-content{
-  margin-left: 250px; /* Same width as sidebar */
+  margin-left: 250px;
   padding: 20px;
-  background-color: var(--main-background-color);
-  overflow-y: scroll; /* Enable scrolling for main content */
-  height: calc(100vh - 80px); /* Adjust height for header */
+  overflow-y: scroll; 
+  height: calc(100vh - 80px); 
   box-sizing: border-box;
-  flex: 1; /* Take remaining width */
+  flex: 1; 
 }
+
+.common-home-index-sub{
+  background-color: var(--main-background-color);
+  scrollbar-width: thin; 
+}
+
 
 ::ng-deep .p-divider {
   margin: 12px 0px 12px 0px;
@@ -50,7 +54,8 @@
 @media(max-width:800px) {
 
   .home-index-main{
-    margin-top: 0px; /* Same height as the header */
+    margin-top: 0px; 
+    height: 100%; 
   }
   
   .nav-button-lists{
@@ -64,7 +69,9 @@
   .main-content{
     width: 100%;
     margin: 0px 0px 0px 0px;
+    height: calc(100vh - 80px); 
     border-right: unset;
     border-left: unset;
+    overflow-y: scroll; 
   }
 }
