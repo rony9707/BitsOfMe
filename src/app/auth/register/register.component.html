@@ -1,4 +1,334 @@
 <div class="form-data-enter">
-  dasfasdfsadf
+  <div class="register-nav-button">
+
+    <button class="nav-buttons" [ngClass]="{
+      'highlight': activeDiv() == 'div1', 
+      'valid-button': sectionInfoValid('AI'), 
+      'invalid-button': sectionInfoInvalid('AI')}" (click)="setActiveDiv('div1')">
+      Account Information</button>
+
+    <button class="nav-buttons" [ngClass]="{
+        'highlight': activeDiv() === 'div2',      
+        'valid-button': sectionInfoValid('PI'),
+        'invalid-button': sectionInfoInvalid('PI')
+      }" (click)="setActiveDiv('div2')">
+      Personal Information
+    </button>
+
+
+    <button class="nav-buttons" [ngClass]="{
+    'highlight': activeDiv() == 'div3',
+    'valid-button': sectionInfoValid('CI'), 
+    'invalid-button': sectionInfoInvalid('CI')}" (click)="setActiveDiv('div3')">
+      Contact Information</button>
+
+  </div>
+
+  <form [formGroup]="registerForm" class="register-form" (ngSubmit)="registerUser()">
+    @switch (activeDiv()) {
+    @case("div1"){
+    <div [ngTemplateOutlet]="accountInformation" [ngTemplateOutletContext]="{ formGroup: registerForm }"></div>
+    }
+    @case("div2"){
+    <div [ngTemplateOutlet]="personalInformation" [ngTemplateOutletContext]="{ formGroup: registerForm }"></div>
+    }
+    @case("div3"){
+    <div [ngTemplateOutlet]="contactInformation" [ngTemplateOutletContext]="{ formGroup: registerForm }"></div>
+    }
+    @default {
+    <div class="content">dasdasdasdasd</div>
+    }
+    }
+    <div class="form-button-div">
+      <button class="form-button reset-button" type="button" (click)="resetForm()">Reset</button>
+      @if(registerForm.valid){
+      <button class="form-button register-button" type="submit">Register</button>
+      }
+    </div>
+    <div class="display-profile-design">
+      @if(windowWidth() < 1300){ <button class="form-button show-display-profile" type="button"
+        (click)="openModal(myModal)">Show Profile</button>
+        }
+    </div>
+  </form>
 </div>
-<app-display-profile></app-display-profile>
+
+
+<!-- MODAL TO OPEN IN BROWSER BUT NOT IN MOBILE. TO ENABLE IT, SEE CSS FILE class show-display-profile -->
+<dialog #myModal>
+  <button class="modal-close-btn" (click)="closeModal(myModal)">Close</button>
+  <app-display-profile [registerFormData]="registerForm.value"
+    [uploadedImage]="uploadedImage || defaultImageUrl"></app-display-profile>
+</dialog>
+
+
+<!-- Display Profile -->
+@if(windowWidth() > 1300){
+<app-display-profile [registerFormData]="registerForm.value"
+  [uploadedImage]="uploadedImage || defaultImageUrl"></app-display-profile>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Account Information ----------------------------------------------------------------->
+<ng-template #accountInformation let-formGroup="formGroup">
+  <div class="content" [formGroup]="formGroup">
+    <div class="AI-main common-div">
+      <!-- USERNAME ---------------------------------------->
+      <div class="input-box">
+        <input #usernameInput (focus)="inputFocus(usernameLabel)" (blur)="inputBlur(usernameLabel, usernameInput)"
+          (keydown)="onlyAlphabetsAndNumbers($event)" type="text" formControlName="username" maxlength="20" />
+        <label #usernameLabel [ngClass]="{'focused': registerForm.get('username')?.value}">Enter your username</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="usernameValidator && usernameValidator.invalid && usernameValidator.touched">
+            Enter your name please
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Password ---------------------------------------->
+      <div class="input-box password-input-box">
+        <input #passwordInput (focus)="inputFocus(passwordLabel)" (blur)="inputBlur(passwordLabel, passwordInput)"
+          [type]="passwordEyeFlag() ? 'text' : 'password'" formControlName="password" />
+        <label [ngClass]="{'focused': registerForm.get('password')?.value}" #passwordLabel>Enter your password</label>
+
+        <!-- Password Hide and Show -->
+        @if(passwordEyeFlag()){
+        <app-password-show (click)="passwordEye()" class="password-eye"></app-password-show>
+        }@else{
+        <app-password-hide (click)="passwordEye()" class="password-eye"></app-password-hide>
+        }
+
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="passwordValidator && passwordValidator.invalid && passwordValidator.touched">
+            {{toolTip}}
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Confirm Password ---------------------------------------->
+      <div class="input-box">
+        <input #confirmPasswordInput (focus)="inputFocus(confirmPasswordLabel)"
+          (blur)="inputBlur(confirmPasswordLabel, confirmPasswordInput)" type="password"
+          formControlName="confirmPassword" />
+        <label [ngClass]="{'focused': registerForm.get('confirmPassword')?.value}" #confirmPasswordLabel>Confirm your
+          password</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span
+            *ngIf="passwordInput.value != confirmPasswordInput.value || confirmPasswordValidator && confirmPasswordValidator.invalid && confirmPasswordValidator.touched">
+            Password and Confirm password does not match
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+<!-- Personal Information ----------------------------------------------------------------->
+<ng-template #personalInformation let-formGroup="formGroup">
+  <div class="content" [formGroup]="formGroup">
+    <div class="PI-main common-div">
+
+
+
+      <!-- Image Upload ---------------------------------------->
+      <div class="profile-pic-main">
+        <div class="profile-pic-wrapper">
+          <img class="profile-pic" [src]="uploadedImage || defaultImageUrl" alt="Uploaded Image" />
+        </div>
+        <div class="select-file">
+          <label for="attach_img" style="display:grid;place-items:center" class="upload-button">
+            Upload your profile pic
+          </label>
+          <input style="display:none" id="attach_img" type="file" accept="image/*" (change)="onImageUpload($event)" />
+        </div>
+      </div>
+
+
+      <!-- FULL NAME ---------------------------------------->
+      <div class="input-box">
+        <input #fullnameInput (focus)="inputFocus(fullnameLabel)" (blur)="inputBlur(fullnameLabel, fullnameInput)"
+          type="text" formControlName="fullname" maxlength="30" />
+        <label #fullnameLabel [ngClass]="{'focused': registerForm.get('fullname')?.value}">Enter your full name</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="fullnameValidator && fullnameValidator.invalid && fullnameValidator.touched">
+            Enter your fullname please</span>
+        </div>
+      </div>
+
+
+      <!-- Date Of Birth ---------------------------------------->
+      <div class="input-box">
+        <input #dobInput [type]="registerForm.get('dob')?.value ? 'date' : 'text'" (focus)="inputFocus(dobLabel)"
+          (blur)="inputBlur(dobLabel, dobInput)" (focus)="dobInput.type = 'date'"
+          (blur)="dobInput.type = dobInput.value ? 'date' : 'text'" aria-label="Date Input" formControlName="dob" />
+        <label #dobLabel [ngClass]="{ 'focused': registerForm.get('dob')?.value }">
+          Enter your Date of Birth
+        </label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="dobValidator && dobValidator.invalid && dobValidator.touched">
+            Enter your Date of Birth please</span>
+        </div>
+      </div>
+
+
+      <!-- GENDER ---------------------------------------->
+      <div class="input-box">
+        <select name="gender" formControlName="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Others">Others</option>
+        </select>
+        <label class="focused">Select your gender</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="genderValidator && genderValidator.invalid && genderValidator.touched">
+            select your gender please</span>
+        </div>
+      </div>
+
+      <!-- About Me ---------------------------------------->
+      <div class="input-box">
+        <input #aboutmeInput (focus)="inputFocus(aboutmeLabel)" (blur)="inputBlur(aboutmeLabel, aboutmeInput)"
+          type="text" formControlName="aboutme" maxlength="200" />
+        <label #aboutmeLabel [ngClass]="{'focused': registerForm.get('aboutme')?.value}">
+          About yourself
+          <span style="color:rgb(252, 252, 252);" *ngIf="registerForm.get('aboutme')?.value">
+            {{aboutmeInput.maxLength - (registerForm.get('aboutme')?.value?.length || 0)}} characters left
+          </span>
+        </label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="aboutmeValidator && aboutmeValidator.invalid && aboutmeValidator.touched">
+            Enter something about yourself please</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Contact Information ----------------------------------------------------------------->
+<ng-template #contactInformation let-formGroup="formGroup">
+  <div class="content" [formGroup]="formGroup">
+    <div class="CI-main common-div">
+      <!-- EMAIL ---------------------------------------->
+      <div class="input-box">
+        <input #emailInput (focus)="inputFocus(emailLabel)" (blur)="inputBlur(emailLabel, emailInput)" type="email"
+          formControlName="email" maxlength="50" />
+        <label #emailLabel [ngClass]="{'focused': registerForm.get('email')?.value}">Enter your email</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="emailValidator && emailValidator.invalid && emailValidator.touched">
+            Enter a valid email please</span>
+        </div>
+      </div>
+
+
+      <!-- PHONE NUMBER ---------------------------------------->
+      <div class="input-box">
+        <div class="phone-number-wrapper">
+          <!-- COUNTRY CODE -->
+          <div class="select-countrycode-wrapper">
+            <select class="country-code" name="countrycode" formControlName="countryCode">
+              @for (code of countryCode(); track code.name) {
+              <option [value]="code.code">
+                {{ code.name }}: {{ code.code }}
+              </option>
+              }
+            </select>
+            <label class="focused">Country Code</label>
+          </div>
+
+          <!-- INPUT BOX -->
+          <div class="input-box-phone-number-wrapper">
+            <input class="phone-number-input" #phoneNumberInput (focus)="inputFocus(phoneNumberLabel)"
+              (blur)="inputBlur(phoneNumberLabel, phoneNumberInput)" (keypress)="onlyNumbers($event)" type="text"
+              formControlName="phoneNumber" maxlength="10" />
+            <label class="phone-number-label" #phoneNumberLabel
+              [ngClass]="{'focused': registerForm.get('phoneNumber')?.value}">Enter your Phone
+              Number</label>
+          </div>
+        </div>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="phoneNumberValidator && phoneNumberValidator.invalid && phoneNumberValidator.touched">
+            Enter your phone number please</span>
+        </div>
+      </div>
+
+
+      <!-- ADDRESS---------------------------------------->
+      <div class="input-box">
+        <input #addressInput (focus)="inputFocus(addressLabel)" (blur)="inputBlur(addressLabel, addressInput)"
+          type="email" formControlName="address" maxlength="50" />
+        <label #addressLabel [ngClass]="{'focused': registerForm.get('address')?.value}">Enter your address</label>
+        <!-- Invalid Text -->
+        <div class="input-invalid-text-register">
+          <span *ngIf="addressValidator && addressValidator.invalid && addressValidator.touched">
+            Enter your address please please</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

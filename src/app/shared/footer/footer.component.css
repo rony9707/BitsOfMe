@@ -1,16 +1,16 @@
-:host{
+:host {
   position: fixed;
   bottom: 0;
   right: 0;
-  margin: 0px 25px 15px 0px;
+  margin: 20px 25px 15px 0px;
   cursor: default;
 }
 
-h3{
+h3 {
   color: var(--white);
 }
 
-h3 span{
+h3 span {
   color: var(--footer-secondary-color);
   cursor: pointer;
 }
@@ -33,4 +33,11 @@ span:hover {
 
 h3 span:hover::before {
   width: 50%;
+}
+
+@media(max-width:800px) {
+  h3 {
+    font-size: 15px;
+  }
+
 }
