@@ -33,6 +33,7 @@ export class RegisterComponent {
   uploadedImage: string | ArrayBuffer | null = null;
   defaultImageUrl: string = 'assets/images/avatar.jpg';
   passwordEyeFlag = signal(false)
+  isDropdownOpen = signal(false);
   toolTip = `Password must be 8-16 characters long,
    containing at least one lowercase, one uppercase, one number, and one special character.`;
   countryCode = signal(countryCode)
@@ -52,7 +53,6 @@ export class RegisterComponent {
 
   constructor() {
     this.windowWidth.set(window.innerWidth);
-    this.logger.log(`The window width is ${this.windowWidth()}px`, 'info')
 
     //Declare Form Group and Form Controls here
     this.registerForm = new FormGroup({
@@ -261,6 +261,10 @@ export class RegisterComponent {
   //On Modal Close
   closeModal(dialog: HTMLDialogElement): void {
     dialog.close();
+  }
+
+  toggleDropdown(state: boolean) {
+    this.isDropdownOpen.set(state);
   }
 
   showErrorMessage(title: string, text: string) {

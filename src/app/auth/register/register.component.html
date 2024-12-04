@@ -289,10 +289,16 @@
         <div class="phone-number-wrapper">
           <!-- COUNTRY CODE -->
           <div class="select-countrycode-wrapper">
-            <select class="country-code" name="countrycode" formControlName="countryCode">
+            <select class="country-code" name="countrycode"   (focus)="toggleDropdown(true)" 
+            (blur)="toggleDropdown(false)" formControlName="countryCode">
               @for (code of countryCode(); track code.name) {
               <option [value]="code.code">
-                {{ code.name }}: {{ code.code }}
+                @if(isDropdownOpen()){
+                  {{code.name + ': ' + code.code}}
+                }
+                @else{
+                  {{code.code}}
+                }
               </option>
               }
             </select>

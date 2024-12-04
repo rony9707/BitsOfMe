@@ -234,7 +234,7 @@ button:hover {
 .select-countrycode-wrapper{
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width:20%;
 }
 
 .phone-number-wrapper select{
@@ -246,7 +246,7 @@ button:hover {
 .input-box-phone-number-wrapper{
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 80%;
   position: relative;
 }
 
