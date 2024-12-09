@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, OnInit, Output, signal, ViewChild, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems, emojis } from '../../../../shared/BitsOfLifeData/bits-data';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -7,13 +7,20 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AttachItemsComponent } from '../../../../shared/svg/attach-items/attach-items.component';
 import { LoggerService } from '../../../../services/logger/logger.service';
 import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-button.component';
+import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
 
 
 
 @Component({
   selector: 'app-create-posts-content',
   standalone: true,
-  imports: [FormsModule, PickerModule, CommonModule, TooltipModule, AttachItemsComponent,CloseButtonComponent],
+  imports: [FormsModule, 
+    PickerModule, 
+    CommonModule, 
+    TooltipModule, 
+    AttachItemsComponent, 
+    CloseButtonComponent, 
+    EmojiPickerComponent],
   templateUrl: './create-posts-content.component.html',
   styleUrl: './create-posts-content.component.css'
 })
@@ -28,9 +35,7 @@ export class CreatePostsContentComponent implements OnInit {
   selectedOption = this.selectBoxOptions()[0].hobbie;
   message = signal('');
   imageURL = signal('');
-  showEmojiPicker = signal(false);
-  emojiButton = signal('😊');
-  listOfEmojis = signal(emojis);
+  showEmojiPicker = signal(true);
   selectedFiles: File[] = [];
 
   //Output to sent to Parent
@@ -39,22 +44,18 @@ export class CreatePostsContentComponent implements OnInit {
   @Output() selectedFilesChange = new EventEmitter<File[]>();
   @Output() selectedOptionChange = new EventEmitter<string>();
 
-  
+
   // Array to store both images and their titles
   myImages: { uploadedImages: string; title: string }[] = [];
 
   ngOnInit(): void {
-      this.emitSelectedOption();
+    this.emitSelectedOption();
   }
 
-  // Toggle emoji picker
-  toggleEmojiPicker() {
-    this.showEmojiPicker.update((value) => !value);
-  }
 
   //Appends the selected emoji in the textare
   addEmoji(event: any) {
-    const emoji = event.emoji.native;
+    const emoji = event;
     this.message.update((currentMessage) => currentMessage + emoji);
     this.emitMessage();
   }
@@ -64,18 +65,19 @@ export class CreatePostsContentComponent implements OnInit {
     this.showEmojiPicker.set(false);
   }
 
-  //randomly generates emoji on hover on the emoji button each time
-  emojiRandom() {
-    let countOfEmoji = this.listOfEmojis().length;
-    const randomNumber = Math.floor(Math.random() * (countOfEmoji - 1)); // 0 to 5
-    this.emojiButton.set(this.listOfEmojis()[randomNumber]);
+  //If focus on TextArea, the Emojpicket op
+  onBlur(): void {
+    this.showEmojiPicker.set(true);
   }
 
+
+  
   //Append the message
   onInput(event: any) {
     this.message.set(event.target.value);
     this.emitMessage();
   }
+  
 
   //Adjust height of the textarea based on text written
   adjustHeight(event: Event): void {

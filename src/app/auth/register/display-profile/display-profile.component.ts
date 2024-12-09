@@ -11,7 +11,7 @@ import { DividerModule } from 'primeng/divider';
 })
 export class DisplayProfileComponent {
 
-  @Input() registerFormData!: registerFormInterface;
+  @Input() registerFormData?: registerFormInterface;
   @Input() uploadedImage: string | ArrayBuffer | null = null;
   displayProfileFlag = false
   windowWidth: WritableSignal<number> = signal(0);

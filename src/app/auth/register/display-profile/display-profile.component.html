@@ -45,7 +45,7 @@
         </div>
         <div class="left-bottom-about-me">
           <h3>About Me</h3>
-          <p>{{registerFormData.aboutme}}</p>
+          <p>{{registerFormData?.aboutme}}</p>
         </div>
       </div>
 
@@ -59,9 +59,9 @@
             <div class="PI2 PI-common">
               <div class="PI1 PI-common">
                 <ul>
-                  <li><span>Full Name: </span>{{registerFormData.fullname}}</li>
-                  <li><span>Date Of Birth: </span>{{registerFormData.dob}}</li>
-                  <li><span>Gender: </span>{{registerFormData.gender}}</li>
+                  <li><span>Full Name: </span>{{registerFormData?.fullname}}</li>
+                  <li><span>Date Of Birth: </span>{{registerFormData?.dob}}</li>
+                  <li><span>Gender: </span>{{registerFormData?.gender}}</li>
                 </ul>
               </div>
             </div>
@@ -71,9 +71,9 @@
         <div class="personal-info-main">
 
           <ul>
-            <li><span>Email: </span>{{registerFormData.email}}</li>
-            <li><span>Phone Number: </span>{{registerFormData.countryCode}} {{registerFormData.phoneNumber}}</li>
-            <li><span>Address: </span>{{registerFormData.address}}</li>
+            <li><span>Email: </span>{{registerFormData?.email}}</li>
+            <li><span>Phone Number: </span>{{registerFormData?.countryCode}} {{registerFormData?.phoneNumber}}</li>
+            <li><span>Address: </span>{{registerFormData?.address}}</li>
           </ul>
 
         </div>
@@ -89,10 +89,9 @@
         <img class="profile-pic-img" [src]="uploadedImage" alt="profile pic" />
       </div>
       <div class="username">
-        {{registerFormData.username}}
+        {{registerFormData?.username}}
       </div>
     </div>
-
-
+    
   </div>
 </div>

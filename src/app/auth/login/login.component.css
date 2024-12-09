@@ -1,6 +1,14 @@
-:host{
+:host {
   background-color: var(--main-background-color);
   width: 100%;
-  margin-top: 80px; 
-  height: calc(100vh - 80px); 
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+}
+
+@media(max-width:800px) {
+  :host {
+    margin-top: 0px;
+    height: 100%;
+  }
+
 }

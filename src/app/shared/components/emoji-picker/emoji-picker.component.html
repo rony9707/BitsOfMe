@@ -1,0 +1,9 @@
+<button class="emoji-picker-btn"
+    [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}" pTooltip="Emoji"
+    tooltipPosition="top" positionLeft="-3" (mouseenter)="showEmojiPicker() ? null : emojiRandom()"
+    (click)="toggleEmojiPicker()">{{emojiButton()}}</button>
+@if(showEmojiPicker()==true) {
+<div #emojiPicker>
+    <emoji-mart class="emoji-mart" (emojiClick)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
+</div>
+}
