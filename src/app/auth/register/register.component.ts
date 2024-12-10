@@ -29,7 +29,7 @@ import { countryCode } from '../../shared/BitsOfLifeData/DialingCodeCountry';
 export class RegisterComponent {
   //Declare objects to use in the DOM-----------------------------------------
   windowWidth: WritableSignal<number> = signal(0);
-  activeDiv = signal('div3')// Keeps track of the active div
+  activeDiv = signal('div1')// Keeps track of the active div
   uploadedImage: string | ArrayBuffer | null = null;
   defaultImageUrl: string = 'assets/images/avatar.jpg';
   passwordEyeFlag = signal(false)

@@ -6,16 +6,16 @@
   cursor: default;
 }
 
-h3 {
+.footer {
   color: var(--white);
 }
 
-h3 span {
+.footer span {
   color: var(--footer-secondary-color);
   cursor: pointer;
 }
 
-h3 span::before {
+.footer span::before {
   content: '';
   position: absolute;
   bottom: 0;
@@ -31,12 +31,12 @@ span:hover {
   color: rgb(255, 255, 255);
 }
 
-h3 span:hover::before {
+.footer span:hover::before {
   width: 50%;
 }
 
 @media(max-width:800px) {
-  h3 {
+  .footer {
     font-size: 15px;
   }
 

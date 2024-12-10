@@ -221,7 +221,7 @@
 
 
       <!-- GENDER ---------------------------------------->
-      <div class="input-box">
+      <label class="input-box">
         <select name="gender" formControlName="gender">
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -233,7 +233,7 @@
           <span *ngIf="genderValidator && genderValidator.invalid && genderValidator.touched">
             select your gender please</span>
         </div>
-      </div>
+      </label>
 
       <!-- About Me ---------------------------------------->
       <div class="input-box">
