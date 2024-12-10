@@ -14,7 +14,7 @@ import { HeaderSidenavbarComponent } from './header-sidenavbar/header-sidenavbar
 export class HeaderComponent implements OnInit {
 
   //Declare objects to use in the DOM-----------------------------------------
-  pageTitle = signal('')
+  pageTitle = signal('Default Title');
   windowWidth: WritableSignal<number> = signal(0);
 
 

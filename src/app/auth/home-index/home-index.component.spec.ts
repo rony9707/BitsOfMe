@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeIndexComponent } from './home-index.component';
+import { provideRouter } from '@angular/router';
 
 describe('HomeIndexComponent', () => {
   let component: HomeIndexComponent;
@@ -8,7 +9,10 @@ describe('HomeIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeIndexComponent]
+      imports: [HomeIndexComponent],
+      providers: [
+        provideRouter([]), 
+      ],
     })
     .compileComponents();
 

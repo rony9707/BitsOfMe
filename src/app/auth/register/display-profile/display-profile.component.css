@@ -1,5 +1,287 @@
 :host{
-  width: 50%;
-  background-color: rgb(55, 255, 0);
+  width: 40%;
+  background-color: var(--main-background-color);
   height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.display-profile-main{
+  width: 90%;
+  height: 90%;
+  background-color: rgb(255, 255, 0);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.profile-paper-main{
+  position: relative;
+  background-color: rgb(255, 248, 235);
+  width: 90%;
+  height: 90%;
+  border: 2px solid black;
+}
+
+/* HEADER START ---------------------------------------------------------------*/
+
+.paper-header{
+  background-color: #487284;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  border: 2px solid black;
+}
+
+.full-name-wrapper{
+  width: 60%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.full-name{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FN{
+  font-size: 40px;
+  font-family: "Roboto Condensed", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  transform: scaleY(1.7);
+  font-style: normal;
+}
+
+.LN{
+  font-size: 20px;
+}
+
+.clip{
+  position: absolute;
+  top:-53px;
+}
+
+.pin{
+  width: 40px;
+  position: absolute;
+  top:-10px;
+  left:30px;
+  transform: rotate(359deg);
+  z-index: 10;
+}
+
+.show-display-profile{
+  position: absolute;
+  top:0;
+  right:0;
+  margin: 10px 10px 0px 0px;
+}
+
+/* HEADER END ---------------------------------------------------------------*/
+
+/* PROFILE PIC START ---------------------------------------------------------------*/
+
+.profile-pic-wrapper{
+  position: absolute;
+  top:-10px;
+  left:0;
+  width: 39%;
+  height: 40%;
+  background-color: #76ABC5;
+  display: flex;
+  justify-content: center;
+  transform: rotate(-5deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+}
+
+.profile-pic{
+  width: 95%;
+  height: 70%;
+  margin: 5px;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.profile-pic-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the circle area */
+}
+
+
+
+.username{
+  height: 30%;
+  width: 100%;
+  background-color: #76ABC5;
+  display: grid;
+  place-items: center;
+  overflow-wrap: break-word; 
+  word-break: break-word;
+  font-family: "Caveat", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  padding: 10px;
+}
+
+/* PROFILE PIC END ---------------------------------------------------------------*/
+
+/* MAIN CONTENT START ---------------------------------------------------------------*/
+
+.main-content{
+  width: 100%;
+  height: 75%;
+  display: flex;
+}
+
+.left{
+  width: 40%;
+}
+
+.right{
+  width: 60%;
+  border-left: 2px solid black;
+}
+
+/* MAIN CONTENT END ---------------------------------------------------------------*/
+
+
+/* RIGHT CONTENT START ---------------------------------------------------------------*/
+.personal-info-main{
+  width: 100%;
+  height: 50%;
+  z-index: 10;
+}
+
+.PI-common{
+  width: 100%;
+  background-color: #FFDCD8;
+  border: 2px solid black;
+  z-index: 1000;
+}
+
+.PI3{
+  height: 100%;
+  transform: rotate(7deg);
+  border-radius: 20px;
+  position: relative;
+}
+
+.PI2{
+  height: 95%;
+  top:8px;
+  right:8px;
+  border-radius: 5px;
+  position: absolute;
+}
+
+.PI1{
+  height: 97%;
+  top:8px;
+  right:8px;
+  border-radius: 5px;
+  position: absolute;
+  transform: rotate(-2deg);
+  font-size: 14px;
+}
+
+ul{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left:20px;
+}
+
+ul li{
+  color:rgb(0, 0, 0);
+  font-family: "Lacquer", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+}
+
+ul li span{
+  color:black;
+  font-weight: bold;
+}
+
+.personal-info-main ul li{
+  overflow-wrap: break-word; 
+  word-break: break-word;
+  font-style: normal;
+  font-family: cursive;
+}
+
+/* RIGHT CONTENT END ---------------------------------------------------------------*/
+
+
+/* LEFT CONTENT START ---------------------------------------------------------------*/
+.left-top{
+  width: 100%;
+  height:30%;
+}
+
+.left-bottom-about-me{
+  width: 100%;
+  height:70%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.left-bottom-about-me h3{
+  color:black;
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+
+.left-bottom-about-me p{
+  width: 100%;
+  flex:1;
+  overflow-wrap: break-word; 
+  word-break: break-word;
+  color:black;
+  overflow-y: auto;
+}
+
+/* LEFT CONTENT END ---------------------------------------------------------------*/
+
+::ng-deep .p-divider-vertical{
+  margin: 0px 5px 0px 5px;
+}
+
+@media(max-width:1300px) {
+  :host{
+    width: 100%;
+    height: 100%;
+  }
+
+  .display-profile-main{
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+    display: grid;
+    place-items: center;
+  }
+}
+
+@media(max-width:800px) {
+  /* :host{
+    width: 100%;
+  } */
 }

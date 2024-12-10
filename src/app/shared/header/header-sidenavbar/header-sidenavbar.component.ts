@@ -27,7 +27,6 @@ export class HeaderSidenavbarComponent {
 
   constructor() {
     this.windowWidth.set(window.innerWidth);
-    this.logger.log(`The window width is ${this.windowWidth()}px`, 'info')
   }
 
   @HostListener('window:resize', ['$event'])

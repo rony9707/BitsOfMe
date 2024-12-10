@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideRouter } from '@angular/router';
 import { PostButtonsComponent } from './post-buttons.component';
 
 describe('PostButtonsComponent', () => {
@@ -8,7 +8,10 @@ describe('PostButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PostButtonsComponent]
+      imports: [PostButtonsComponent],
+      providers: [
+        provideRouter([]), 
+      ],
     })
     .compileComponents();
 
