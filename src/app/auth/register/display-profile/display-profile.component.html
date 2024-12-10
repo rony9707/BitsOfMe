@@ -1,1 +1,97 @@
-<p>display-profile works!</p>
+<!-- LINK FOR FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Doto:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+AT:ital,wght@0,100..400;1,100..400&family=Playwrite+CZ:wght@100..400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Satisfy&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Doto:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+AT:ital,wght@0,100..400;1,100..400&family=Playwrite+CZ:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Satisfy&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Doto:wght@100..900&family=Lacquer&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playwrite+AT:ital,wght@0,100..400;1,100..400&family=Playwrite+CZ:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Satisfy&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Caveat:wght@400..700&family=Doto:wght@100..900&family=Lacquer&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playwrite+AT:ital,wght@0,100..400;1,100..400&family=Playwrite+CZ:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Satisfy&display=swap"
+  rel="stylesheet">
+<!-- LINK FOR FONTS -->
+
+
+
+<div class="display-profile-main">
+  <div class="profile-paper-main">
+
+    <!-- FULL NAME -->
+    <div class="paper-header">
+      <div class="full-name-wrapper">
+        <div class="full-name">
+          <span class="FN">{{ firstName }}</span>
+          <span class="LN">{{ lastName }}</span>
+        </div>
+      </div>
+
+
+      <!-- Paper CLip -->
+      <img class="clip" src="assets/PNG/clip.png" alt="clip">
+
+      <!-- Pin -->
+      <img class="pin" src="assets/PNG/pin.png" alt="pin">
+    </div>
+
+
+    <div class="main-content">
+      <div class="left">
+        <div class="left-top">
+
+        </div>
+        <div class="left-bottom-about-me">
+          <h3>About Me</h3>
+          <p>{{registerFormData?.aboutme}}</p>
+        </div>
+      </div>
+
+
+
+      <div class="right">
+
+
+        <div class="personal-info-main">
+          <div class="PI3 PI-common">
+            <div class="PI2 PI-common">
+              <div class="PI1 PI-common">
+                <ul>
+                  <li><span>Full Name: </span>{{registerFormData?.fullname}}</li>
+                  <li><span>Date Of Birth: </span>{{registerFormData?.dob}}</li>
+                  <li><span>Gender: </span>{{registerFormData?.gender}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="personal-info-main">
+
+          <ul>
+            <li><span>Email: </span>{{registerFormData?.email}}</li>
+            <li><span>Phone Number: </span>{{registerFormData?.countryCode}} {{registerFormData?.phoneNumber}}</li>
+            <li><span>Address: </span>{{registerFormData?.address}}</li>
+          </ul>
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <!-- PROFILE PIC -->
+    <div class="profile-pic-wrapper">
+      <div class="profile-pic">
+        <img class="profile-pic-img" [src]="uploadedImage" alt="profile pic" />
+      </div>
+      <div class="username">
+        {{registerFormData?.username}}
+      </div>
+    </div>
+    
+  </div>
+</div>

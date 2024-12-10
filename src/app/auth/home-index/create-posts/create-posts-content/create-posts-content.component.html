@@ -1,4 +1,6 @@
-<textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
+<textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" 
+(focus)="onFocus()"
+(blur)="onBlur()"
   (input)="onInput($event)" name="message" [(ngModel)]="message" (input)="adjustHeight($event)"></textarea>
 
 <div class="image-container">
@@ -49,13 +51,17 @@
     <input style="display:none" id="attach_img" type="file" accept="image/*" multiple
       (change)="onImageUpload($event)" />
 
-    <button class="emoji-picker-btn" [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}"
+    <!-- <button class="emoji-picker-btn" [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}"
       pTooltip="Emoji" tooltipPosition="top" positionLeft="-3" (mouseenter)="showEmojiPicker() ? null : emojiRandom()"
       (click)="toggleEmojiPicker()">{{emojiButton()}}</button>
 
     @if(showEmojiPicker()==true){
     <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
-    }
+    } -->
+
+    <app-emoji-picker  (emojiSelected)="addEmoji($event)"
+    [isTextareaFocused]="showEmojiPicker()"
+    ></app-emoji-picker>
 
   </div>
 

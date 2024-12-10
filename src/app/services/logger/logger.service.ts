@@ -32,7 +32,7 @@ export class LoggerService {
         console.info(`[${timestamp}] [INFO]: ${message}`);
         break;
       case 'table':
-        console.table(`${message}`);
+        console.table(message);
         break;
       default:
         console.log(`[${timestamp}] [LOG]: ${message}`);

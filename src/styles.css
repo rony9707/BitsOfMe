@@ -2,8 +2,9 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
-
 @import '@ctrl/ngx-emoji-mart/picker';
+
+
 
 :root {
   --main-background-color: #505050;
@@ -15,7 +16,7 @@
   --button-color-nav-main: #C9E6F0;
   --button-color-nav-secondary: #78B3CE;
   --footer-main-color:#243642;
-  --footer-secondary-color:#87A2FF;
+  --footer-secondary-color:#ffba39;
   --post-button-primary-color: #BFEA7C;
   --post-button-secondary-color: #92d139;
   --main-content-color:#2f2f2f;

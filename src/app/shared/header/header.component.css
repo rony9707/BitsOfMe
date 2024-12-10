@@ -11,7 +11,7 @@ header {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
+.page-title {
   position: relative;
   cursor: default;
   font-family: "Doto", sans-serif;
@@ -23,13 +23,14 @@ h1 {
   padding: 0px 0px 0px 25px;
   transition: color 0.3s ease-out;
   color: var(--white);
+  font-size: 25px;
 }
 
-h1:hover{
+.page-title:hover{
   cursor: pointer;
 }
 
-h1::after {
+.page-title::after {
   content: '';
   position: absolute;
   bottom: 0; 
@@ -40,7 +41,7 @@ h1::after {
   transition: width 0.3s ease-out, left 0.3s ease-out;
 }
 
-h1:hover::after {
+.page-title:hover::after {
   width: 50%; 
   left: 25%; 
 }
