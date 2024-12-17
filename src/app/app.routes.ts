@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CreatePostsComponent } from './auth/home-index/create-posts/create-posts.component';
 import { AllUsersPostsComponent } from './user/all-users-posts/all-users-posts.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
           {
             path:'',
             component: AllUsersPostsComponent
+          },
+          {
+            path:'user/:usernameID',
+            loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent),
           }
         ]
       }
