@@ -28,6 +28,6 @@
   }
 
 
-  @if(sidebarVisible == false){
-  <img src="assets/SVG/hamburger.svg" (click)="sidebarVisible = true" class="hamburger" alt="hamburger_SVG">
+  @if(sidebarVisible() == false){
+  <img src="assets/SVG/hamburger.svg" (click)="sidebarVisible.set(true)" class="hamburger" alt="hamburger_SVG">
   }

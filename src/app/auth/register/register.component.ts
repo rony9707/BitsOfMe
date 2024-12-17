@@ -10,6 +10,8 @@ import swal from 'sweetalert2';
 import { RouterModule } from '@angular/router';
 import { LoggerService } from '../../services/logger/logger.service';
 import { countryCode } from '../../shared/BitsOfLifeData/DialingCodeCountry';
+import { AuthService } from '../../services/API/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +33,9 @@ export class RegisterComponent {
   windowWidth: WritableSignal<number> = signal(0);
   activeDiv = signal('div1')// Keeps track of the active div
   uploadedImage: string | ArrayBuffer | null = null;
-  defaultImageUrl: string = 'assets/images/avatar.jpg';
+  //defaultImageUrl: string = 'assets/images/avatar.webp';
+  defaultImageUrl_male: string = 'assets/images/avatar_male.webp';
+  defaultImageUrl_female: string = 'assets/images/avatar_female.webp';
   passwordEyeFlag = signal(false)
   isDropdownOpen = signal(false);
   toolTip = `Password must be 8-16 characters long,
@@ -43,11 +47,13 @@ export class RegisterComponent {
   //Form Code
   //FormGroup and FormControl Validators Code
   registerForm: FormGroup;
-  myPfp: File[] = []
+  myPfp?: File;
 
 
   //Inject Services here------------------------------------------------------
   private logger = inject(LoggerService)
+  private authService = inject(AuthService)
+  private router = inject(Router)
 
 
 
@@ -55,22 +61,40 @@ export class RegisterComponent {
     this.windowWidth.set(window.innerWidth);
 
     //Declare Form Group and Form Controls here
+    // this.registerForm = new FormGroup({
+    //   username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    //   password: new FormControl(
+    //     '', [Validators.required,
+    //     Validators.minLength(8),
+    //     Validators.maxLength(16),
+    //     Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/)]),
+    //   confirmPassword: new FormControl('', [Validators.required]),
+    //   fullname: new FormControl('', [Validators.required]),
+    //   dob: new FormControl('', [Validators.required]),
+    //   gender: new FormControl('', [Validators.required]),
+    //   aboutme: new FormControl('', [Validators.required]),
+    //   email: new FormControl('', [Validators.required, Validators.email]),
+    //   countryCode: new FormControl('', [Validators.required]),
+    //   phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+    //   address: new FormControl('', [Validators.required]),
+    // })
+ 
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      username: new FormControl('rony9707', [Validators.required, Validators.maxLength(20)]),
       password: new FormControl(
-        '', [Validators.required,
+        'Qwerty123.', [Validators.required,
         Validators.minLength(8),
         Validators.maxLength(16),
-        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.].{8,16}')]),
-      confirmPassword: new FormControl('', [Validators.required]),
-      fullname: new FormControl('', [Validators.required]),
-      dob: new FormControl('', [Validators.required]),
-      gender: new FormControl('', [Validators.required]),
-      aboutme: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/)]),
+      confirmPassword: new FormControl('Qwerty123.', [Validators.required]),
+      fullname: new FormControl('Agnibha Chowdhury', [Validators.required]),
+      dob: new FormControl('2024-12-11', [Validators.required]),
+      gender: new FormControl('Male', [Validators.required]),
+      aboutme: new FormControl('I am a cat', [Validators.required]),
+      email: new FormControl('chowdhury.agnibha.98@gmail.com', [Validators.required, Validators.email]),
       countryCode: new FormControl('+91', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
-      address: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('7003652082', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+      address: new FormControl('P 16 Iswar Gupta Road, Kolkata 28', [Validators.required]),
     })
 
   }
@@ -107,15 +131,23 @@ export class RegisterComponent {
   onImageUpload(event: any): void {
     const file = event.target.files[0]; // Get the first file
     if (file) {
-      // Create a URL for the uploaded file
-      this.myPfp = file
-      const imageUrl = URL.createObjectURL(file);
-      this.uploadedImage = imageUrl
+      // Check the file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
+      if (allowedTypes.includes(file.type)) {
+        // Create a URL for the uploaded file
+        this.myPfp = file;
+        const imageUrl = URL.createObjectURL(file);
+        this.uploadedImage = imageUrl;
+      } else {
+        this.logger.log(`Invalid file type. Please upload a jpeg, png, or webp image.`, 'error');
+        this.showErrorMessage('Error', 'Invalid file type. Please upload a jpeg, png, or webp image.')
+      }
     } else {
-      this.logger.log(`No file selected`, 'error')
+      this.logger.log(`No file selected`, 'error');
     }
   }
+
 
   //Function which will help to type only and numbers
   onlyNumbers(event: KeyboardEvent) {
@@ -130,24 +162,24 @@ export class RegisterComponent {
 
   // Function to allow only alphabets and numbers, no spaces or special characters
   onlyAlphabetsAndNumbers(event: KeyboardEvent) {
-  var charCode = (event.which) ? event.which : event.keyCode;
-  
-  // Allow numbers (48-57), uppercase letters (65-90), lowercase letters (97-122),
-  // backspace (8) and delete (46)
-  if (
-    (charCode > 64 && charCode < 91) || // A-Z
-    (charCode > 96 && charCode < 123) || // a-z
-    (charCode > 47 && charCode < 58) || // 0-9
-    charCode === 8 || // Backspace
-    charCode === 46 // Delete
-  ) {
-    return true;
-  } else {
-    event.preventDefault();
-    return false;
+    var charCode = (event.which) ? event.which : event.keyCode;
+
+    // Allow numbers (48-57), uppercase letters (65-90), lowercase letters (97-122),
+    // backspace (8) and delete (46)
+    if (
+      (charCode > 64 && charCode < 91) || // A-Z
+      (charCode > 96 && charCode < 123) || // a-z
+      (charCode > 47 && charCode < 58) || // 0-9
+      charCode === 8 || // Backspace
+      charCode === 46 // Delete
+    ) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
   }
-}
-  
+
 
 
 
@@ -249,7 +281,7 @@ export class RegisterComponent {
   //Resets the form
   resetForm() {
     this.registerForm.reset()
-    this.uploadedImage = this.defaultImageUrl;
+    this.uploadedImage = '';
     this.logger.log(`Registration form is reset`, 'info')
   }
 
@@ -263,32 +295,68 @@ export class RegisterComponent {
     dialog.close();
   }
 
+  //Toggle Country code dropdown
   toggleDropdown(state: boolean) {
     this.isDropdownOpen.set(state);
   }
 
+  //sweetalert 2 error and success msg
   showErrorMessage(title: string, text: string) {
     swal.fire({ title, text, icon: 'error', timer: 1500, showConfirmButton: false });
   }
 
+  showSuccessMessage(title: string, text: string) {
+    return swal.fire({ title, text, icon: 'success', timer: 1500, showConfirmButton: false });
+  }
 
+
+  //Register User
   registerUser() {
-
     if (!this.registerForm.valid) {
       this.showErrorMessage('Error', 'Please fill all required fields correctly.')
       return;
     }
-    else if (this.myPfp.length == 0) {
+    else if (!this.myPfp) {
       this.showErrorMessage('Error', 'Please upload your profile pic')
       this.logger.log(`Profile Picture not uploaded`, 'error')
       return;
     }
     else if (this.registerForm.valid) {
 
-      this.logger.log(this.registerForm.value, 'table')
-      console.log(this.myPfp)
+      const formData = new FormData();
 
+      //Append Image 
+      formData.append('image', this.myPfp);
+  
+      //Append everything expect image and confirm password
+      for (const key in this.registerForm.value) {
+        if(key!='confirmPassword'){
+          formData.append(key, this.registerForm.value[key]);
+        }
+      }
+
+      this.sentDataToBackend(formData)
     }
+  }
+
+
+
+  //Sent Data to backend here
+  sentDataToBackend(formData:FormData) {
+
+    //Sent Data to the backend with the help of authService
+    this.authService.registerUser(formData).subscribe({
+      next:(value) =>{
+        this.showSuccessMessage('Success', value.message).then(() => {
+          // Navigate to login form
+          this.router.navigate(['/login'])
+          this.resetForm();
+        });
+      },
+      error:(err)=>{
+        this.showErrorMessage('Error', err.error.message)
+      },
+    })
   }
 
 

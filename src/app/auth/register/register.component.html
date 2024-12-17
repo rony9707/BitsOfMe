@@ -58,14 +58,14 @@
 <dialog #myModal>
   <button class="modal-close-btn" (click)="closeModal(myModal)">Close</button>
   <app-display-profile [registerFormData]="registerForm.value"
-    [uploadedImage]="uploadedImage || defaultImageUrl"></app-display-profile>
+    [uploadedImage]="uploadedImage || (registerForm.get('gender')?.value === 'Male' ? defaultImageUrl_male : defaultImageUrl_female)"></app-display-profile>
 </dialog>
 
 
 <!-- Display Profile -->
 @if(windowWidth() > 1300){
 <app-display-profile [registerFormData]="registerForm.value"
-  [uploadedImage]="uploadedImage || defaultImageUrl"></app-display-profile>
+  [uploadedImage]="uploadedImage || (registerForm.get('gender')?.value === 'Male' ? defaultImageUrl_male : defaultImageUrl_female)"></app-display-profile>
 }
 
 
@@ -180,13 +180,15 @@
       <!-- Image Upload ---------------------------------------->
       <div class="profile-pic-main">
         <div class="profile-pic-wrapper">
-          <img class="profile-pic" [src]="uploadedImage || defaultImageUrl" alt="Uploaded Image" />
+          <img rel="preload" class="profile-pic" [src]="uploadedImage ||
+           (registerForm.get('gender')?.value === 'Male' ? defaultImageUrl_male : defaultImageUrl_female)" 
+           alt="Uploaded Image" />
         </div>
         <div class="select-file">
           <label for="attach_img" style="display:grid;place-items:center" class="upload-button">
             Upload your profile pic
           </label>
-          <input style="display:none" id="attach_img" type="file" accept="image/*" (change)="onImageUpload($event)" />
+          <input style="display:none" id="attach_img" type="file"  accept="image/jpeg, image/png, image/webp" (change)="onImageUpload($event)" />
         </div>
       </div>
 
@@ -225,7 +227,6 @@
         <select name="gender" formControlName="gender">
           <option value="Male">Male</option>
           <option value="Female">Female</option>
-          <option value="Others">Others</option>
         </select>
         <label class="focused">Select your gender</label>
         <!-- Invalid Text -->
@@ -289,7 +290,7 @@
         <div class="phone-number-wrapper">
           <!-- COUNTRY CODE -->
           <div class="select-countrycode-wrapper">
-            <select class="country-code" name="countrycode"   (focus)="toggleDropdown(true)" 
+            <select class="country-code" name="countrycode"  (focus)="toggleDropdown(true)" 
             (blur)="toggleDropdown(false)" formControlName="countryCode">
               @for (code of countryCode(); track code.name) {
               <option [value]="code.code">

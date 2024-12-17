@@ -1,8 +1,8 @@
-<textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" 
-(focus)="onFocus()"
-(blur)="onBlur()"
-  (input)="onInput($event)" name="message" [(ngModel)]="message" (input)="adjustHeight($event)"></textarea>
+<textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
+  (blur)="onBlur()" (input)="onInput($event)" name="message" [(ngModel)]="message"
+  (input)="adjustHeight($event)"></textarea>
 
+@if(myImages){
 <div class="image-container">
 
   @for (image of myImages; track image) {
@@ -20,20 +20,20 @@
     <!-- Close button -->
     <!-- <img rel="prefetch" class="remove-img-btn" (click)="removeImage(image.uploadedImages)" src="assets/SVG/close-btn.svg"
       alt="CloseButton" /> -->
-    <app-close-button
-    class="remove-img-btn" (click)="removeImage(image.uploadedImages)"
-      alt="CloseButton"
-    ></app-close-button>
+    <app-close-button class="remove-img-btn" (click)="removeImage(image.uploadedImages)"
+      alt="CloseButton"></app-close-button>
   </div>
   }
 
 </div>
+}
 
 
 
 
 <div class="extra-info">
-  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"  (ngModelChange)="emitSelectedOption()" >
+  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"
+    (ngModelChange)="emitSelectedOption()">
     @for (option of selectBoxOptions(); track option.hobbie) {
     @if(option.name != 'music'){
     <option [value]="option.hobbie">
@@ -59,13 +59,11 @@
     <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
     } -->
 
-    <app-emoji-picker  (emojiSelected)="addEmoji($event)"
-    [isTextareaFocused]="showEmojiPicker()"
-    ></app-emoji-picker>
+    <app-emoji-picker (emojiSelected)="addEmoji($event)" [isTextareaFocused]="showEmojiPicker()"></app-emoji-picker>
 
   </div>
 
 </div>
 
-<button [disabled]="!postContent.value.trim() && myImages.length === 0"
- class="post" (click)="uploadPost()">Post</button>
+<button [disabled]="!postContent.value.trim() && myImages.length === 0" class="post"
+  (click)="uploadPost()">Post</button>

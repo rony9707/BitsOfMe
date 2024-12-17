@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, OnInit, Output, signal, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, OnInit, Output, signal, ViewChild, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems, emojis } from '../../../../shared/BitsOfLifeData/bits-data';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -8,6 +8,9 @@ import { AttachItemsComponent } from '../../../../shared/svg/attach-items/attach
 import { LoggerService } from '../../../../services/logger/logger.service';
 import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-button.component';
 import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { DebounceService } from '../../../../services/debounce/debounce.service';
 
 
 
@@ -22,11 +25,13 @@ import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker
     CloseButtonComponent, 
     EmojiPickerComponent],
   templateUrl: './create-posts-content.component.html',
-  styleUrl: './create-posts-content.component.css'
+  styleUrl: './create-posts-content.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePostsContentComponent implements OnInit {
   //Inject Services here
   private logger = inject(LoggerService)
+  private debounceService = inject(DebounceService)
 
 
 
@@ -47,6 +52,14 @@ export class CreatePostsContentComponent implements OnInit {
 
   // Array to store both images and their titles
   myImages: { uploadedImages: string; title: string }[] = [];
+
+  constructor(){
+
+    //Debouncing
+    this.debounceService.debounce().subscribe(value => {
+      this.message.set(value); // Update the message
+    });
+  }
 
   ngOnInit(): void {
     this.emitSelectedOption();
@@ -71,12 +84,15 @@ export class CreatePostsContentComponent implements OnInit {
   }
 
 
-  
   //Append the message
   onInput(event: any) {
-    this.message.set(event.target.value);
+    //Call the set debouncer function to sent the value to the debouncer
+    this.debounceService.sentToDebouncer(event.target.value)
     this.emitMessage();
   }
+
+
+
   
 
   //Adjust height of the textarea based on text written
