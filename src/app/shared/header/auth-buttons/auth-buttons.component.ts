@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './auth-buttons.component.html',
-  styleUrl: './auth-buttons.component.css'
+  styleUrl: './auth-buttons.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthButtonsComponent {
   @Output() closeSidebarEvent = new EventEmitter<boolean>();

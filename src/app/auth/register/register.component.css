@@ -241,6 +241,9 @@ button:hover {
   width: 100%;
 }
 
+/* .phone-number-wrapper select option{
+  width: auto;
+} */
 
 
 .input-box-phone-number-wrapper{
@@ -273,6 +276,7 @@ button:hover {
   border-radius: 50%;
   border: 1px solid black;
   overflow: hidden;
+  background-color: #323232;
   /* Ensures no overflow outside the circle */
 }
 

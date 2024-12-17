@@ -4,7 +4,7 @@
 
 
 
-@for (item of buttonList; track item.name) {
+@for (item of buttonList(); track item.name) {
   <button (click)="closeSidebar()">{{ item.hobbie }}</button> 
 } 
 @empty {

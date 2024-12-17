@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { emojis } from '../../BitsOfLifeData/bits-data';
 import { TooltipModule } from 'primeng/tooltip';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [TooltipModule, PickerModule, CommonModule],
   templateUrl: './emoji-picker.component.html',
-  styleUrl: './emoji-picker.component.css'
+  styleUrl: './emoji-picker.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmojiPickerComponent implements OnChanges {
 
