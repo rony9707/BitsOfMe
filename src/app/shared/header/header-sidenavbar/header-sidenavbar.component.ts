@@ -17,11 +17,10 @@ export class HeaderSidenavbarComponent {
 
 
   //Declare Variables here
-  sidebarVisible = false
+  sidebarVisible = signal(false)
   windowWidth: WritableSignal<number> = signal(0);
 
   //Inject Services here
-  private logger=inject(LoggerService)
 
 
 
@@ -35,7 +34,7 @@ export class HeaderSidenavbarComponent {
   }
 
   closeSidebar(dataFromChild:boolean): void {
-    this.sidebarVisible=dataFromChild
+    this.sidebarVisible.set(dataFromChild)
   }
 
 }

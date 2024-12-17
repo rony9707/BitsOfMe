@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 
@@ -9,7 +9,8 @@ import { AvatarModule } from 'primeng/avatar';
   standalone: true,
   imports: [AvatarModule,FormsModule,NgFor],
   templateUrl: './create-posts-header.component.html',
-  styleUrl: './create-posts-header.component.css'
+  styleUrl: './create-posts-header.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePostsHeaderComponent implements OnInit{
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './post-buttons.component.html',
-  styleUrl: './post-buttons.component.css'
+  styleUrl: './post-buttons.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostButtonsComponent {
   @Output() closeSidebarEvent = new EventEmitter
