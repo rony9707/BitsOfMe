@@ -14,7 +14,7 @@ export class AuthService {
 
   // https://chatgpt.com/share/67607c20-5334-8013-aa41-548c4f5b26b6
 
-  public isLoggedIn = new BehaviorSubject<boolean>(false);
+  public $isLoggedIn = new BehaviorSubject<boolean>(false);
 
 
   //Declear Services here
@@ -25,7 +25,7 @@ export class AuthService {
   baseURL = environment.apiUrl
   registerUserURL = `${this.baseURL}/user/register`
   loginURL = `${this.baseURL}/user/login`
-  userDataURL  = `${this.baseURL}/user/getUser`
+  userDataURL = `${this.baseURL}/user/getUser`
 
 
   //Register User
@@ -48,6 +48,13 @@ export class AuthService {
       withCredentials: true
     });
   }
+
+
+  // Getter for login status
+  get isAuthenticated() {
+    return this.$isLoggedIn.asObservable();
+  }
+
 
 
 

@@ -8,15 +8,15 @@ export class DebounceService {
 
   constructor() { }
 
-  private inputSubject = new Subject<string>();
+  private $inputSubject = new Subject<string>();
 
   
   debounce(){
-     return this.inputSubject.pipe(debounceTime(300))
+     return this.$inputSubject.pipe(debounceTime(300))
   }
 
   //Next Value to the Subject
   sentToDebouncer(value:string){
-    this.inputSubject.next(value); 
+    this.$inputSubject.next(value); 
   }
 }
