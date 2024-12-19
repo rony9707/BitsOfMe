@@ -5,12 +5,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../states/app.state';
 import * as getUserAction from './../../states/getUser/getUser.action'
 import * as getUserSelector from './../../states/getUser/getUser.selector'
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-all-users-posts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,AsyncPipe],
   templateUrl: './all-users-posts.component.html',
   styleUrl: './all-users-posts.component.css'
 })
@@ -21,6 +22,7 @@ export class AllUsersPostsComponent {
   $error: Observable<string | null>;
 
   private store = inject(Store<AppState>);
+  private activatedRoute = inject(ActivatedRoute);
 
   constructor() {
     this.store.dispatch(getUserAction.getUser())

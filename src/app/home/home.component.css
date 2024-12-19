@@ -12,36 +12,3 @@
 }
 
 
-
-.content-wrapper {
-  display: flex;
-  flex: 1; 
-  margin-top: 60px; 
-  height: calc(100vh - 60px); 
-}
-
-.sidebar {
-  width: 250px; 
-  background-color: #f4f4f4;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  position: fixed; 
-  top: 60px; 
-  height: calc(100vh - 60px); 
-  overflow-y: auto;
-}
-
-.main-content {
-  margin-left: 250px; 
-  padding: 20px;
-  background-color: #fff;
-  overflow-y: auto; 
-  height: calc(100vh - 60px); 
-  box-sizing: border-box;
-  flex: 1; 
-}
-
-
-p{
-  color:black;
-}

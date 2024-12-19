@@ -16,3 +16,8 @@ export const getUserError = createAction(
   '[GetUser Component] getUserError',
   props<{ errorMessage: string }>()
 )
+
+//Actionf if logout
+export const logoutUser = createAction(
+  '[AuthButton Component] LogoutUser'
+)

@@ -4,9 +4,6 @@
     <button routerLink="/register" routerLinkActive="selected" (click)="closeSidebar()">Register</button>
   }
   @else if ((authService.isAuthenticated | async)) {
-    <button class="logout-btn">Logout</button>
+    <button class="logout-btn" (click)="logout()">Logout</button>
   }
-  <!-- <button routerLink="/login" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="selected" (click)="closeSidebar()">Login</button>
-  <button routerLink="/register" routerLinkActive="selected" (click)="closeSidebar()">Register</button>
-  <button class="logout-btn">Logout</button> -->
 </div>

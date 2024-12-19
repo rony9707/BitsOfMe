@@ -3,6 +3,8 @@ import { HomeComponent } from './home/home.component';
 import { CreatePostsComponent } from './auth/home-index/create-posts/create-posts.component';
 import { AllUsersPostsComponent } from './user/all-users-posts/all-users-posts.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { CanActivateUser, userResolve } from './services/Authguard/authguard.service';
+
 
 export const routes: Routes = [
   {
@@ -23,7 +25,8 @@ export const routes: Routes = [
         children: [
           {
             path:'create-a-post',
-            component: CreatePostsComponent
+            component: CreatePostsComponent,
+            canActivate: [CanActivateUser]
           },
           {
             path:'',
@@ -31,10 +34,12 @@ export const routes: Routes = [
           },
           {
             path:'user/:usernameID',
-            loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent),
+            component: UserProfileComponent,
+            canActivate: [CanActivateUser]
           }
         ]
       }
     ]
   }
+
 ];

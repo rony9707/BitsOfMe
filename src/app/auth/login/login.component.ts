@@ -5,11 +5,11 @@ import { PasswordHideComponent } from '../../shared/svg/password-hide/password-h
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { LoggerService } from '../../services/logger/logger.service';
-import swal from 'sweetalert2';
 import { LoginFormInterface } from './loginData.interface';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../../services/common/common.service';
 
 
 @Component({
@@ -36,6 +36,7 @@ export class LoginComponent {
   private logger = inject(LoggerService)
   private authService = inject(AuthService)
   private router = inject(Router)
+  private common = inject(CommonService)
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -92,19 +93,10 @@ export class LoginComponent {
     }
   }
 
-  //sweetalert 2 error and success msg
-  showErrorMessage(title: string, text: string) {
-    swal.fire({ title, text, icon: 'error', timer: 1500, showConfirmButton: false });
-  }
-
-  showSuccessMessage(title: string, text: string) {
-    return swal.fire({ title, text, icon: 'success', timer: 1500, showConfirmButton: false });
-  }
-
 
   loginUser() {
     if (!this.loginForm.valid) {
-      this.showErrorMessage('Error', 'Please fill all required fields correctly.')
+      this.common.showErrorMessage('Error', 'Please fill all required fields correctly.')
       return;
     } else {
 
@@ -125,13 +117,13 @@ export class LoginComponent {
   sentDataToBackend(loginDataToSentToBackend: LoginFormInterface) {
     this.authService.loginUser(loginDataToSentToBackend).subscribe({
       next:(value) =>{
-        this.showSuccessMessage('Success', value.message).then(() => {
+        this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
           this.router.navigate([''])
         });
       },
       error:(err)=>{
-        this.showErrorMessage('Error', err.error.message)
+        this.common.showErrorMessage('Error', err.error.message)
       },
     })
   }

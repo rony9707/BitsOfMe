@@ -1,10 +1,10 @@
-<div *ngIf="($user | async) as user;">
+@if ($user | async; as user) {
   <h1>{{ user.db_fullname }}</h1>
   <p>Email: {{ user.db_email }}</p>
-</div>
+}
 
-<p>all-users-posts works!</p>
 
+
 <p>all-users-posts works!</p>
 
 <p>all-users-posts works!</p>
@@ -347,3 +347,4 @@
 
 <p>all-users-posts works!</p>
 
+<p>all-users-posts works!</p>

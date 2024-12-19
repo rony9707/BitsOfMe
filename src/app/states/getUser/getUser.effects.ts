@@ -3,13 +3,15 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as getUserActions from './getUser.action'
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from "../../services/API/auth.service";
+import { LoggerService } from "../../services/logger/logger.service";
 
 
 @Injectable()
 export class getUserEffect {
 
   private getUser = inject(AuthService)
-  action$ = inject(Actions)
+  private action$ = inject(Actions)
+  private logger = inject(LoggerService)
 
 
   loadUser$ = createEffect(() =>
@@ -17,15 +19,16 @@ export class getUserEffect {
       ofType(getUserActions.getUser),
       mergeMap(
         action => {
-          console.log('Request for user made'); // Log when request is initiated
+          this.logger.log('Request for user made','log') // Log when request is initiated
           return this.getUser.getUser().pipe(
             map((res) => {
-              console.log('Request for user succeeded'); // Log when request succeeds
+              this.logger.log('Request for user succeeded','log')  // Log when request succeeds
               this.getUser.$isLoggedIn.next(true)
               return getUserActions.getUserSuccess({ user: res });
             }),
             catchError(err => {
               this.getUser.$isLoggedIn.next(false)
+              this.logger.log(err.message,'error')  // Log when request error
               return of(getUserActions.getUserError({ errorMessage: err.message || 'Failed to load users' }));
             })
           );

@@ -1,1 +1,13 @@
-<p>user-profile works!</p>
+<div class="user-profile-left-main common-main" [class.fontColorChange]="isHovered()">
+  <div class="left-section-main">
+    asdasd
+  </div>
+</div>
+<div class="user-profile-right-main common-main" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+  <div class="right-section-text">
+    Welcome, John!
+    <br>
+    Here&#39;s your profile.
+  </div>
+</div>
+<div class="absolute-background"></div>

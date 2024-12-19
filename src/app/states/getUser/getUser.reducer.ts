@@ -16,6 +16,7 @@ export const initialGetUser: getUserState = {
 }
 
 
+
 export const getUserReducer = createReducer(
   initialGetUser,
 
@@ -31,5 +32,12 @@ export const getUserReducer = createReducer(
     {
       ...state,
       error: errorMessage,
-    }))
+    })),
+
+  //If user logs out
+  on(getUserActions.logoutUser, (state) => ({
+    ...state,
+    user:null,
+  })),
+
 );
