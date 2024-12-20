@@ -44,6 +44,27 @@ button:hover {
   background-color: var(--secondary-color);
 }
 
+.pfp-logout{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s ease;
+  border: 2px solid transparent;
+}
+
+.pfp:hover {
+  transition: 0.2s ease;
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7); /* Glow effect */
+}
+
+
 
 @media(max-width:800px) {
   .auth-buttons {

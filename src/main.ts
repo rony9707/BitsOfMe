@@ -5,11 +5,13 @@ import { AppComponent } from './app/app.component';
 function removeLoader() {
   const loader = document.getElementById('app-loader');
   if (loader) {
-    loader.style.opacity = '0'; // Fade-out effect (optional)
-    setTimeout(() => loader.remove(), 300); // Remove after fade-out
+    setTimeout(() => {
+      loader.style.opacity = '0'; // Fade-out effect (optional)
+      setTimeout(() => loader.remove(), 300); // Remove after fade-out
+    }, 2000); 
   }
 }
 
 bootstrapApplication(AppComponent, appConfig)
-.then(() => removeLoader())
+  .then(() => removeLoader())
   .catch((err) => console.error(err));

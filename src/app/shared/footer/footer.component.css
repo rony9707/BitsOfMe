@@ -4,6 +4,7 @@
   right: 0;
   margin: 20px 25px 15px 0px;
   cursor: default;
+  z-index: 100;
 }
 
 .footer {

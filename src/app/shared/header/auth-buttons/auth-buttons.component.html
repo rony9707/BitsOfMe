@@ -1,9 +1,13 @@
 <div class="auth-buttons">
-  @if(!(authService.isAuthenticated | async)){
-    <button routerLink="/login" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="selected" (click)="closeSidebar()">Login</button>
-    <button routerLink="/register" routerLinkActive="selected" (click)="closeSidebar()">Register</button>
+  @if(!(authService.isAuthenticated | async);as isAuthenticated){
+  <button routerLink="/login" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="selected"
+    (click)="closeSidebar()">Login</button>
+  <button routerLink="/register" routerLinkActive="selected" (click)="closeSidebar()">Register</button>
   }
-  @else if ((authService.isAuthenticated | async)) {
+  @else {
+  <div class="pfp-logout">
+    <img class="pfp"  [routerLink]="'/user/' + ($user | async)?.db_username" [src]="($user | async)?.db_phofilePic_100">
     <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
   }
 </div>

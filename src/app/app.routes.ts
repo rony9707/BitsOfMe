@@ -4,6 +4,8 @@ import { CreatePostsComponent } from './auth/home-index/create-posts/create-post
 import { AllUsersPostsComponent } from './user/all-users-posts/all-users-posts.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { CanActivateUser, userResolve } from './services/Authguard/authguard.service';
+import { AuthGuardService_opposite } from './services/Authguard/authguard_opposite.service';
+
 
 
 export const routes: Routes = [
@@ -13,11 +15,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent)
+        loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent),
+        canActivate:[AuthGuardService_opposite]
       },
       {
         path: 'register',
-        loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent)
+        loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent),
+        canActivate:[AuthGuardService_opposite]
       },
       {
         path: '',

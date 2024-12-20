@@ -1,16 +1,20 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/API/auth.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import swal from 'sweetalert2';
 import { LoggerService } from '../../../services/logger/logger.service';
 import * as getUserAction from './../../../states/getUser/getUser.action'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../states/app.state';
+import { Observable } from 'rxjs';
+import { UserProfile } from '../../../user/user-profile/user-profile.interface';
+import * as getUserSelector from './../../../states/getUser/getUser.selector'
+
 @Component({
   selector: 'app-auth-buttons',
   standalone: true,
-  imports: [RouterModule, AsyncPipe],
+  imports: [RouterModule, AsyncPipe, CommonModule],
   templateUrl: './auth-buttons.component.html',
   styleUrl: './auth-buttons.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -22,7 +26,16 @@ export class AuthButtonsComponent {
   public logger = inject(LoggerService)
 
 
+  $user: Observable<UserProfile | null>;
+  $error: Observable<string | null>;
+
   private store = inject(Store<AppState>);
+
+  constructor() {
+    this.$user = this.store.select(getUserSelector.getAllUser);
+    this.$error = this.store.select(getUserSelector.selectUserError);
+  }
+
 
 
   @Output() closeSidebarEvent = new EventEmitter<boolean>();

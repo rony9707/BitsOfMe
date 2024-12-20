@@ -1,13 +1,102 @@
 <div class="user-profile-left-main common-main" [class.fontColorChange]="isHovered()">
   <div class="left-section-main">
-    asdasd
+    <div class="pfp-username">
+      <div class="pfp-username-sub">
+        <img class="pfp" [src]="($user | async)?.db_phofilePic_100" alt="cat">
+        <div class="username">
+          <span class="username-span">&#64;username</span>
+          <br>
+          <div class="username-data-span">
+            {{($user | async)?.db_username}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title-wrapper">
+      @if(($user | async); as user){
+
+        <div class="title">
+          About Me 
+        </div>
+        <div class="title-data title-common title-data-input-aboutuser">
+          {{user.db_aboutUser}}
+        </div>
+
+        <div class="title fullname">
+          Full Name
+        </div>
+        <div class="title-data title-common fullname">
+          {{user.db_fullname}}
+        </div>
+
+        <div class="title">
+          Email
+        </div>
+        <div class="title-data title-common">
+          {{user.db_email}}
+        </div>
+
+        <div class="title">
+          Date of Birth
+        </div>
+        <div class="title-data title-common">
+          {{user.db_dob}}
+        </div>
+
+        <div class="title">
+          Gender
+        </div>
+        <div class="title-data title-common">
+          {{user.db_gender}}
+        </div>
+
+        <div class="title">
+          Address
+        </div>
+        <div class="title-data title-common">
+          {{user.db_address}}
+        </div>
+
+        <div class="title">
+          Phone Number
+        </div>
+        <div class="title-data title-common">
+          {{user.db_phoneNumber}}
+        </div>
+
+        <div class="title">
+          Profile Creation Date
+        </div>
+        <div class="title-data title-common">
+          {{user.db_dtecre}}
+        </div>
+
+        <div class="title">
+          Last Profile Login Date
+        </div>
+        <div class="title-data title-common">
+          {{user.db_dteLastLogin}}
+        </div>
+
+        <div class="title">
+          Last Profile Modification Date
+        </div>
+        <div class="title-data title-common">
+          {{user.db_dtemod}}
+        </div>
+      }
+      @else {
+        <div>{{($error | async)}}</div>
+      }
+
+    </div>
   </div>
 </div>
 <div class="user-profile-right-main common-main" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
   <div class="right-section-text">
-    Welcome, John!
+    Welcome, {{ ($user | async)?.db_fullname }}!
     <br>
-    Here&#39;s your profile.
+    Here's your profile.
   </div>
 </div>
 <div class="absolute-background"></div>
