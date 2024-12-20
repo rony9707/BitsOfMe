@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, HostListener, inject, signal, WritableSignal } from '@angular/core';
 import { DisplayProfileComponent } from './display-profile/display-profile.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,12 +6,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { PasswordHideComponent } from '../../shared/svg/password-hide/password-hide.component';
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
-import swal from 'sweetalert2';
-import { RouterModule } from '@angular/router';
 import { LoggerService } from '../../services/logger/logger.service';
 import { countryCode } from '../../shared/BitsOfLifeData/DialingCodeCountry';
 import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../../services/common/common.service';
 
 @Component({
   selector: 'app-register',
@@ -54,6 +53,7 @@ export class RegisterComponent {
   private logger = inject(LoggerService)
   private authService = inject(AuthService)
   private router = inject(Router)
+   private common = inject(CommonService)
 
 
 
@@ -141,7 +141,7 @@ export class RegisterComponent {
         this.uploadedImage = imageUrl;
       } else {
         this.logger.log(`Invalid file type. Please upload a jpeg, png, or webp image.`, 'error');
-        this.showErrorMessage('Error', 'Invalid file type. Please upload a jpeg, png, or webp image.')
+        this.common.showErrorMessage('Error', 'Invalid file type. Please upload a jpeg, png, or webp image.')
       }
     } else {
       this.logger.log(`No file selected`, 'error');
@@ -300,24 +300,16 @@ export class RegisterComponent {
     this.isDropdownOpen.set(state);
   }
 
-  //sweetalert 2 error and success msg
-  showErrorMessage(title: string, text: string) {
-    swal.fire({ title, text, icon: 'error', timer: 1500, showConfirmButton: false });
-  }
-
-  showSuccessMessage(title: string, text: string) {
-    return swal.fire({ title, text, icon: 'success', timer: 1500, showConfirmButton: false });
-  }
 
 
   //Register User
   registerUser() {
     if (!this.registerForm.valid) {
-      this.showErrorMessage('Error', 'Please fill all required fields correctly.')
+      this.common.showErrorMessage('Error', 'Please fill all required fields correctly.')
       return;
     }
     else if (!this.myPfp) {
-      this.showErrorMessage('Error', 'Please upload your profile pic')
+      this.common.showErrorMessage('Error', 'Please upload your profile pic')
       this.logger.log(`Profile Picture not uploaded`, 'error')
       return;
     }
@@ -347,14 +339,14 @@ export class RegisterComponent {
     //Sent Data to the backend with the help of authService
     this.authService.registerUser(formData).subscribe({
       next:(value) =>{
-        this.showSuccessMessage('Success', value.message).then(() => {
+        this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
           this.router.navigate(['/login'])
           this.resetForm();
         });
       },
       error:(err)=>{
-        this.showErrorMessage('Error', err.error.message)
+        this.common.showErrorMessage('Error', err.error.message)
       },
     })
   }

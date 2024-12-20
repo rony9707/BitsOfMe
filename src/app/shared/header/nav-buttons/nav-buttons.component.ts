@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { menuItems } from '../../BitsOfLifeData/bits-data';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,8 +17,15 @@ export class NavButtonsComponent {
   buttonList = signal(menuItems)
   @Output() closeSidebarEvent = new EventEmitter<boolean>();
 
+  //Inject Services here------------------------------------------------------
+  private router = inject(Router)
+
   closeSidebar(): void {
     this.closeSidebarEvent.emit(false); // Emit the event to close the sidebar
+  }
+
+  goToMusic():void{
+    this.router.navigate(['/music']);
   }
 
 }

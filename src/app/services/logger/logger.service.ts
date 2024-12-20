@@ -15,7 +15,7 @@ export class LoggerService {
     return `${hours}:${minutes}:${seconds}`;
   }
 
-  log(message: string, typeConsole: string): void {
+  log(message: string| unknown, typeConsole: string): void {
     const timestamp = this.getCurrentTime();
 
     switch (typeConsole.toLowerCase()) {

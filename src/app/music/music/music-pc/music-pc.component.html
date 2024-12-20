@@ -1,0 +1,13 @@
+<div class="disk" [ngClass]="{'disk-rotate': songServices.music_status()}">
+  <app-disk></app-disk>
+
+  <div class="play-pause" *ngIf="songServices.music_status(); else playTemplate">
+    <app-pause (click)="songPlay(false)"></app-pause>
+  </div>
+
+  <ng-template #playTemplate>
+    <div class="play-pause">
+      <app-play (click)="songPlay(true)"></app-play>
+    </div>
+  </ng-template>
+</div>
