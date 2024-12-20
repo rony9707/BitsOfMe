@@ -1,19 +1,45 @@
-.hamburger {
+.hamburger-pfp {
   position: absolute;
   top: 50%;
   /* Position the top of the element at 50% of the container */
   right: 0;
   transform: translateY(-50%);
   margin: 0px 15px 0px 0px;
-  width: 30px;
-  cursor: pointer;
   display: none;
 }
 
+.pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s ease;
+  border: 2px solid transparent;
+}
+
+.pfp:hover {
+  transition: 0.2s ease;
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);
+  /* Glow effect */
+}
+
+.highlighted {
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);
+  /* Glow effect */
+}
+
+
 
 @media(max-width:800px) {
-  .hamburger {
-    display: block;
+  .hamburger-pfp {
+    display: flex;
+    align-items: center;
+    gap:20px
+  }
+
+  .hamburger{
+    width: 30px;
+    cursor: pointer;
   }
 
   ::ng-deep .p-sidebar-icon {

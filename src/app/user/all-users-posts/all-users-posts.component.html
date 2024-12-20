@@ -1,6 +1,5 @@
-@if (user) {
-  <h1>{{ user.db_fullname }}</h1>
-  <p>Email: {{ user.db_email }}</p>
+@if ($error | async) {
+  <div>YOU ARE NOT LOGGED IN</div>
 }
 
 

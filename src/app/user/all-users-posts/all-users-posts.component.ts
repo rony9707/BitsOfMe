@@ -17,19 +17,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AllUsersPostsComponent {
 
-  //Declare Variables here
-  $user: Observable<UserProfile | null>;
+  //Declare Variables here----------------------------------------------------------------
+  //$user: Observable<UserProfile | null>;
   $error: Observable<string | null>;
-  user:UserProfile | null;
+  //user:UserProfile | null;
 
+  
+  //Decleare Services here----------------------------------------------------------------
   private store = inject(Store<AppState>);
   private activatedRoute = inject(ActivatedRoute);
 
   constructor() {
-    this.user = this.activatedRoute.snapshot.data['user']
-    console.log(this.user)
+    //this.user = this.activatedRoute.snapshot.data['user']
     this.store.dispatch(getUserAction.getUser())
-    this.$user = this.store.select(getUserSelector.getAllUser);
+    //this.$user = this.store.select(getUserSelector.getAllUser);
     this.$error = this.store.select(getUserSelector.selectUserError);
   }
 

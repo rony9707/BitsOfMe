@@ -1,0 +1,33 @@
+.main-circle {
+  width: 1300px;
+  height: 1300px;
+  border-radius: 50%;
+  display: flex;
+  /* To center the image */
+  justify-content: center;
+  align-items: center;
+  border: 10px solid #000000; 
+}
+
+.main-circle img {
+  width: 100%;
+  /* Make the image cover the circle */
+  height: 100%;
+  /* Ensure it fills the container */
+  border-radius: 50%;
+  /* Make the image circular */
+  object-fit: cover;
+  /* Ensure the image covers the circle without distortion */
+}
+
+.smallest-circle {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-background-color);
+  border: 10px solid #000000; 
+}

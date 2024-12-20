@@ -8,7 +8,7 @@ function removeLoader() {
     setTimeout(() => {
       loader.style.opacity = '0'; // Fade-out effect (optional)
       setTimeout(() => loader.remove(), 300); // Remove after fade-out
-    }, 2000); 
+    }, 100); 
   }
 }
 

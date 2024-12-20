@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CreatePostsHeaderComponent } from './create-posts-header/create-posts-header.component';
 import { CreatePostsContentComponent } from './create-posts-content/create-posts-content.component';
 import { postDetails } from './create-post.interface';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../states/app.state';
+import { Observable } from 'rxjs';
+import { UserProfile } from '../../../user/user-profile/user-profile.interface';
+import * as getUserSelector from './../../../states/getUser/getUser.selector'
 
 @Component({
   selector: 'app-create-posts',
@@ -16,9 +21,23 @@ export class CreatePostsComponent {
   postDetails: postDetails = {
     posttext: '',
     visibility: '',
-    postTopic: ''
+    postTopic: '',
+    username: ''
   }
   selectedFiles: File[] = [];
+  $user: Observable<UserProfile | null>;
+  $error: Observable<string | null>;
+
+  private store = inject(Store<AppState>);
+
+  constructor() {
+    this.$user = this.store.select(getUserSelector.getAllUser);
+    this.$error = this.store.select(getUserSelector.selectUserError);
+    this.$user.subscribe((user)=>{
+      this.postDetails.username = user?.db_username
+    })
+  }
+
 
   onVisibilityChange(newVisibility: string) {
     this.postDetails.visibility = newVisibility

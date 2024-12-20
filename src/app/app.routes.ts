@@ -34,12 +34,17 @@ export const routes: Routes = [
           },
           {
             path:'',
-            component: AllUsersPostsComponent
+            component: AllUsersPostsComponent,
+            resolve: {user: userResolve} 
           },
           {
             path:'user/:usernameID',
-            component: UserProfileComponent,
+            loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent),
             canActivate: [CanActivateUser]
+          },
+          {
+            path:'music',
+            loadComponent: () => import('./music/music/music.component').then(m => m.MusicComponent)
           }
         ]
       }
