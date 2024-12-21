@@ -29,12 +29,12 @@ export const routes: Routes = [
         children: [
           {
             path:'create-a-post',
-            component: CreatePostsComponent,
+            loadComponent: () => import('./auth/home-index/create-posts/create-posts.component').then(m => m.CreatePostsComponent),
             canActivate: [CanActivateUser]
           },
           {
             path:'',
-            component: AllUsersPostsComponent,
+            loadComponent: () => import('./user/all-users-posts/all-users-posts.component').then(m => m.AllUsersPostsComponent),
             resolve: {user: userResolve} 
           },
           {

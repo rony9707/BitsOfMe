@@ -1,33 +1,30 @@
 .main-circle {
-  width: 1300px;
-  height: 1300px;
+  width: 70vw; /* Adjust based on your layout */
+  height: 70vw; /* Maintain the aspect ratio */
   border-radius: 50%;
   display: flex;
-  /* To center the image */
   justify-content: center;
   align-items: center;
-  border: 10px solid #000000; 
+  border: 1vw solid #000000; /* Scales with viewport width */
+  /* clip-path: circle(10% at 70% 30%); */
 }
+
 
 .main-circle img {
   width: 100%;
-  /* Make the image cover the circle */
   height: 100%;
-  /* Ensure it fills the container */
   border-radius: 50%;
-  /* Make the image circular */
   object-fit: cover;
-  /* Ensure the image covers the circle without distortion */
 }
 
 .smallest-circle {
-  width: 400px;
-  height: 400px;
+  width: 20vw; /* Relative to viewport width */
+  height: 20vw; /* Maintain the aspect ratio */
   border-radius: 50%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--main-background-color);
-  border: 10px solid #000000; 
+  border: .5vw solid #87ff6e; /* Scales with viewport width */
 }

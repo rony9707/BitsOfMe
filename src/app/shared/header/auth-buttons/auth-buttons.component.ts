@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/API/auth.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import swal from 'sweetalert2';
 import { LoggerService } from '../../../services/logger/logger.service';
 import * as getUserAction from './../../../states/getUser/getUser.action'
 import { Store } from '@ngrx/store';
@@ -10,6 +9,8 @@ import { AppState } from '../../../states/app.state';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../states/getUser/getUser.selector'
+import { SongService } from '../../../music/Music-Services/song.service';
+import { CommonService } from '../../../services/common/common.service';
 
 @Component({
   selector: 'app-auth-buttons',
@@ -24,6 +25,8 @@ export class AuthButtonsComponent {
   public authService = inject(AuthService)
   private router = inject(Router)
   public logger = inject(LoggerService)
+  public songServices = inject(SongService)
+  public commonservices = inject(CommonService)
 
 
   $user: Observable<UserProfile | null>;
@@ -48,17 +51,11 @@ export class AuthButtonsComponent {
   logout() {
     this.authService.logoutUser().subscribe({
       next: (value) => {
-        swal.fire({
-          title: "Log out",
-          text: value.message,
-          icon: "success",
-          timer: 1000, // Auto close after 2 seconds
-          timerProgressBar: true, // Show progress bar
-          showConfirmButton: false // Hide the "OK" button
-        }).then(() => {
-          this.authService.$isLoggedIn.next(false)
-          this.store.dispatch(getUserAction.logoutUser())
-          this.router.navigate(['/login'])
+        this.commonservices.showSuccessMessage("Log out",value.message).then(() => {
+          this.authService.$isLoggedIn.next(false)//set status to logged off
+          this.songServices.toggleMusic(false)//Stop song when logout
+          this.store.dispatch(getUserAction.logoutUser()) //Make the user data empty
+          this.router.navigate(['/login'])//Navigate to login page
         });
         this.logger.log('The User is logged out of the system', 'log')
       },

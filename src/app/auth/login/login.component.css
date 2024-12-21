@@ -96,10 +96,7 @@
   justify-content: space-between;
 }
 
-::ng-deep .pi {
-  /* Your custom styles here */
-  margin-left: 8px;
-}
+
 
 @media(max-width:800px) {
   :host {

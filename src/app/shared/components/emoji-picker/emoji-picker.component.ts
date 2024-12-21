@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { emojis } from '../../BitsOfLifeData/bits-data';
-import { TooltipModule } from 'primeng/tooltip';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-emoji-picker',
   standalone: true,
-  imports: [TooltipModule, PickerModule, CommonModule],
+  imports: [PickerComponent, CommonModule],
   templateUrl: './emoji-picker.component.html',
   styleUrl: './emoji-picker.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -35,7 +34,6 @@ export class EmojiPickerComponent implements OnChanges {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (this.showEmojiPicker() && this.emojiPicker && !this.emojiPicker.nativeElement.contains(event.target)) {
-      console.log("clicked outside")
       this.showEmojiPicker.set(false)
     }
   }
