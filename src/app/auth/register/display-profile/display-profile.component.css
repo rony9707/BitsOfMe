@@ -1,284 +1,271 @@
-:host{
+.FN,
+ul li span {
+  font-weight: 700
+}
+
+.left-bottom-about-me p,
+.personal-info-main ul li,
+.username {
+  overflow-wrap: break-word;
+  word-break: break-word
+}
+
+:host {
   width: 40%;
   background-color: var(--main-background-color);
   height: 100%;
   display: grid;
-  place-items: center;
+  place-items: center
 }
 
-.display-profile-main{
+.display-profile-main {
   width: 90%;
   height: 90%;
-  background-color: rgb(255, 255, 0);
+  background-color: #ff0;
   border-radius: 10px;
   display: grid;
-  place-items: center;
+  place-items: center
 }
 
-.profile-paper-main{
+.PI-common,
+.paper-header,
+.profile-paper-main,
+.profile-pic,
+.profile-pic-wrapper {
+  border: 2px solid #000
+}
+
+.profile-paper-main {
   position: relative;
-  background-color: rgb(255, 248, 235);
+  background-color: #fff8eb;
   width: 90%;
-  height: 90%;
-  border: 2px solid black;
+  height: 90%
 }
 
-/* HEADER START ---------------------------------------------------------------*/
-
-.paper-header{
+.paper-header {
   background-color: #487284;
   width: 100%;
   height: 25%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  position: relative;
-  border: 2px solid black;
+  position: relative
 }
 
-.full-name-wrapper{
+.full-name,
+ul {
+  flex-direction: column
+}
+
+.clip,
+.pin,
+.profile-pic-wrapper {
+  position: absolute
+}
+
+.full-name-wrapper {
   width: 60%;
   height: 100%;
   display: grid;
-  place-items: center;
+  place-items: center
 }
 
-.full-name{
+.full-name {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center
 }
 
-.FN{
+.FN {
   font-size: 40px;
   font-family: "Roboto Condensed", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 700;
   transform: scaleY(1.7);
-  font-style: normal;
+  font-style: normal
 }
 
-.LN{
-  font-size: 20px;
+.LN,
+ul li {
+  font-size: 20px
 }
 
-.clip{
-  position: absolute;
-  top:-53px;
+.username,
+ul li {
+  font-weight: 400;
+  font-style: normal
 }
 
-.pin{
+.clip {
+  top: -53px
+}
+
+.pin {
   width: 40px;
-  position: absolute;
-  top:-10px;
-  left:30px;
+  top: -10px;
+  left: 30px;
   transform: rotate(359deg);
-  z-index: 10;
+  z-index: 10
 }
 
-.show-display-profile{
+.show-display-profile {
   position: absolute;
-  top:0;
-  right:0;
-  margin: 10px 10px 0px 0px;
+  top: 0;
+  right: 0;
+  margin: 10px 10px 0 0
 }
 
-/* HEADER END ---------------------------------------------------------------*/
-
-/* PROFILE PIC START ---------------------------------------------------------------*/
-
-.profile-pic-wrapper{
-  position: absolute;
-  top:-10px;
-  left:0;
+.profile-pic-wrapper {
+  top: -10px;
+  left: 0;
   width: 39%;
   height: 40%;
-  background-color: #76ABC5;
+  background-color: #76abc5;
   display: flex;
   justify-content: center;
   transform: rotate(-5deg);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border: 2px solid black;
+  align-items: center
 }
 
-.profile-pic{
+.profile-pic {
   width: 95%;
   height: 70%;
-  margin: 5px;
-  border: 2px solid black;
+  margin: 5px
 }
 
 .profile-pic-img {
   width: 100%;
   height: 100%;
   background-color: #323232;
-  object-fit: cover; /* Ensures the image covers the circle area */
+  object-fit: cover
 }
 
-
-
-.username{
+.username {
   height: 30%;
-  width: 100%;
-  background-color: #76ABC5;
+  background-color: #76abc5;
   display: grid;
   place-items: center;
-  overflow-wrap: break-word; 
-  word-break: break-word;
-  font-family: "Caveat", cursive;
-  font-weight: 400;
-  font-style: normal;
+  font-family: Caveat, cursive;
   font-size: 30px;
-  padding: 10px;
+  padding: 10px
 }
 
-/* PROFILE PIC END ---------------------------------------------------------------*/
-
-/* MAIN CONTENT START ---------------------------------------------------------------*/
-
-.main-content{
+.main-content {
   width: 100%;
   height: 75%;
-  display: flex;
+  display: flex
 }
 
-.left{
-  width: 40%;
+.left {
+  width: 40%
 }
 
-.right{
+.right {
   width: 60%;
-  border-left: 2px solid black;
+  border-left: 2px solid #000
 }
 
-/* MAIN CONTENT END ---------------------------------------------------------------*/
-
-
-/* RIGHT CONTENT START ---------------------------------------------------------------*/
-.personal-info-main{
+.personal-info-main {
   width: 100%;
   height: 50%;
-  z-index: 10;
+  z-index: 10
 }
 
-.PI-common{
+.PI3,
+ul {
+  height: 100%
+}
+
+.PI-common {
   width: 100%;
-  background-color: #FFDCD8;
-  border: 2px solid black;
-  z-index: 1000;
+  background-color: #ffdcd8;
+  z-index: 1000
 }
 
-.PI3{
-  height: 100%;
+.PI3 {
   transform: rotate(7deg);
   border-radius: 20px;
-  position: relative;
+  position: relative
 }
 
-.PI2{
-  height: 95%;
-  top:8px;
-  right:8px;
+.PI1,
+.PI2 {
+  top: 8px;
+  right: 8px;
   border-radius: 5px;
-  position: absolute;
+  position: absolute
 }
 
-.PI1{
+.PI2 {
+  height: 95%
+}
+
+.PI1 {
   height: 97%;
-  top:8px;
-  right:8px;
-  border-radius: 5px;
-  position: absolute;
   transform: rotate(-2deg);
-  font-size: 14px;
+  font-size: 14px
 }
 
-ul{
-  height: 100%;
+ul {
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
-  padding-left:22px;
+  padding-left: 22px
 }
 
-ul li{
-  color:rgb(0, 0, 0);
-  font-family: "Lacquer", system-ui;
-  font-weight: 400;
+ul li {
+  color: #000;
+  font-family: Lacquer, system-ui
+}
+
+ul li span {
+  color: #000
+}
+
+.personal-info-main ul li {
   font-style: normal;
-  font-size: 20px;
+  font-family: cursive
 }
 
-ul li span{
-  color:black;
-  font-weight: bold;
-}
-
-.personal-info-main ul li{
-  overflow-wrap: break-word; 
-  word-break: break-word;
-  font-style: normal;
-  font-family: cursive;
-}
-
-/* RIGHT CONTENT END ---------------------------------------------------------------*/
-
-
-/* LEFT CONTENT START ---------------------------------------------------------------*/
-.left-top{
+.left-top {
   width: 100%;
-  height:30%;
+  height: 30%
 }
 
-.left-bottom-about-me{
+.left-bottom-about-me {
   width: 100%;
-  height:70%;
+  height: 70%;
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 5px
 }
 
-.left-bottom-about-me h3{
-  color:black;
+.left-bottom-about-me h3 {
+  color: #000;
   font-size: 25px;
   font-weight: 600;
-  text-decoration: underline;
+  text-decoration: underline
 }
 
-
-.left-bottom-about-me p{
+.left-bottom-about-me p {
   width: 100%;
-  flex:1;
-  overflow-wrap: break-word; 
-  word-break: break-word;
-  color:black;
-  overflow-y: auto;
+  flex: 1;
+  color: #000;
+  overflow-y: auto
 }
-
-/* LEFT CONTENT END ---------------------------------------------------------------*/
-
 
 @media(max-width:1300px) {
-  :host{
+  :host {
     width: 100%;
-    height: 100%;
+    height: 100%
   }
 
-  .display-profile-main{
+  .display-profile-main {
     width: 100%;
     height: 100%;
-    border-radius: 0px;
+    border-radius: 0;
     display: grid;
-    place-items: center;
+    place-items: center
   }
-}
-
-@media(max-width:800px) {
-  /* :host{
-    width: 100%;
-  } */
 }

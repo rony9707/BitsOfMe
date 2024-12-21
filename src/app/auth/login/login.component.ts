@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordHideComponent } from '../../shared/svg/password-hide/password-hide.component';
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
@@ -8,6 +8,7 @@ import { LoginFormInterface } from './loginData.interface';
 import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { CommonService } from '../../services/common/common.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
 
   passwordEyeFlag = signal(false)
 
@@ -33,6 +34,7 @@ export class LoginComponent {
   private authService = inject(AuthService)
   private router = inject(Router)
   private common = inject(CommonService)
+  private loginSubscription?:Subscription
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -40,6 +42,11 @@ export class LoginComponent {
       password: new FormControl('Qwerty123.', [Validators.required]),
       rememberMe: new FormControl(localStorage.getItem('rememberMeCheckbox') === 'true')//Here conversion is done from string to boolean as in local stroage stores data in string
     })
+  }
+  ngOnDestroy(): void {
+      if (this.loginSubscription) {
+        this.loginSubscription.unsubscribe();
+      }
   }
 
  
@@ -111,7 +118,7 @@ export class LoginComponent {
 
 
   sentDataToBackend(loginDataToSentToBackend: LoginFormInterface) {
-    this.authService.loginUser(loginDataToSentToBackend).subscribe({
+    this.loginSubscription=this.authService.loginUser(loginDataToSentToBackend).subscribe({
       next:(value) =>{
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output, signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnDestroy, OnInit, Output, signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems } from '../../../../shared/BitsOfLifeData/bits-data';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { LoggerService } from '../../../../services/logger/logger.service';
 import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-button.component';
 import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
 import { DebounceService } from '../../../../services/debounce/debounce.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -22,7 +23,7 @@ import { DebounceService } from '../../../../services/debounce/debounce.service'
   styleUrl: './create-posts-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreatePostsContentComponent implements OnInit {
+export class CreatePostsContentComponent implements OnInit, OnDestroy {
   //Inject Services here
   private logger = inject(LoggerService)
   private debounceService = inject(DebounceService)
@@ -36,6 +37,7 @@ export class CreatePostsContentComponent implements OnInit {
   imageURL = signal('');
   showEmojiPicker = signal(true);
   selectedFiles: File[] = [];
+  private debounceSubscription: Subscription;
 
   //Output to sent to Parent
   @Output() postClicked = new EventEmitter<void>();
@@ -50,7 +52,7 @@ export class CreatePostsContentComponent implements OnInit {
   constructor(){
 
     //Debouncing
-    this.debounceService.debounce().subscribe(value => {
+    this.debounceSubscription=this.debounceService.debounce().subscribe(value => {
       this.message.set(value); // Update the message
     });
   }
@@ -59,6 +61,11 @@ export class CreatePostsContentComponent implements OnInit {
     this.emitSelectedOption();
   }
 
+  ngOnDestroy(): void {
+    if (this.debounceSubscription) {
+      this.debounceSubscription.unsubscribe();
+    }
+  }
 
   //Appends the selected emoji in the textare
   addEmoji(event: any) {

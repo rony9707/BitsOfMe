@@ -19,7 +19,7 @@ export class MusicPcComponent{
   public songServices = inject(SongService)
 
   songPlay(songStatus:boolean){
-    this.songServices.music_status.set(songStatus)
+    //this.songServices.music_status.set(songStatus)
     this.songServices.toggleMusic(songStatus);
   }
 

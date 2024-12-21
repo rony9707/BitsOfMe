@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, signal, WritableSignal } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { DisplayProfileComponent } from './display-profile/display-profile.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { countryCode } from '../../shared/BitsOfLifeData/DialingCodeCountry';
 import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,7 @@ import { CommonService } from '../../services/common/common.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy{
   //Declare objects to use in the DOM-----------------------------------------
   windowWidth: WritableSignal<number> = signal(0);
   activeDiv = signal('div1')// Keeps track of the active div
@@ -36,6 +37,7 @@ export class RegisterComponent {
   toolTip = `Password must be 8-16 characters long,
    containing at least one lowercase, one uppercase, one number, and one special character.`;
   countryCode = signal(countryCode)
+  private registerSubscription?:Subscription
 
 
 
@@ -93,6 +95,12 @@ export class RegisterComponent {
       address: new FormControl('P 16 Iswar Gupta Road, Kolkata 28', [Validators.required]),
     })
 
+  }
+
+  ngOnDestroy(): void {
+      if(this.registerSubscription){
+        this.registerSubscription.unsubscribe()
+      }
   }
 
 
@@ -333,7 +341,7 @@ export class RegisterComponent {
   sentDataToBackend(formData:FormData) {
 
     //Sent Data to the backend with the help of authService
-    this.authService.registerUser(formData).subscribe({
+    this.registerSubscription=this.authService.registerUser(formData).subscribe({
       next:(value) =>{
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
