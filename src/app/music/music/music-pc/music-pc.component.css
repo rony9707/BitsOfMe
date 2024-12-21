@@ -12,6 +12,7 @@
   position: absolute;
   left: -30vw;
   top:50%;
+  border-radius: 50%;
   transform: translateY(-50%); 
   animation: rotate 5s linear infinite;
   animation-play-state: paused; 

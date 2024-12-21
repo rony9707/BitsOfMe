@@ -127,8 +127,7 @@ a {
 
 .image-container {
   display: flex;
-  gap: 15px;
-  padding: 5px;
+  gap: 10px;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -141,6 +140,7 @@ a {
   width: 190px;
   height: 100%;
   display: flex;
+  margin: 0px 5px 5px 5px;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
@@ -155,15 +155,17 @@ a {
 
 .image-wrapper {
   flex: 0 0 auto;
-  width: 180px;
+  width: 190px;
+  display: grid;
+  place-items: center;
   height: 100%;
-  aspect-ratio: 1 / 1;
   background-color: rgb(118, 118, 118);
 }
 
 
 img {
   width: 100%;
+  aspect-ratio: 1 / 1;
   height: 100%;
   object-fit: contain;
 }
