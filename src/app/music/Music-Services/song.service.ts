@@ -28,17 +28,22 @@ export class SongService {
 
   //Toggle the start and stop of the song here
   toggleMusic(musicStatus: boolean) {
-    this.music_status.set(musicStatus)
     this.audio.volume = this.music_volume() / 100;
-    if (this.music_status()) {
+    if (musicStatus) {
       if (this.music_url() && this.audio.src !== this.music_url()) {
         this.audio.src = this.music_url();
       }
-      this.audio.play();
+      this.audio.play().then((val)=>{
+        console.log("Music has started playing")
+        this.music_status.set(musicStatus)
+      });
     } else {
       this.audio.pause();
+      this.music_status.set(musicStatus)
     }
   }
+
+  
 
 
 }
