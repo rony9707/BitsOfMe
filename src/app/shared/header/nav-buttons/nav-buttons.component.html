@@ -5,8 +5,13 @@
 
 
 @for (item of buttonList(); track item.name) {
-  <button (click)="closeSidebar()">{{ item.hobbie }}</button> 
-} 
+@if(item.name == 'music'){
+<button (click)="closeSidebar()" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="highlighted"
+  routerLink="/music">{{ item.hobbie }}</button>
+}@else {
+<button (click)="closeSidebar()" routerLinkActive="highlighted">{{ item.hobbie }}</button>
+}
+}
 @empty {
-  <li>There are no items.</li>
+<li>There are no items.</li>
 }

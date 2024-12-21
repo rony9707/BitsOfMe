@@ -48,3 +48,11 @@
 .visibility-select-box:hover {
   border-color: #555;
 }
+
+.pfp {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: default;
+  border: 2px solid transparent;
+}

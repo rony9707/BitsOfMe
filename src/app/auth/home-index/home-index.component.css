@@ -7,7 +7,7 @@
 
 
 .nav-button-lists{
-  width: 250px; 
+  width: 220px; 
   padding: 20px;
   position: fixed; 
   overflow-y: auto;
@@ -40,14 +40,8 @@
   scrollbar-width: thin; 
 }
 
-
-::ng-deep .p-divider {
-  margin: 12px 0px 12px 0px;
-  align-items: flex-start;
-}
-
-::ng-deep .p-divider-content {
-  background-color: var(--main-background-color);
+.divider-text {
+  margin: 15px 0px 15px 0px;
 }
 
 

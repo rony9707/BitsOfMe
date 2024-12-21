@@ -1,2 +1,55 @@
-<p>login works!</p>
-sdfasdf
+<form class="login-main" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+
+  <!-- Username or Email -->
+  <div class="input-box">
+    <input #usernameInput (focus)="inputFocus(usernameLabel)" (blur)="inputBlur(usernameLabel, usernameInput)"
+      type="text" formControlName="username" maxlength="20" />
+    <label #usernameLabel [ngClass]="{'focused': loginForm.get('username')?.value}">
+      Enter your username or email
+    </label>
+    <!-- Invalid Text -->
+    <div class="input-invalid-text-login">
+      <span *ngIf="usernameValidator && usernameValidator.invalid && usernameValidator.touched">
+        Enter your username or email please
+      </span>
+    </div>
+  </div>
+
+
+  <!-- Password -->
+  <div class="input-box">
+    <input #passwordInput (focus)="inputFocus(passwordLabel)" (blur)="inputBlur(passwordLabel, passwordInput)"
+      [type]="passwordEyeFlag() ? 'text' : 'password'" formControlName="password" />
+    <label [ngClass]="{'focused': loginForm.get('password')?.value}" #passwordLabel>
+      Enter your password
+    </label>
+
+    <!-- Password Hide and Show -->
+    @if(passwordEyeFlag()){
+    <app-password-show (click)="passwordEye()" class="password-eye"></app-password-show>
+    }@else{
+    <app-password-hide (click)="passwordEye()" class="password-eye"></app-password-hide>
+    }
+
+
+    <!-- Invalid Text -->
+    <div class="input-invalid-text-login">
+      <span *ngIf="passwordValidator && passwordValidator.invalid && passwordValidator.touched">
+        Enter your password please
+      </span>
+    </div>
+  </div>
+
+
+  <!-- Remember Username or Password -->
+  <div class="remember-me-div">
+    <input type="checkbox"  formControlName="rememberMe" id="remember-me-label" />
+    <label class="remember-me-label" for="remember-me-label">Remember my username or email</label>
+  </div>
+
+  <!-- Remember Username or Password -->
+  <div class="login-div">
+    <button>Forget Password</button>
+    <button [disabled]="loginForm.invalid" type="submit">Login</button>
+  </div>
+</form>

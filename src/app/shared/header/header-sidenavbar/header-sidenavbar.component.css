@@ -1,52 +1,99 @@
-.hamburger {
+.hamburger-pfp {
   position: absolute;
   top: 50%;
   /* Position the top of the element at 50% of the container */
   right: 0;
   transform: translateY(-50%);
   margin: 0px 15px 0px 0px;
-  width: 30px;
-  cursor: pointer;
   display: none;
 }
 
+.pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s ease;
+  border: 2px solid transparent;
+}
+
+.pfp:hover {
+  transition: 0.2s ease;
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);
+  /* Glow effect */
+}
+
+.highlighted {
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);
+  /* Glow effect */
+}
+
+
 
 @media(max-width:800px) {
+  .hamburger-pfp {
+    display: flex;
+    align-items: center;
+    gap: 20px
+  }
+
   .hamburger {
-    display: block;
+    width: 30px;
+    cursor: pointer;
   }
 
-  ::ng-deep .p-sidebar-icon {
+  .sidebar-main {
+    height: 100vh;
+    width: 250px;
+    background-color: var(--main-background-color);
+    position: fixed;
+    top: 0;
+    left: -270px;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.7);
+    z-index: 52;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar-main.open {
+    left: 0;
+  }
+
+  .sidebar-header {
+    height: 5%;
+    width: 100%;
+    position: relative;
+  }
+
+  .close-btn-sidebar {
     position: absolute;
-    right:0;
-    margin: 10px 10px 0px 0px;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 
-  ::ng-deep .p-sidebar-left{
-    width: 200px;
+  .sidebar-content {
+    height: 95%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
   }
 
-  ::ng-deep .p-divider {
-    margin: 12px 0px 12px 0px;
+  .sidebar-sub-content {
+    width: 85%;
+    height: 100%;
+    overflow-x: visible;
   }
 
-  ::ng-deep .p-sidebar {
-    background-color: var(--main-background-color);;
+  .divider-text {
+    margin: 10px 0px 10px 0px;
   }
 
-  ::ng-deep .p-divider-content {
-    background-color: var(--main-background-color);;
-  }
-
-  ::ng-deep .font-semibold {
-    position: absolute;
-    left:0;
-    margin: 10px 0px 0px 20px;
-  }
-  
 
 
- 
-  
-  
+
+
+
 }
