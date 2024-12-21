@@ -124,10 +124,6 @@ a {
   background-color: transparent;
 }
 
-::ng-deep .p-tooltip-text {
-  color: rgb(180, 179, 179);
-}
-
 
 .image-container {
   display: flex;

@@ -118,13 +118,6 @@ button:hover {
 }
 
 
-.content {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-}
-
 .common-div {
   width: 50%;
   display: grid;
@@ -241,10 +234,6 @@ button:hover {
   width: 100%;
 }
 
-/* .phone-number-wrapper select option{
-  width: auto;
-} */
-
 
 .input-box-phone-number-wrapper{
   display: flex;
@@ -254,20 +243,25 @@ button:hover {
 }
 
 
-.phone-number-wrapper input{
-  width: 100%;
-}
-
-
 .PI-main {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
+.content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+
 .profile-pic-main {
   display: grid;
   place-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .profile-pic-wrapper {
@@ -311,14 +305,6 @@ button:hover {
 .upload-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.5);
-}
-
-::ng-deep .p-datepicker {
-  background-color: black;
-}
-
-::ng-deep .p-datepicker-header {
-  background-color: black;
 }
 
 dialog {
@@ -382,6 +368,6 @@ dialog:modal {
     height: 150px;
   }
 
- 
+
 
 }

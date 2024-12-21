@@ -7,5 +7,38 @@ export class SongService {
 
   constructor() { }
 
-  music_status = signal(false)
+
+  public audio = new Audio();
+  music_status = signal(false);
+  music_volume = signal(50);
+  music_url=signal('');//Stores the music which is playing at that time
+  private songLinks = signal<string[]>([]); //Stores the full music list 
+  private currentSongIndex = signal(0);
+
+
+
+  //Set the songs here
+  setSongs(songLinks: string[]) {
+    this.songLinks.set(songLinks);
+    if (this.songLinks().length > 0) {
+      this.music_url.set(this.songLinks()[this.currentSongIndex()]);
+    }
+  }
+
+
+  //Toggle the start and stop of the song here
+  toggleMusic(musicStatus: boolean) {
+    this.music_status.set(musicStatus)
+    this.audio.volume = this.music_volume() / 100;
+    if (this.music_status()) {
+      if (this.music_url() && this.audio.src !== this.music_url()) {
+        this.audio.src = this.music_url();
+      }
+      this.audio.play();
+    } else {
+      this.audio.pause();
+    }
+  }
+
+
 }

@@ -1,38 +1,51 @@
-@if(windowWidth() < 800){ <p-sidebar [(visible)]="sidebarVisible">
+@if(windowWidth() < 800){ <div class="sidebar-main" [class.open]="sidebarVisible()">
 
-  <ng-template pTemplate="header">
-    <span class="font-semibold text-xl">Sidebar</span>
-  </ng-template>
+  <div class="sidebar-header">
 
-  <!-- Auth Buttons -->
-  <p-divider type="solid" />
-  <app-auth-buttons (closeSidebarEvent)="closeSidebar($event)"></app-auth-buttons>
+    
+    <div class="close-btn-sidebar">
+      <app-close-button (click)="sidebarVisible.set(false)"></app-close-button>
+    </div>
+  </div>
 
-
-  <!-- Post Buttons -->
-  <p-divider align="center" type="solid">
-    <b>My Posts</b>
-  </p-divider>
-  <app-post-buttons (closeSidebarEvent)="closeSidebar($event)"></app-post-buttons>
-
-
-  <!-- Navigation Buttons -->
-  <p-divider align="center" type="solid">
-    <b>My Bits</b>
-  </p-divider>
-  <app-nav-buttons (closeSidebarEvent)="closeSidebar($event)"></app-nav-buttons>
-  <p-divider type="solid" />
+  <div class="sidebar-content">
+    <div class="sidebar-sub-content">
+      <!-- Auth Buttons -->
+      <div class="divider-text">
+        <app-divider></app-divider>
+      </div>
+      <app-auth-buttons (closeSidebarEvent)="closeSidebar($event)"></app-auth-buttons>
 
 
-  </p-sidebar>
+      <!-- Post Buttons -->
+      <div class="divider-text">
+        <app-divider [text]="'My Posts'"></app-divider>
+      </div>
+      <app-post-buttons (closeSidebarEvent)="closeSidebar($event)"></app-post-buttons>
+
+
+      <!-- Navigation Buttons -->
+      <div class="divider-text">
+        <app-divider [text]="'My Bits'"></app-divider>
+      </div>
+      <app-nav-buttons (closeSidebarEvent)="closeSidebar($event)"></app-nav-buttons>
+      <div class="divider-text">
+        <app-divider></app-divider>
+      </div>
+
+    </div>
+  </div>
+
+
+  </div>
   }
 
 
   @if(sidebarVisible() == false){
   <div class="hamburger-pfp">
     <img class="pfp" routerLinkActive="highlighted" [routerLink]="'/user/' + ($user | async)?.db_username"
-    [src]="($user | async)?.db_phofilePic_100">
+      [src]="($user | async)?.db_phofilePic_100">
     <img src="assets/SVG/hamburger.svg" (click)="sidebarVisible.set(true)" class="hamburger" alt="hamburger_SVG">
   </div>
-  
+
   }

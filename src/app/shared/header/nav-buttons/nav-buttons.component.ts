@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { menuItems } from '../../BitsOfLifeData/bits-data';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-nav-buttons',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './nav-buttons.component.html',
   styleUrl: './nav-buttons.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

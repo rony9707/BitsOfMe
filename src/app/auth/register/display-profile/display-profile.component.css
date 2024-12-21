@@ -261,9 +261,6 @@ ul li span{
 
 /* LEFT CONTENT END ---------------------------------------------------------------*/
 
-::ng-deep .p-divider-vertical{
-  margin: 0px 5px 0px 5px;
-}
 
 @media(max-width:1300px) {
   :host{

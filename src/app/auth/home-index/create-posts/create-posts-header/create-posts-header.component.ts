@@ -2,7 +2,6 @@ import { AsyncPipe, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AvatarModule } from 'primeng/avatar';
 import { AppState } from '../../../../states/app.state';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../../../user/user-profile/user-profile.interface';
@@ -12,7 +11,7 @@ import * as getUserSelector from './../../../../states/getUser/getUser.selector'
 @Component({
   selector: 'app-create-posts-header',
   standalone: true,
-  imports: [AvatarModule, FormsModule, NgFor, AsyncPipe],
+  imports: [ FormsModule, NgFor, AsyncPipe],
   templateUrl: './create-posts-header.component.html',
   styleUrl: './create-posts-header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

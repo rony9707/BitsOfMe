@@ -10,7 +10,7 @@
 .disk{
   display: inline-block;
   position: absolute;
-  left: -400px;
+  left: -30vw;
   top:50%;
   transform: translateY(-50%); 
   animation: rotate 5s linear infinite;
@@ -22,8 +22,7 @@
 }
 
 .play-pause{
-  width: 200px;
-  height: 200px;
+  width: 10vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -41,3 +40,15 @@
   }
 }
 
+
+/* @media(max-width:1300px) {
+  .disk{
+    left: -300px;
+  }
+}
+
+@media(max-width:1200px) {
+  .disk{
+    left: -270px;
+  }
+} */

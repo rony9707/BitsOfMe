@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, inject, Input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { registerFormInterface } from '../register-form.interface';
-import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-display-profile',
   standalone: true,
-  imports: [DividerModule],
+  imports: [],
   templateUrl: './display-profile.component.html',
   styleUrl: './display-profile.component.css',
   changeDetection:ChangeDetectionStrategy.OnPush

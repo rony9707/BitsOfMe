@@ -3,10 +3,8 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordHideComponent } from '../../shared/svg/password-hide/password-hide.component';
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
-import { CheckboxModule } from 'primeng/checkbox';
 import { LoggerService } from '../../services/logger/logger.service';
 import { LoginFormInterface } from './loginData.interface';
-import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
@@ -18,10 +16,8 @@ import { CommonService } from '../../services/common/common.service';
   imports: [CommonModule,
     PasswordHideComponent,
     PasswordShowComponent,
-    CheckboxModule,
     FormsModule,
-    ReactiveFormsModule,
-    ButtonModule],
+    ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

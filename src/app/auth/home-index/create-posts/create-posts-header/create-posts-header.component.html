@@ -1,7 +1,6 @@
 @if(($user | async); as user){
   <div class="profilepic">
-    <p-avatar [image]="user.db_phofilePic_100" styleClass="mr-2" size="xlarge"
-      shape="circle"/>
+    <img class="pfp" [src]="user.db_phofilePic_100" [alt]="user.db_username">
   </div>
   <div class="user-fullname-and-visibility">
     <div class="user-fullname">

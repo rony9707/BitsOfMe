@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output, signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems } from '../../../../shared/BitsOfLifeData/bits-data';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
-import { TooltipModule } from 'primeng/tooltip';
 import { AttachItemsComponent } from '../../../../shared/svg/attach-items/attach-items.component';
 import { LoggerService } from '../../../../services/logger/logger.service';
 import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-button.component';
@@ -16,9 +14,7 @@ import { DebounceService } from '../../../../services/debounce/debounce.service'
   selector: 'app-create-posts-content',
   standalone: true,
   imports: [FormsModule, 
-    PickerModule, 
-    CommonModule, 
-    TooltipModule, 
+    CommonModule,  
     AttachItemsComponent, 
     CloseButtonComponent, 
     EmojiPickerComponent],

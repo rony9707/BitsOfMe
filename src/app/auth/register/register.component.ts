@@ -2,8 +2,6 @@ import { Component, HostListener, inject, signal, WritableSignal } from '@angula
 import { DisplayProfileComponent } from './display-profile/display-profile.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
-import { TooltipModule } from 'primeng/tooltip';
 import { PasswordHideComponent } from '../../shared/svg/password-hide/password-hide.component';
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
 import { LoggerService } from '../../services/logger/logger.service';
@@ -20,8 +18,6 @@ import { CommonService } from '../../services/common/common.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule,
-    TooltipModule,
     PasswordHideComponent,
     PasswordShowComponent],
   templateUrl: './register.component.html',

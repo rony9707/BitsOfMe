@@ -12,6 +12,6 @@ export class DiskComponent implements OnInit {
 
   ngOnInit() {
     // Imagine this URL comes from an API
-    this.imageUrl = 'https://picsum.photos/id/104/3840/2160';
+    this.imageUrl = 'https://img.freepik.com/free-photo/close-up-kitten-exploring-nature_23-2150782371.jpg';
   }
 }
