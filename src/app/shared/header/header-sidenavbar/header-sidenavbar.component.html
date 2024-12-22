@@ -1,11 +1,13 @@
-@if(windowWidth() < 800){ <div class="sidebar-main" [class.open]="sidebarVisible()">
+@if(windowWidth() < 800){ <div class="sidebar-main" [class.open]="sidebarVisible()" #slider>
 
   <div class="sidebar-header">
 
-    
+  
+
     <div class="close-btn-sidebar">
       <app-close-button (click)="sidebarVisible.set(false)"></app-close-button>
     </div>
+
   </div>
 
   <div class="sidebar-content">
@@ -43,9 +45,8 @@
 
   @if(sidebarVisible() == false){
   <div class="hamburger-pfp">
-    <img class="pfp" routerLinkActive="highlighted" [routerLink]="'/user/' + ($user | async)?.db_username"
-      [src]="($user | async)?.db_phofilePic_100">
-    <img src="assets/SVG/hamburger.svg" (click)="sidebarVisible.set(true)" class="hamburger" alt="hamburger_SVG">
+    <app-pfp></app-pfp>
+    <img src="assets/SVG/hamburger.svg"  (click)="toggleSidebar($event)"  class="hamburger" alt="hamburger_SVG">
   </div>
 
   }

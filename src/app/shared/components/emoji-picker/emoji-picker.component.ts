@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { emojis } from '../../BitsOfLifeData/bits-data';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-emoji-picker',

@@ -127,7 +127,6 @@ a {
 
 .image-container {
   display: flex;
-  gap: 10px;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -171,15 +170,13 @@ img {
 }
 
 .title-image {
-  padding: 7px 0px 7px 5px;
+  padding: 7px 0px 7px 0px;
   font-size: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
   background-color: var(--main-content-color);;
-  display: flex;
-  align-items: center;
 }
 
 .remove-img-btn {

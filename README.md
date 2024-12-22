@@ -25,3 +25,11 @@ Package                         Version
 rxjs                            7.8.1
 typescript                      5.5.4
 zone.js                         0.14.10
+
+
+SOME IMPORTANT WEBSITES:
+https://css-loaders.com/infinity/
+https://www.svgbackgrounds.com/elements/animated-svg-preloaders/
+https://cubic-bezier.com/#.17,.67,.83,.67
+https://www.toptal.com/developers/cssminifier
+https://esbuild.github.io/analyze/

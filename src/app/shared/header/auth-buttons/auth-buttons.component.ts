@@ -6,39 +6,33 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import * as getUserAction from './../../../states/getUser/getUser.action'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../states/app.state';
-import { Observable, Subscription } from 'rxjs';
-import { UserProfile } from '../../../user/user-profile/user-profile.interface';
-import * as getUserSelector from './../../../states/getUser/getUser.selector'
+import { Subscription } from 'rxjs';
 import { SongService } from '../../../music/Music-Services/song.service';
 import { CommonService } from '../../../services/common/common.service';
+import { PfpComponent } from "../../components/pfp/pfp.component";
 
 @Component({
   selector: 'app-auth-buttons',
   standalone: true,
-  imports: [RouterModule, AsyncPipe, CommonModule],
+  imports: [RouterModule, AsyncPipe, CommonModule, PfpComponent],
   templateUrl: './auth-buttons.component.html',
   styleUrl: './auth-buttons.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthButtonsComponent implements OnDestroy {
 
+
+  private logoutSubscription?:Subscription
+
+
   public authService = inject(AuthService)
   private router = inject(Router)
   public logger = inject(LoggerService)
   public songServices = inject(SongService)
   public commonservices = inject(CommonService)
-
-
-  $user: Observable<UserProfile | null>;
-  $error: Observable<string | null>;
   private store = inject(Store<AppState>);
- 
-  private logoutSubscription?:Subscription
 
-  constructor() {
-    this.$user = this.store.select(getUserSelector.getAllUser);
-    this.$error = this.store.select(getUserSelector.selectUserError);
-  }
+
 
   ngOnDestroy(): void {
       if(this.logoutSubscription){
