@@ -10,4 +10,17 @@
       <app-play (click)="songPlay(true)"></app-play>
     </div>
   </ng-template>
+
+</div>
+
+<div class="music-data-main">
+
+  <div class="songprogress">
+    <app-song-progressbar></app-song-progressbar>
+  </div>
+
+
+  <app-volume-control [volume]="songServices.music_volume()" (volumeUpdate)="VolumeUpdate($event)" ></app-volume-control>
+
+ 
 </div>

@@ -1,0 +1,66 @@
+.songprogress{
+  border: 1px solid black;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 7px 0px 7px;
+}
+
+.songprogress input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: hsl(186, 20%, 59%);
+  border-radius: 5px;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.slider:hover {
+  box-shadow: 0 0 15px #00ff00;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00ff00;
+  border: 2px solid #00ff00;
+  border-radius: 50%;
+  box-shadow: 0 0 25px #00ff00, 0 0 50px #00ff00;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #00ff00;
+  border: 2px solid #00ff00;
+  border-radius: 50%;
+  box-shadow: 0 0 25px #00ff00, 0 0 50px #00ff00;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+

@@ -41,15 +41,22 @@
   }
 }
 
-
-/* @media(max-width:1300px) {
-  .disk{
-    left: -300px;
-  }
+.music-data-main{
+  width: 34vw;
+  height: 100%;
+  border: 2px solid red;
+  float: right;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
-@media(max-width:1200px) {
-  .disk{
-    left: -270px;
-  }
-} */
+.songprogress{
+  margin-top: 20px;
+  border: 1px solid black;
+  width: 100%;
+  box-sizing: border-box;
+}
+

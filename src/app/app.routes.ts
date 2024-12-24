@@ -16,12 +16,10 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent),
-        canActivate:[AuthGuardService_opposite]
       },
       {
         path: 'register',
         loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent),
-        canActivate:[AuthGuardService_opposite]
       },
       {
         path: '',
