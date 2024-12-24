@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-close-button',
@@ -10,4 +10,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class CloseButtonComponent {
 
+  @Input()fillColor?: string|null
 }

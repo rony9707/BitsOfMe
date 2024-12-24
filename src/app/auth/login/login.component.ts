@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, ComponentRef, inject, OnDestroy, signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordHideComponent } from '../../shared/svg/password-hide/password-hide.component';
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
@@ -9,6 +9,7 @@ import { AuthService } from '../../services/API/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
+import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 
 
 @Component({
@@ -22,11 +23,15 @@ import { Subscription } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnDestroy{
+export class LoginComponent implements OnDestroy {
 
   passwordEyeFlag = signal(false)
 
   loginForm: FormGroup;
+
+  @ViewChild('forgetPasswordContainer', { read: ViewContainerRef, static: true })
+  container!: ViewContainerRef;
+  private forgetpasswordComponentRef?: ComponentRef<ForgetPasswordComponent>;
 
 
   //Inject Services here------------------------------------------------------
@@ -34,7 +39,7 @@ export class LoginComponent implements OnDestroy{
   private authService = inject(AuthService)
   private router = inject(Router)
   private common = inject(CommonService)
-  private loginSubscription?:Subscription
+  private loginSubscription?: Subscription
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -44,12 +49,16 @@ export class LoginComponent implements OnDestroy{
     })
   }
   ngOnDestroy(): void {
-      if (this.loginSubscription) {
-        this.loginSubscription.unsubscribe();
-      }
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
+
+    if (this.forgetpasswordComponentRef) {
+      this.forgetpasswordComponentRef.destroy();
+    }
   }
 
- 
+
   //Adds class when input element is focused
   inputFocus(label: HTMLLabelElement): void {
     label.classList.add('focused');
@@ -118,17 +127,41 @@ export class LoginComponent implements OnDestroy{
 
 
   sentDataToBackend(loginDataToSentToBackend: LoginFormInterface) {
-    this.loginSubscription=this.authService.loginUser(loginDataToSentToBackend).subscribe({
-      next:(value) =>{
+    this.loginSubscription = this.authService.loginUser(loginDataToSentToBackend).subscribe({
+      next: (value) => {
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
           this.router.navigate([''])
         });
       },
-      error:(err)=>{
+      error: (err) => {
         this.common.showErrorMessage('Error', err.error.message)
       },
     })
+  }
+
+
+  forgetPassword(username: string) {
+    console.log('hi');
+    this.container.clear();
+
+    // Dynamically create the component and assign the reference
+    this.forgetpasswordComponentRef = this.container.createComponent(ForgetPasswordComponent);
+
+    // Pass data to the component instance
+    this.forgetpasswordComponentRef.instance.username_email = username;
+
+    // Pass a destruction callback to the child
+    this.forgetpasswordComponentRef.instance.closeCompomponent = () => this.destroyComponent();
+  }
+
+
+  destroyComponent() {
+    // Destroy the dynamic component if it exists
+    if (this.forgetpasswordComponentRef) {
+      this.forgetpasswordComponentRef.destroy();
+      this.forgetpasswordComponentRef = undefined; // Reset the reference
+    }
   }
 
 }

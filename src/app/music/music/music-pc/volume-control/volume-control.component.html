@@ -1,0 +1,22 @@
+<div class="base-parent">
+  <div class="base">
+    <input #inputRange hidden type="range" min="0" max="100" value="0" step="1">
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #baseNotches class="base-notch"></div>
+    <div #knob class="knob">
+      <div #knobNotch class="knob-notch"></div>
+    </div>
+    <div #knobShadow class="knob-shadow" (mousedown)="knobTouchHandler($event)" (touchstart)="knobTouchHandler($event)"
+      ></div>
+    <div #value class="value">{{volume}}</div>
+  </div>
+</div>
