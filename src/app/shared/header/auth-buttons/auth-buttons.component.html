@@ -6,8 +6,9 @@
   }
   @else {
   <div class="pfp-logout">
-    <img class="pfp" routerLinkActive="highlighted" [routerLink]="'/user/' + ($user | async)?.db_username"
-      [src]="($user | async)?.db_phofilePic_100">
+    <div class="pfp">
+      <app-pfp></app-pfp>
+    </div>
     <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
   }

@@ -97,6 +97,85 @@
 }
 
 
+/* Base styles */
+.remember-me {
+  accent-color: #4a4a4a; /* Dark gray for the checkbox accent */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  border-radius: 4px; /* Slightly rounded corners */
+  transition: all 0.3s ease;
+}
+
+
+/* Checkbox hover effect */
+.remember-me:hover {
+  accent-color: #6a6a6a; /* Slightly lighter gray for hover */
+}
+
+/* Checkbox focus effect */
+.remember-me:focus-visible {
+  outline: 2px solid #b2bfab; /* Highlight for accessibility */
+  outline-offset: 2px;
+}
+
+/* Checkbox checked state */
+.remember-me:checked {
+  accent-color: #b0fd57; /* Light blue for a slightly vibrant touch */
+}
+
+
+/* Shared button styles */
+button {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Forget Password button styles */
+.forget-password {
+  background-color: #000000; /* Dark gray background */
+  color: #e0e0e0; /* Light gray text */
+  border: 1px solid #555; /* Subtle border */
+}
+
+.forget-password:hover {
+  background-color: #b7b7b7; /* Slightly lighter on hover */
+  color: #ffffff; /* Brighten text */
+}
+
+.forget-password:focus-visible {
+  outline: 2px solid #8ab4f8; /* Highlight for accessibility */
+}
+
+/* Login button styles */
+.login {
+  background-color: #bcff74; /* Vibrant blue */
+  color: #262626; /* White text */
+  border: 1px solid #bcff74; /* Darker blue border */
+}
+
+.login:hover {
+  background-color: #93ff20; /* Darker blue on hover */
+}
+
+.login:disabled {
+  background-color: #deffdd; /* Muted gray for disabled state */
+  color: #999; /* Light gray text for disabled state */
+  cursor: not-allowed; /* Not-allowed cursor */
+}
+
+/* Button spacing */
+.forget-password {
+  margin-right: 10px; /* Space between the buttons */
+}
+
+
 
 @media(max-width:800px) {
   :host {

@@ -1,17 +1,12 @@
-import { Component, HostListener, inject, signal, WritableSignal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { AuthButtonsComponent } from '../auth-buttons/auth-buttons.component';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { NavButtonsComponent } from '../nav-buttons/nav-buttons.component';
 import { PostButtonsComponent } from '../post-buttons/post-buttons.component';
 import { RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../states/app.state';
-import { Observable } from 'rxjs';
-import { UserProfile } from '../../../user/user-profile/user-profile.interface';
-import * as getUserSelector from './../../../states/getUser/getUser.selector'
-import { AsyncPipe } from '@angular/common';
 import { DividerComponent } from '../../components/divider/divider.component';
 import { CloseButtonComponent } from "../../svg/close-button/close-button.component";
+import { PfpComponent } from "../../components/pfp/pfp.component";
 
 @Component({
   selector: 'app-header-sidenavbar',
@@ -21,8 +16,9 @@ import { CloseButtonComponent } from "../../svg/close-button/close-button.compon
     NavButtonsComponent,
     PostButtonsComponent,
     RouterModule,
-    AsyncPipe,
-    DividerComponent, CloseButtonComponent],
+    DividerComponent, CloseButtonComponent,
+    PfpComponent
+],
   templateUrl: './header-sidenavbar.component.html',
   styleUrl: './header-sidenavbar.component.css'
 })
@@ -32,16 +28,13 @@ export class HeaderSidenavbarComponent {
   //Declare Variables here---------------------------------------------------
   sidebarVisible = signal(false)
   windowWidth: WritableSignal<number> = signal(0);
-  $user: Observable<UserProfile | null>;
-  $error: Observable<string | null>;
+  @ViewChild('slider', { static: false }) slider?: ElementRef;
 
   //Inject Services here--------------------------------------------------
-  private store = inject(Store<AppState>);
+
 
   constructor() {
     this.windowWidth.set(window.innerWidth);
-    this.$user = this.store.select(getUserSelector.getAllUser);
-    this.$error = this.store.select(getUserSelector.selectUserError);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -49,6 +42,25 @@ export class HeaderSidenavbarComponent {
     this.windowWidth.set(window.innerWidth);
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (
+      this.sidebarVisible() && // Sidebar is open
+      this.slider &&
+      !this.slider.nativeElement.contains(event.target) // Click is outside the slider
+    ) {
+      this.sidebarVisible.set(false); // Close the sidebar
+      console.log(this.sidebarVisible())
+    }
+  }
+
+  toggleSidebar(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent triggering document click
+    this.sidebarVisible.set(true); // Open the sidebar
+  }
+
+
+  //Close the slider when cliking buttons
   closeSidebar(dataFromChild: boolean): void {
     this.sidebarVisible.set(dataFromChild)
   }

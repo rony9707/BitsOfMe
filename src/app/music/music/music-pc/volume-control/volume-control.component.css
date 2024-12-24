@@ -1,0 +1,151 @@
+:host{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: var(--main-background-color);
+}
+
+
+
+.base-parent {
+  width: 200px;
+  height: 200px;
+}
+
+.base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--light1);
+  border-radius: 50%;
+  box-shadow: inset 0 -10px 20px var(--dark3), inset 0 10px 20px var(--light2);
+}
+
+.base-notch {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 4%;
+  height: 4%;
+  background-color: var(--light3);
+  border-radius: 999px;
+  transition: all .2s ease-in;
+}
+
+.base-notch:nth-of-type(1) {
+  top: 80.052%;
+  left: 19.948%;
+}
+
+.base-notch:nth-of-type(2) {
+  top: 63.1332%;
+  left: 9.5801%;
+}
+
+.base-notch:nth-of-type(3) {
+  top: 43.3515%;
+  left: 8.02325%;
+}
+
+.base-notch:nth-of-type(4) {
+  top: 25.0191%;
+  left: 15.6168%;
+}
+
+.base-notch:nth-of-type(5) {
+  top: 12.1322%;
+  left: 30.7054%;
+}
+
+.base-notch:nth-of-type(6) {
+  top: 7.5%;
+  left: 50%;
+}
+
+.base-notch:nth-of-type(7) {
+  top: 12.1322%;
+  left: 69.2946%;
+}
+
+.base-notch:nth-of-type(8) {
+  top: 25.0191%;
+  left: 84.3832%;
+}
+
+.base-notch:nth-of-type(9) {
+  top: 43.3515%;
+  left: 91.9768%;
+}
+
+.base-notch:nth-of-type(10) {
+  top: 63.1332%;
+  left: 90.4199%;
+}
+
+.base-notch:nth-of-type(11) {
+  top: 80.052%;
+  left: 80.052%;
+}
+
+.knob {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  transform: rotate(-135deg);
+  width: 70%;
+  height: 70%;
+  background-color: var(--light3);
+  border-radius: 50%;
+  transition: box-shadow .4s ease-in;
+}
+
+.knob-shadow {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background-image: linear-gradient(0deg, var(--dark2), var(--light3));
+  box-shadow: 0 10px 20px var(--dark3), 0 -10px 20px var(--light2);
+}
+
+.knob-notch {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6%;
+  height: 15%;
+  background-color: var(--light3);
+  border-radius: 20px;
+  transition: all .4s ease-in;
+}
+
+.knob-active {
+  box-shadow: 0 0 20px -8px var(--led2);
+}
+
+.notch-active {
+  background-color: var(--led);
+  box-shadow: 0 0 8px var(--led2);
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--dark2);
+  text-shadow: 0 0 20px var(--dark3);
+  transition: all .6s ease-in;
+}
+
+.value-active {
+  color: var(--led);
+  text-shadow: 0 0 20px var(--led2);
+}

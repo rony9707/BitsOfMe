@@ -1,0 +1,6 @@
+<div class="songprogress">
+  <input #slider id="songSlider" class="slider" type="range" [value]="songProgressValue" 
+  (input)="onProgressChange($event)">
+
+  <span>{{ songSeek() }}</span>
+</div>
