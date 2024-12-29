@@ -1,10 +1,13 @@
 import { inject } from "@angular/core";
-import {  Router } from "@angular/router";
-import { catchError, delay, firstValueFrom, map, Observable, of, take } from "rxjs";
+import { Router } from "@angular/router";
+import { catchError, delay, firstValueFrom, map, Observable, of, take, pipe, tap } from "rxjs";
 import { AuthService } from "../API/auth.service";
 import { CommonService } from "../common/common.service";
 import { UserProfile } from "../../user/user-profile/user-profile.interface";
 import { LoggerService } from "../logger/logger.service";
+import { select, Store } from "@ngrx/store";
+import * as getUserSelector from './../../states/getUser/getUser.selector'
+import * as getUserAction from './../../states/getUser/getUser.action'
 
 
 //Can Activate User Route Guard
@@ -33,23 +36,21 @@ export const CanActivateUser = ():
 
 
 //User Resolve Route Guar
-export const userResolve = async (): Promise<UserProfile | null> => {
+export const userResolve = (): Observable<UserProfile | null> => {
   const userService = inject(AuthService);
   const logger = inject(LoggerService)
+  const store = inject(Store)
 
-  try {
-    return await firstValueFrom(
-      userService.getUser().pipe(
-        catchError((error) => {
-          console.error("Error from Authguard",error)
-          return of(null);
-        }),
-         //delay(2000)  //to test resolve guard
-      )
+  return store.pipe(
+    select(getUserSelector.getAllUser),
+    tap((users) => {
 
-    );
-  } catch (error) {
-    logger.log(error, 'error')
-    return null;
-  }
+      if (!users) {
+        store.dispatch(getUserAction.getUser())
+      }
+
+    }),
+   //delay(2000) // To simular Resolve route delay
+  )
+
 };

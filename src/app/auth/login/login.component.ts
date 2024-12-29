@@ -142,7 +142,6 @@ export class LoginComponent implements OnDestroy {
 
 
   forgetPassword(username: string) {
-    console.log('hi');
     this.container.clear();
 
     // Dynamically create the component and assign the reference

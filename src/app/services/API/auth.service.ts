@@ -10,12 +10,12 @@ import { UserProfile } from '../../user/user-profile/user-profile.interface';
 })
 export class AuthService {
 
-  constructor() { }
 
   // https://chatgpt.com/share/67607c20-5334-8013-aa41-548c4f5b26b6
 
   //public $isLoggedIn = new BehaviorSubject<boolean>(false);
   public $isLoggedIn = new BehaviorSubject<boolean | null>(true);
+  public cookie = '';
 
 
   //Declear Services here
@@ -29,6 +29,19 @@ export class AuthService {
   userDataURL = `${this.baseURL}/user/getUser`
   logoutURL = `${this.baseURL}/user/logout`
 
+
+  constructor(){
+
+  }
+
+
+  getCookie(){
+    return this.cookie
+  }
+
+  setCookie(cookie:string){
+    this.cookie=cookie
+  }
 
   //Register User
   registerUser(formData: FormData) {
@@ -57,25 +70,6 @@ export class AuthService {
       withCredentials: true
     });
   }
-
-  // Fetch user state during initialization
-  // Fetch user state during initialization
-  initializeAuthState(): void {
-    this.getUser().subscribe({
-      next: (user) => {
-        console.log('User authenticated:', user);
-        this.$isLoggedIn.next(true);
-      },
-      error: (error) => {
-        console.error('Error fetching user:', error);
-        this.$isLoggedIn.next(false);
-      },
-      complete: () => {
-        console.log('Authentication state check completed.');
-      }
-    });
-  }
-
 
 
   // Getter for login status

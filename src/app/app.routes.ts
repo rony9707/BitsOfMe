@@ -5,6 +5,7 @@ import { AllUsersPostsComponent } from './user/all-users-posts/all-users-posts.c
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { CanActivateUser, userResolve } from './services/Authguard/authguard.service';
 import { AuthGuardService_opposite } from './services/Authguard/authguard_opposite.service';
+import { Error404Component } from './shared/components/error404/error404.component';
 
 
 
@@ -26,27 +27,30 @@ export const routes: Routes = [
         loadComponent: () => import('./auth/home-index/home-index.component').then(m => m.HomeIndexComponent),
         children: [
           {
-            path:'create-a-post',
+            path: 'create-a-post',
             loadComponent: () => import('./auth/home-index/create-posts/create-posts.component').then(m => m.CreatePostsComponent),
             canActivate: [CanActivateUser]
           },
           {
-            path:'',
+            path: '',
             loadComponent: () => import('./user/all-users-posts/all-users-posts.component').then(m => m.AllUsersPostsComponent),
-            resolve: {user: userResolve} 
+            resolve: { user: userResolve }
           },
           {
-            path:'user/:usernameID',
+            path: 'user/:usernameID',
             loadComponent: () => import('./user/user-profile/user-profile.component').then(m => m.UserProfileComponent),
             canActivate: [CanActivateUser]
           },
           {
-            path:'music',
+            path: 'music',
             loadComponent: () => import('./music/music/music.component').then(m => m.MusicComponent)
           }
         ]
       }
     ]
+  },
+  {
+    path: '**',
+    component: Error404Component
   }
-
 ];

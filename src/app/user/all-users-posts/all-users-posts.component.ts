@@ -20,7 +20,7 @@ export class AllUsersPostsComponent {
   //Declare Variables here----------------------------------------------------------------
   //$user: Observable<UserProfile | null>;
   $error: Observable<string | null>;
-  //user:UserProfile | null;
+  user:UserProfile | null;
 
   
   //Decleare Services here----------------------------------------------------------------
@@ -28,8 +28,8 @@ export class AllUsersPostsComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   constructor() {
-    //this.user = this.activatedRoute.snapshot.data['user']
-    this.store.dispatch(getUserAction.getUser())
+    this.user = this.activatedRoute.snapshot.data['user']
+   // this.store.dispatch(getUserAction.getUser())
     //this.$user = this.store.select(getUserSelector.getAllUser);
     this.$error = this.store.select(getUserSelector.selectUserError);
   }
