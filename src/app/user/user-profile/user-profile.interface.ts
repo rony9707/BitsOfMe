@@ -12,4 +12,5 @@ export interface UserProfile {
   db_dtecre: string;
   db_dtemod: string;
   db_dteLastLogin: string;
+  [key: string]: string;
 }

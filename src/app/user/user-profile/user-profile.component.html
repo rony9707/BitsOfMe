@@ -12,84 +12,22 @@
         </div>
       </div>
     </div>
+
     <div class="title-wrapper">
-      @if(($user | async); as user){
-
+      @if(($user | async); as user) {
+      <ng-container *ngFor="let field of fields">
         <div class="title">
-          About Me 
+          {{ field.label }}
         </div>
-        <div class="title-data title-common title-data-input-aboutuser">
-          {{user.db_aboutUser}}
+        <div class="title-data title-common" [ngClass]="field.class ? field.class : ''">
+          {{ user[field.key] }}
         </div>
-
-        <div class="title fullname">
-          Full Name
-        </div>
-        <div class="title-data title-common fullname">
-          {{user.db_fullname}}
-        </div>
-
-        <div class="title">
-          Email
-        </div>
-        <div class="title-data title-common">
-          {{user.db_email}}
-        </div>
-
-        <div class="title">
-          Date of Birth
-        </div>
-        <div class="title-data title-common">
-          {{user.db_dob}}
-        </div>
-
-        <div class="title">
-          Gender
-        </div>
-        <div class="title-data title-common">
-          {{user.db_gender}}
-        </div>
-
-        <div class="title">
-          Address
-        </div>
-        <div class="title-data title-common">
-          {{user.db_address}}
-        </div>
-
-        <div class="title">
-          Phone Number
-        </div>
-        <div class="title-data title-common">
-          {{user.db_phoneNumber}}
-        </div>
-
-        <div class="title">
-          Profile Creation Date
-        </div>
-        <div class="title-data title-common">
-          {{user.db_dtecre}}
-        </div>
-
-        <div class="title">
-          Last Profile Login Date
-        </div>
-        <div class="title-data title-common">
-          {{user.db_dteLastLogin}}
-        </div>
-
-        <div class="title">
-          Last Profile Modification Date
-        </div>
-        <div class="title-data title-common">
-          {{user.db_dtemod}}
-        </div>
+      </ng-container>
+      } @else {
+      <div>{{ ($error | async) }}</div>
       }
-      @else {
-        <div>{{($error | async)}}</div>
-      }
-
     </div>
+    
   </div>
 </div>
 <div class="user-profile-right-main common-main" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">

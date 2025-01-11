@@ -44,6 +44,12 @@
   margin: 15px 0px 15px 0px;
 }
 
+.divider-text-last {
+  margin: 15px 0px 25px 0px;
+}
+
+
+
 
 @media(max-width:800px) {
 

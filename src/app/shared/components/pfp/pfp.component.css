@@ -1,4 +1,4 @@
-:host{
+:host {
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -13,6 +13,11 @@
   transition: 0.5s ease;
   border: 2px solid transparent;
 }
+
+.pfp:hover {
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);
+}
+
 
 .highlighted {
   box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.7);

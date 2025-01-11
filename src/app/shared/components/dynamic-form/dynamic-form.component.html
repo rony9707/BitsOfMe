@@ -1,0 +1,32 @@
+<h1>{{form.formTitle}}</h1>
+<form [formGroup]="dynamicFormGroup">
+  @for(control of form.formControls;track control){
+
+  @if (['text','email','password','number','date'].includes(control.type)) {
+
+
+  <div class="input-box-main">
+    <input [class]="control.inputClass" [type]="control.type" placeholder=" " [formControlName]="control.name" />
+    <label [class]="control.labelClass">{{control.placeholder}}</label>
+    <!-- {{this.dynamicFormGroup.get('email')?.touched}}
+      {{control.name}} -->
+
+    <div class="invalid-text">
+      <small *ngIf="dynamicFormGroup.get(control.name)?.touched && (dynamicFormGroup.get(control.name)?.touched)"
+        class="error-message">{{ getValidationErrors(control)
+        }}</small>
+    </div>
+
+  </div>
+
+  }
+
+  }
+
+  <div class="buttons">
+    <button clas="reset" (click)="resetForm()" type="button">{{form.resetBtn}}</button>
+    <button class="submit" (click)="onSubmit()" type="submit">{{form.submitBtn}}</button>
+  </div>
+
+
+</form>

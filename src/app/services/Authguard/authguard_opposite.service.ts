@@ -1,33 +1,40 @@
-import { inject, Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { map, Observable, take, tap } from "rxjs";
-import { AuthService } from "../API/auth.service";
+import { inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { catchError, delay, firstValueFrom, map, Observable, of, take, pipe, tap, switchMap, filter } from "rxjs";
+import { AuthService } from "../API/Auth/auth.service";
 import { CommonService } from "../common/common.service";
+import { UserProfile } from "../../user/user-profile/user-profile.interface";
+import { LoggerService } from "../logger/logger.service";
+import { select, Store } from "@ngrx/store";
+import * as getUserSelector from './../../states/getUser/getUser.selector'
+import * as getUserAction from './../../states/getUser/getUser.action'
 
 
-@Injectable({
-  providedIn: 'root'
-})
+//Can Activate User Route Guard
+export const CanActivateUserOpposite = (): Observable<boolean> => {
+  // Inject Services here
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const common = inject(CommonService);
+  const store = inject(Store);
 
-export class AuthGuardService_opposite implements CanActivate {
+  return store.select(getUserSelector.getAllUser).pipe(
+    switchMap((user) => {
+      if (user) {
+        // User is already available in the store
+        return [false]; // Return an observable of true
+      } else {
+        // Dispatch the action to fetch user data
+        return [true]; // Return an observable of true
+      }
+    })
+  );
+};
 
-  private authService = inject(AuthService)
-  private router = inject(Router)
-  private common = inject(CommonService)
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    boolean | Observable<boolean> | Promise<boolean> {
-    return this.authService.isAuthenticated.pipe(
-      take(1), // Take the first emitted value from the BehaviorSubject
-      map(isLoggedIn => {
-        if (isLoggedIn) {
-          this.router.navigate([''])
-          return false; //Block route access
-        } else {
-          return true; //Allow access
-        }
-      })
-    );
-  }
-}
+
+
+
+
+
 

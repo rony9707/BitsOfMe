@@ -1,0 +1,44 @@
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  overflow: hidden; /* Ensure no scrollbars appear */
+}
+
+.error-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the entire screen */
+  position: relative;
+}
+
+
+.home-button {
+  background-color: #525252; /* Blue background */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size */
+  padding: 10px 20px; /* Top-bottom, left-right padding */
+  border: none; /* No border */
+  border-radius: 25px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for color and transform */
+  text-align: center; /* Text center alignment */
+  position: absolute;
+  bottom:140px;
+}
+
+.home-button:hover {
+  background-color: #2e2e2e; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.home-button:focus {
+  outline: none; /* Remove focus outline */
+}
+
+.home-button:active {
+  background-color: #003d7a; /* Even darker blue when pressed */
+}

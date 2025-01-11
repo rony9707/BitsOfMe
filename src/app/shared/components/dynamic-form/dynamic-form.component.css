@@ -1,0 +1,100 @@
+h1{
+  display: grid;
+  place-items: center;
+}
+
+.input-box-main {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form{
+  margin: 20px;
+}
+
+.input-box {
+  width: 100%;
+  height: 30px;
+  background-color: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid rgb(255, 255, 255);
+  outline: none;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+.input-box:focus {
+  box-shadow: 0px 8px 8px -8px rgba(0, 0, 0, 1);
+}
+
+
+.input-box:focus~.label-box,
+.input-box:not(:placeholder-shown)~.label-box {
+  top: -15px;
+  font-size: 12px;
+  transition: .3s;
+}
+
+.input-box:placeholder-shown~.label-box {
+  top: 2px;
+  font-size: 16px;
+  transition: .3s;
+}
+
+.label-box {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  pointer-events: none;
+  transition: .3s;
+  color:white;
+}
+
+.invalid-text{
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
+.invalid-text small{
+  font-size: 14px;
+  color:rgb(255, 82, 82);
+}
+
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+  gap:15px;
+}
+
+button {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color:black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.submit {
+  background-color: #bcff74; /* Vibrant blue */
+  color: #262626; /* White text */
+  border: 1px solid #bcff74; /* Darker blue border */
+}
+
+.submit:hover {
+  background-color: #93ff20; /* Darker blue on hover */
+}
+

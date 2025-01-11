@@ -3,4 +3,5 @@ export interface postDetails {
   visibility:string;
   postTopic:string;
   username:string | undefined;
+  [key: string]: string | undefined; 
 }
