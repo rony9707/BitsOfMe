@@ -6,7 +6,7 @@ import { PasswordHideComponent } from '../../shared/svg/password-hide/password-h
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
 import { LoggerService } from '../../services/logger/logger.service';
 import { countryCode } from '../../shared/BitsOfLifeData/DialingCodeCountry';
-import { AuthService } from '../../services/API/auth.service';
+import { AuthService } from '../../services/API/Auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnDestroy{
+export class RegisterComponent implements OnDestroy {
   //Declare objects to use in the DOM-----------------------------------------
   windowWidth: WritableSignal<number> = signal(0);
   activeDiv = signal('div1')// Keeps track of the active div
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnDestroy{
   toolTip = `Password must be 8-16 characters long,
    containing at least one lowercase, one uppercase, one number, and one special character.`;
   countryCode = signal(countryCode)
-  private registerSubscription?:Subscription
+  private registerSubscription?: Subscription
 
 
 
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnDestroy{
   private logger = inject(LoggerService)
   private authService = inject(AuthService)
   private router = inject(Router)
-   private common = inject(CommonService)
+  private common = inject(CommonService)
 
 
 
@@ -76,7 +76,7 @@ export class RegisterComponent implements OnDestroy{
     //   phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
     //   address: new FormControl('', [Validators.required]),
     // })
- 
+
     this.registerForm = new FormGroup({
       username: new FormControl('rony9707', [Validators.required, Validators.maxLength(20)]),
       password: new FormControl(
@@ -98,9 +98,9 @@ export class RegisterComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-      if(this.registerSubscription){
-        this.registerSubscription.unsubscribe()
-      }
+    if (this.registerSubscription) {
+      this.registerSubscription.unsubscribe()
+    }
   }
 
 
@@ -135,10 +135,9 @@ export class RegisterComponent implements OnDestroy{
   onImageUpload(event: any): void {
     const file = event.target.files[0]; // Get the first file
     if (file) {
-      // Check the file type
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-      if (allowedTypes.includes(file.type)) {
+      // Check the file type
+      if (this.common.checkFileFormat(file)) {
         // Create a URL for the uploaded file
         this.myPfp = file;
         const imageUrl = URL.createObjectURL(file);
@@ -323,10 +322,10 @@ export class RegisterComponent implements OnDestroy{
 
       //Append Image 
       formData.append('image', this.myPfp);
-  
+
       //Append everything expect image and confirm password
       for (const key in this.registerForm.value) {
-        if(key!='confirmPassword'){
+        if (key != 'confirmPassword') {
           formData.append(key, this.registerForm.value[key]);
         }
       }
@@ -338,18 +337,18 @@ export class RegisterComponent implements OnDestroy{
 
 
   //Sent Data to backend here
-  sentDataToBackend(formData:FormData) {
+  sentDataToBackend(formData: FormData) {
 
     //Sent Data to the backend with the help of authService
-    this.registerSubscription=this.authService.registerUser(formData).subscribe({
-      next:(value) =>{
+    this.registerSubscription = this.authService.registerUser(formData).subscribe({
+      next: (value) => {
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
           this.router.navigate(['/login'])
           this.resetForm();
         });
       },
-      error:(err)=>{
+      error: (err) => {
         this.common.showErrorMessage('Error', err.error.message)
       },
     })

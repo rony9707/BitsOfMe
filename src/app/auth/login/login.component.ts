@@ -5,11 +5,12 @@ import { PasswordHideComponent } from '../../shared/svg/password-hide/password-h
 import { PasswordShowComponent } from '../../shared/svg/password-show/password-show.component';
 import { LoggerService } from '../../services/logger/logger.service';
 import { LoginFormInterface } from './loginData.interface';
-import { AuthService } from '../../services/API/auth.service';
+import { AuthService } from '../../services/API/Auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
+import { broadCastChannel } from '../../app.component';
 
 
 @Component({
@@ -132,6 +133,7 @@ export class LoginComponent implements OnDestroy {
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
           this.router.navigate([''])
+          broadCastChannel.postMessage('login')//Login in the other tabs also
         });
       },
       error: (err) => {
@@ -142,7 +144,6 @@ export class LoginComponent implements OnDestroy {
 
 
   forgetPassword(username: string) {
-    console.log('hi');
     this.container.clear();
 
     // Dynamically create the component and assign the reference

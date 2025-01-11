@@ -1,5 +1,6 @@
-import { Injectable, OnDestroy, signal } from '@angular/core';
+import { inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LoggerService } from '../../services/logger/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class SongService implements OnDestroy{
   timer: BehaviorSubject<string> = new BehaviorSubject<string>('0:00');
   private timerInterval: any;
   public knobValue: number = 0;
+  
 
+  //Inject services here
+  private loggerService = inject(LoggerService)
 
 
   constructor() {
@@ -58,7 +62,7 @@ export class SongService implements OnDestroy{
       if (this.audio.src !== currentSongUrl) {
         this.audio.src = currentSongUrl;
         this.audio.load(); 
-        console.log("Song is loaded")
+        this.loggerService.log("Song as been loaded", 'info')
       }
     }
   }

@@ -3,7 +3,6 @@
   height: 100%;
   display: flex;
   position: relative;
-  font-family: "Roboto Mono", monospace;
 }
 
 .common-main {
@@ -69,22 +68,20 @@
 
 
 .title {
-  font-size: 1.2vw;
+  font-size: 1rem;
   color: #ff7017;
   text-decoration: underline;
   margin-bottom: 5px;
 }
 
-.title-wrapper{
-  overflow: auto;
-}
 
 .fullname{
   display: none;
 }
 
 .title-data {
-  font-size: 1vw;
+  font-size: 1.3rem;
+  word-wrap: break-word;
 }
 
 
@@ -155,17 +152,6 @@
   width: 60%;
 }
 
-@media(max-width:1200px) {
-
-  .title {
-    font-size: 1em;
-  }
-
-  .title-data {
-    font-size: .8em;
-  }
-}
-
 
 @media(max-width:800px) {
   .fullname{
@@ -186,12 +172,4 @@
     margin-bottom: 10px;
   }
   
-
-  .title {
-    font-size: 1.2em;
-  }
-
-  .title-data {
-    font-size: 1em;
-  }
 }

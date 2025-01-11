@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnDestroy, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/API/auth.service';
+import { AuthService } from '../../../services/API/Auth/auth.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoggerService } from '../../../services/logger/logger.service';
 import * as getUserAction from './../../../states/getUser/getUser.action'
@@ -10,11 +10,12 @@ import { Subscription } from 'rxjs';
 import { SongService } from '../../../music/Music-Services/song.service';
 import { CommonService } from '../../../services/common/common.service';
 import { PfpComponent } from "../../components/pfp/pfp.component";
+import { broadCastChannel } from '../../../app.component';
 
 @Component({
   selector: 'app-auth-buttons',
   standalone: true,
-  imports: [RouterModule, AsyncPipe, CommonModule, PfpComponent],
+  imports: [RouterModule, CommonModule, PfpComponent],
   templateUrl: './auth-buttons.component.html',
   styleUrl: './auth-buttons.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -22,23 +23,21 @@ import { PfpComponent } from "../../components/pfp/pfp.component";
 export class AuthButtonsComponent implements OnDestroy {
 
 
-  private logoutSubscription?:Subscription
+  private logoutSubscription?: Subscription
 
 
   public authService = inject(AuthService)
-  private router = inject(Router)
   public logger = inject(LoggerService)
   public songServices = inject(SongService)
   public commonservices = inject(CommonService)
-  private store = inject(Store<AppState>);
+  private commonService = inject(CommonService)
 
 
 
   ngOnDestroy(): void {
-      if(this.logoutSubscription){
-        this.logoutSubscription.unsubscribe();
-        console.log('logout was done')
-      }
+    if (this.logoutSubscription) {
+      this.logoutSubscription.unsubscribe();
+    }
   }
 
 
@@ -50,15 +49,16 @@ export class AuthButtonsComponent implements OnDestroy {
 
 
   logout() {
-    this.logoutSubscription=this.authService.logoutUser().subscribe({
+    this.logoutSubscription = this.authService.logoutUser().subscribe({
       next: (value) => {
         this.commonservices.showSuccessMessage("Log out", value.message).then(() => {
-          this.authService.$isLoggedIn.next(false)//set status to logged off
 
           this.songServices.toggleMusic(false); //Stop song when logout
 
-          this.store.dispatch(getUserAction.logoutUser()) //Make the user data empty
-          this.router.navigate(['/login'])//Navigate to login page
+          this.commonService.codeToRunDuringLogout()
+
+          broadCastChannel.postMessage('logout')
+
         });
         this.logger.log('The User is logged out of the system', 'log')
       },
@@ -67,6 +67,9 @@ export class AuthButtonsComponent implements OnDestroy {
         console.log(err)
       },
     })
+
+
+
   }
 
 }

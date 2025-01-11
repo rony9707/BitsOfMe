@@ -1,5 +1,5 @@
 <div class="auth-buttons">
-  @if(!(authService.isAuthenticated | async);as isAuthenticated){
+  @if(!(authService.isAuthenticated)){
   <button routerLink="/login" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="selected"
     (click)="closeSidebar()">Login</button>
   <button routerLink="/register" routerLinkActive="selected" (click)="closeSidebar()">Register</button>

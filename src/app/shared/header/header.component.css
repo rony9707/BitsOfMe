@@ -1,9 +1,11 @@
 header {
-  position: fixed; /* Keeps the header fixed at the top */
+  position: fixed;
+  /* Keeps the header fixed at the top */
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* Header height */
+  height: 80px;
+  /* Header height */
   background-color: #333;
   display: flex;
   justify-content: space-between;
@@ -14,7 +16,7 @@ header {
 .page-title {
   position: relative;
   cursor: default;
-  font-family: "Doto", sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
@@ -26,24 +28,24 @@ header {
   font-size: 25px;
 }
 
-.page-title:hover{
+.page-title:hover {
   cursor: pointer;
 }
 
 .page-title::after {
   content: '';
   position: absolute;
-  bottom: 0; 
-  left: 0; 
+  bottom: 0;
+  left: 0;
   width: 0;
-  height: 2px; 
+  height: 2px;
   background-color: var(--white);
   transition: width 0.3s ease-out, left 0.3s ease-out;
 }
 
 .page-title:hover::after {
-  width: 50%; 
-  left: 25%; 
+  width: 50%;
+  left: 25%;
 }
 
 

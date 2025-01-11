@@ -7,6 +7,8 @@ import { AppState } from '../../../states/app.state';
 import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from '../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../states/getUser/getUser.selector'
+import { postService } from '../../../services/API/Post/post.service';
+import { CommonService } from '../../../services/common/common.service';
 
 @Component({
   selector: 'app-create-posts',
@@ -16,6 +18,8 @@ import * as getUserSelector from './../../../states/getUser/getUser.selector'
   styleUrl: './create-posts.component.css'
 })
 export class CreatePostsComponent implements OnDestroy {
+
+  private createPostSubscription?: Subscription
 
   //Data to sent to backend when a user makes a post
   postDetails: postDetails = {
@@ -28,7 +32,11 @@ export class CreatePostsComponent implements OnDestroy {
 
   $user: Observable<UserProfile | null>;
   $error: Observable<string | null>;
+
+
   private store = inject(Store<AppState>);
+  private postService = inject(postService);
+  private commonService = inject(CommonService)
 
 
   private userSubscription: Subscription;
@@ -45,6 +53,9 @@ export class CreatePostsComponent implements OnDestroy {
   ngOnDestroy(): void {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
+    }
+    if (this.createPostSubscription) {
+      this.createPostSubscription.unsubscribe();
     }
   }
 
@@ -65,9 +76,50 @@ export class CreatePostsComponent implements OnDestroy {
     this.postDetails.postTopic = option
   }
 
+
+
   onPostClicked() {
-    console.log(this.postDetails)
-    console.log(this.selectedFiles)
+
+    const formDataToSendToBackend = new FormData();
+
+    // Append images
+    this.selectedFiles.forEach((file: File) => {
+      formDataToSendToBackend.append('images', file);
+    });
+
+
+    // Append other post details (postDetails object)
+    for (const key in this.postDetails) {
+      if (this.postDetails.hasOwnProperty(key)) {
+        // Cast the key to string explicitly
+        const keyString = key as string;
+
+        // Append the value of postDetails, which is a string or undefined
+        if (this.postDetails[keyString] !== undefined) {
+          formDataToSendToBackend.append(keyString, this.postDetails[keyString] as string);
+        }
+      }
+    }
+
+    //Sent Data to backend
+    this.createPost(formDataToSendToBackend)
   }
+
+
+  createPost(formDataToSendToBackend: FormData) {
+    this.createPostSubscription = this.postService.createPosts(formDataToSendToBackend).subscribe({
+      next: (value) => {
+        this.commonService.showSuccessMessage('Success', value.message).then(
+
+        )
+      },
+      error: (err) => {
+        console.log(err)
+        this.commonService.showErrorMessage('Error', err.error.message)
+      },
+    })
+  }
+
+
 
 }

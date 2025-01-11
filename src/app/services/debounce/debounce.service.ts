@@ -8,7 +8,7 @@ export class DebounceService {
 
   constructor() { }
 
-  private $inputSubject = new Subject<string>();
+  private $inputSubject = new Subject<any>();
 
   
   debounce(){
@@ -16,7 +16,7 @@ export class DebounceService {
   }
 
   //Next Value to the Subject
-  sentToDebouncer(value:string){
+  sentToDebouncer(value:any){
     this.$inputSubject.next(value); 
   }
 }

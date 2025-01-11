@@ -1,0 +1,8 @@
+@if ($error | async) {
+<div>YOU ARE NOT LOGGED IN</div>
+}
+@else if (user) {
+<app-search-posts (searchInputEmitter)="searchInput($event)"></app-search-posts>
+<app-all-posts [data]="'cat'"></app-all-posts>
+
+}

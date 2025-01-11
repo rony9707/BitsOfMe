@@ -44,6 +44,15 @@ export class VolumeControlComponent implements AfterViewInit {
         }
       });
     }
+
+    if (this?.value) {
+      if(this.value.nativeElement.innerText>0){
+        this.value?.nativeElement.classList.add("value-active");
+      }else{
+        this.value?.nativeElement.classList.remove("value-active");
+      }
+      
+    }
   }
 
 

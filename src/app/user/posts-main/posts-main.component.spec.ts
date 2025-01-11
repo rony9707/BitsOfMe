@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllUsersPostsComponent } from './all-users-posts.component';
+import { AllUsersPostsComponent } from './posts-main.component';
 
 describe('AllUsersPostsComponent', () => {
   let component: AllUsersPostsComponent;
@@ -10,7 +10,7 @@ describe('AllUsersPostsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AllUsersPostsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AllUsersPostsComponent);
     component = fixture.componentInstance;

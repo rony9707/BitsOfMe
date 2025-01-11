@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SongService } from '../../../Music-Services/song.service';
 
@@ -9,7 +9,7 @@ import { SongService } from '../../../Music-Services/song.service';
   templateUrl: './song-progressbar.component.html',
   styleUrl: './song-progressbar.component.css'
 })
-export class SongProgressbarComponent implements OnInit, AfterViewInit {
+export class SongProgressbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   songProgress = signal(0);
   songSeek = signal('0:00');
@@ -34,6 +34,10 @@ export class SongProgressbarComponent implements OnInit, AfterViewInit {
     if (this.slider) {
       this.slider.nativeElement.background = 'linear-gradient(to right, #555 0%, #555 100%)';
     }
+  }
+
+  ngOnDestroy(): void {
+    this.progressSubscription?.unsubscribe()
   }
 
   // Getter for songProgress value to be used in the template
