@@ -8,7 +8,10 @@
 @if(item.name == 'music'){
 <button (click)="closeSidebar()" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="highlighted"
   routerLink="/music">{{ item.hobbie }}</button>
-}@else {
+}@else if (item.name == 'mygames') {
+  <button (click)="closeSidebar()" routerLinkActive="highlighted">{{ item.hobbie }}</button>
+}
+@else {
 <button (click)="closeSidebar()" routerLinkActive="highlighted">{{ item.hobbie }}</button>
 }
 }

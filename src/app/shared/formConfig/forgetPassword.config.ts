@@ -1,7 +1,7 @@
 import { IForm } from "../interface/form-interface";
 
 export const forgetPasswordConfig:IForm = {
-  formTitle: "Forget Passwdsfdord",
+  formTitle: "Forget Password",
   submitBtn:"Submit",
   resetBtn:"Reset",
   formControls:[

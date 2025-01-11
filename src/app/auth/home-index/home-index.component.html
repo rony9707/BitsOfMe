@@ -11,10 +11,14 @@
         <app-divider [text]="'My Bits'"></app-divider>
       </div>
       <app-nav-buttons></app-nav-buttons>
+
+      <div class="divider-text-last">
+        <app-divider></app-divider>
+      </div>
     </div>
 
   </div>
-  <div class="main-content enableScroll common-home-index-sub">
+  <div class="main-content enableScroll common-home-index-sub" #scrollContainer (scroll)="throttledOnScroll($event)">
     <router-outlet></router-outlet>
   </div>
 </div>

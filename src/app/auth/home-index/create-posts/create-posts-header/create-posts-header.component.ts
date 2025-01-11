@@ -6,12 +6,13 @@ import { AppState } from '../../../../states/app.state';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../../states/getUser/getUser.selector'
+import { postVisibility } from '../../../../shared/enums/postS.enum';
 
 
 @Component({
   selector: 'app-create-posts-header',
   standalone: true,
-  imports: [ FormsModule, NgFor, AsyncPipe],
+  imports: [FormsModule, NgFor, AsyncPipe],
   templateUrl: './create-posts-header.component.html',
   styleUrl: './create-posts-header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,8 +22,8 @@ export class CreatePostsHeaderComponent implements OnInit {
   @Output() visibilityChange = new EventEmitter<string>();
 
   visibilityOptions = [
-    { label: 'Public', value: 'public' },
-    { label: 'Private', value: 'private' },
+    { label: 'Public', value: postVisibility.Public },
+    { label: 'Private', value: postVisibility.Private },
   ];
   selectedVisibility = this.visibilityOptions[0].value; // Default to 'public'
   $user: Observable<UserProfile | null>;

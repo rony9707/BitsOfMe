@@ -12,11 +12,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     withCredentials: true,
   });
 
-  return next(clonedRequest).pipe(
-    tap(event => {
-      if (event.type === HttpEventType.Response) {
-        console.log('Response Received:', event.headers);
-      }
-    })
-  );
+  return next(clonedRequest)
 };

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnDestroy, OnInit, Output, signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems } from '../../../../shared/BitsOfLifeData/bits-data';
 import { CommonModule } from '@angular/common';
@@ -8,25 +8,26 @@ import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-
 import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
 import { DebounceService } from '../../../../services/debounce/debounce.service';
 import { Subscription } from 'rxjs';
+import { CommonService } from '../../../../services/common/common.service';
 
 
 
 @Component({
   selector: 'app-create-posts-content',
   standalone: true,
-  imports: [FormsModule, 
-    CommonModule,  
-    AttachItemsComponent, 
-    CloseButtonComponent, 
+  imports: [FormsModule,
+    CommonModule,
+    AttachItemsComponent,
+    CloseButtonComponent,
     EmojiPickerComponent],
   templateUrl: './create-posts-content.component.html',
   styleUrl: './create-posts-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreatePostsContentComponent implements OnInit, OnDestroy {
+export class CreatePostsContentComponent implements OnInit {
   //Inject Services here
   private logger = inject(LoggerService)
-  private debounceService = inject(DebounceService)
+  private commonServices = inject(CommonService)
 
 
 
@@ -37,7 +38,6 @@ export class CreatePostsContentComponent implements OnInit, OnDestroy {
   imageURL = signal('');
   showEmojiPicker = signal(true);
   selectedFiles: File[] = [];
-  private debounceSubscription: Subscription;
 
   //Output to sent to Parent
   @Output() postClicked = new EventEmitter<void>();
@@ -49,22 +49,9 @@ export class CreatePostsContentComponent implements OnInit, OnDestroy {
   // Array to store both images and their titles
   myImages: { uploadedImages: string; title: string }[] = [];
 
-  constructor(){
-
-    //Debouncing
-    this.debounceSubscription=this.debounceService.debounce().subscribe(value => {
-      this.message.set(value); // Update the message
-    });
-  }
 
   ngOnInit(): void {
     this.emitSelectedOption();
-  }
-
-  ngOnDestroy(): void {
-    if (this.debounceSubscription) {
-      this.debounceSubscription.unsubscribe();
-    }
   }
 
   //Appends the selected emoji in the textare
@@ -86,15 +73,13 @@ export class CreatePostsContentComponent implements OnInit, OnDestroy {
 
 
   //Append the message
-  onInput(event: any) {
+  onInput(event: HTMLTextAreaElement) {
     //Call the set debouncer function to sent the value to the debouncer
-    this.debounceService.sentToDebouncer(event.target.value)
+    this.message.set(event.value)
     this.emitMessage();
   }
 
 
-
-  
 
   //Adjust height of the textarea based on text written
   adjustHeight(event: Event): void {
@@ -106,23 +91,30 @@ export class CreatePostsContentComponent implements OnInit, OnDestroy {
 
 
 
-  // Handle image upload and store the image URL along with the title
   onImageUpload(event: any) {
     const files = event.target.files;
     if (files && files.length > 0) {
       Array.from(files).forEach((file: any) => {
-        // Create a URL for the uploaded file
-        const imageUrl = URL.createObjectURL(file);
-        const imageTitle = file.name
+        // Use the checkFileFormat function to validate the file format
+        if (this.commonServices.checkFileFormat(file)) {
+          // Create a URL for the uploaded file
+          const imageUrl = URL.createObjectURL(file);
+          const imageTitle = file.name;
 
-        // Create a new object with the image URL and a default title (you can modify this as needed)
-        const imageObject = {
-          uploadedImages: imageUrl,
-          title: imageTitle
-        };
+          // Create a new object with the image URL and a default title (you can modify this as needed)
+          const imageObject = {
+            uploadedImages: imageUrl,
+            title: imageTitle
+          };
 
-        // Push the image object to the array
-        this.myImages.push(imageObject);
+          // Push the image object to the array
+          this.myImages.push(imageObject);
+        } else {
+          // Log or show an error if the file type is not allowed
+          this.commonServices.showErrorMessage('Error', 'Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.')
+
+          this.logger.log(`Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.`, 'error');
+        }
       });
     }
 
@@ -131,9 +123,10 @@ export class CreatePostsContentComponent implements OnInit, OnDestroy {
       this.selectedFiles = Array.from(input.files); // Convert FileList to Array
       this.emitSelectedFiles();
     } else {
-      this.logger.log(`No Files Selected`, 'error')
+      this.logger.log(`No Files Selected`, 'error');
     }
   }
+
 
 
   // Remove image method

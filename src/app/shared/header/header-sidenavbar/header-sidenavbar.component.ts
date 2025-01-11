@@ -50,7 +50,6 @@ export class HeaderSidenavbarComponent {
       !this.slider.nativeElement.contains(event.target) // Click is outside the slider
     ) {
       this.sidebarVisible.set(false); // Close the sidebar
-      console.log(this.sidebarVisible())
     }
   }
 

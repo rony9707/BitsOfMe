@@ -68,3 +68,33 @@ form{
   font-size: 14px;
   color:rgb(255, 82, 82);
 }
+
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+  gap:15px;
+}
+
+button {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color:black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.submit {
+  background-color: #bcff74; /* Vibrant blue */
+  color: #262626; /* White text */
+  border: 1px solid #bcff74; /* Darker blue border */
+}
+
+.submit:hover {
+  background-color: #93ff20; /* Darker blue on hover */
+}
+

@@ -1,8 +1,8 @@
 <textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
-  (blur)="onBlur()" (input)="onInput($event)" name="message" [(ngModel)]="message"
+  (blur)="onBlur()" (input)="onInput(postContent)" name="message" [(ngModel)]="message"
   (input)="adjustHeight($event)"></textarea>
 
-@if(myImages){
+@if(myImages.length>0){
 <div class="image-container">
 
   @for (image of myImages; track image) {
@@ -20,7 +20,7 @@
     <!-- Close button -->
     <!-- <img rel="prefetch" class="remove-img-btn" (click)="removeImage(image.uploadedImages)" src="assets/SVG/close-btn.svg"
       alt="CloseButton" /> -->
-    <app-close-button class="remove-img-btn" (click)="removeImage(image.uploadedImages)"
+    <app-close-button class="remove-img-btn" [fillColor]="'#FF0000'" (click)="removeImage(image.uploadedImages)"
       alt="CloseButton"></app-close-button>
   </div>
   }
@@ -35,7 +35,7 @@
   <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"
     (ngModelChange)="emitSelectedOption()">
     @for (option of selectBoxOptions(); track option.hobbie) {
-    @if(option.name != 'music'){
+    @if(option.name != 'music' && option.name != 'mygames'){
     <option [value]="option.hobbie">
       {{ option.hobbie }}
     </option>
