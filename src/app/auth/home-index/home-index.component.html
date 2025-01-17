@@ -18,7 +18,7 @@
     </div>
 
   </div>
-  <div class="main-content enableScroll common-home-index-sub" #scrollContainer (scroll)="throttledOnScroll($event)">
+  <div class="main-content enableScroll common-home-index-sub" #scrollContainer (swiperight)="onSwipe(true)" (swipeleft)="onSwipe(false)"  (scroll)="throttledOnScroll($event)">
     <router-outlet></router-outlet>
   </div>
 </div>

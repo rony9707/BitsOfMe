@@ -5,7 +5,6 @@ import * as getUserSelector from './states/getUser/getUser.selector'
 import { Store } from '@ngrx/store';
 import { AppState } from './states/app.state';
 import { SongService } from './music/Music-Services/song.service';
-import { IsConnectedService } from './services/sockets/is-connected.service';
 import { Observable, take } from 'rxjs';
 import { UserProfile } from './user/user-profile/user-profile.interface';
 import { AuthService } from './services/API/Auth/auth.service';
@@ -30,7 +29,6 @@ export class AppComponent {
   //Inject Services here---------------------------------
   private store = inject(Store<AppState>);
   public songServices = inject(SongService)
-  public websocket = inject(IsConnectedService)
   public router = inject(Router)
   public authService = inject(AuthService)
   public commonService = inject(CommonService)

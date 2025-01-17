@@ -7,6 +7,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoginComponent } from '../auth/login/login.component';
 import { LoaderComponent } from '../shared/svg/loader/loader.component';
 import { Subscription } from 'rxjs';
+import { CommonService } from '../services/common/common.service';
 
 @Component({
   selector: 'app-home',
@@ -19,12 +20,12 @@ export class HomeComponent implements OnDestroy {
 
   //Declare Variables here--------------------------------
   showloader = signal(false)
-
+  private routerSubscription?: Subscription
 
   //Inject Services here---------------------------------
   public authService = inject(AuthService)
   private router = inject(Router)
-  private routerSubscription?: Subscription
+  private commonService = inject(CommonService)
 
   ngOnInit(): void {
 
@@ -44,6 +45,10 @@ export class HomeComponent implements OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe()
     }
+  }
+
+  onSwipe(visibility:boolean) {
+    this.commonService.changeVisibility(visibility)
   }
 
 }

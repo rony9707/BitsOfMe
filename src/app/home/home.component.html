@@ -2,7 +2,10 @@
   <!-- Header content -->
   <app-header></app-header>
   
-  <router-outlet></router-outlet>
+  <div class="login-register" (swiperight)="onSwipe(true)" (swipeleft)="onSwipe(false)">
+    <router-outlet ></router-outlet>
+  </div>
+  
 
   @if (showloader()) {
     <div class="loader-wrapper">

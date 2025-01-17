@@ -79,4 +79,10 @@ export class HomeIndexComponent implements AfterViewInit, OnInit {
     console.log('Load more images');
     // Add logic to fetch and load new images
   }
+
+  onSwipe(visibility:boolean) {
+    this.commonServices.changeVisibility(visibility)
+  }
+
+
 }

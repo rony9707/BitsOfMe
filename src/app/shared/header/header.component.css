@@ -22,7 +22,7 @@ header {
   font-style: normal;
   font-variation-settings:
     "ROND" 0;
-  padding: 0px 0px 0px 25px;
+  margin: 0px 0px 0px 25px;
   transition: color 0.3s ease-out;
   color: var(--white);
   font-size: 25px;
