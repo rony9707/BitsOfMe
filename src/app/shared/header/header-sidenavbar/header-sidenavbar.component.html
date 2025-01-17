@@ -1,4 +1,4 @@
-@if(windowWidth() < 800){ <div class="sidebar-main" [class.open]="sidebarVisible()" #slider>
+@if(windowWidth() < 800){ <div class="sidebar-main" [class.open]="sidebarVisible()" #slider  (swiperight)="onSwipe(true)" (swipeleft)="onSwipe(false)" >
 
   <div class="sidebar-header">
 

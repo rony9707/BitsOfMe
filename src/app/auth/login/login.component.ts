@@ -11,6 +11,7 @@ import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 import { broadCastChannel } from '../../app.component';
+import { LoaderButtonDirectiveDirective } from '../../shared/directives/loaderButton-directive.directive';
 
 
 @Component({
@@ -20,13 +21,15 @@ import { broadCastChannel } from '../../app.component';
     PasswordHideComponent,
     PasswordShowComponent,
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    LoaderButtonDirectiveDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnDestroy {
 
   passwordEyeFlag = signal(false)
+  isLoading = false
 
   loginForm: FormGroup;
 
@@ -45,7 +48,7 @@ export class LoginComponent implements OnDestroy {
   constructor() {
     this.loginForm = new FormGroup({
       username: new FormControl(localStorage.getItem('rememberMeUsername'), [Validators.required]),
-      password: new FormControl('Qwerty123.', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
       rememberMe: new FormControl(localStorage.getItem('rememberMeCheckbox') === 'true')//Here conversion is done from string to boolean as in local stroage stores data in string
     })
   }
@@ -112,6 +115,7 @@ export class LoginComponent implements OnDestroy {
       this.common.showErrorMessage('Error', 'Please fill all required fields correctly.')
       return;
     } else {
+      this.isLoading=true
 
       //Remember me code
       this.rememberMeLogicSave()
@@ -131,12 +135,14 @@ export class LoginComponent implements OnDestroy {
     this.loginSubscription = this.authService.loginUser(loginDataToSentToBackend).subscribe({
       next: (value) => {
         this.common.showSuccessMessage('Success', value.message).then(() => {
+          this.isLoading=false
           // Navigate to login form
           this.router.navigate([''])
           broadCastChannel.postMessage('login')//Login in the other tabs also
         });
       },
       error: (err) => {
+        this.isLoading=false
         this.common.showErrorMessage('Error', err.error.message)
       },
     })

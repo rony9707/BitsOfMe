@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { AuthButtonsComponent } from '../auth-buttons/auth-buttons.component';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { NavButtonsComponent } from '../nav-buttons/nav-buttons.component';
@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DividerComponent } from '../../components/divider/divider.component';
 import { CloseButtonComponent } from "../../svg/close-button/close-button.component";
 import { PfpComponent } from "../../components/pfp/pfp.component";
+import { CommonService } from '../../../services/common/common.service';
 
 @Component({
   selector: 'app-header-sidenavbar',
@@ -22,7 +23,7 @@ import { PfpComponent } from "../../components/pfp/pfp.component";
   templateUrl: './header-sidenavbar.component.html',
   styleUrl: './header-sidenavbar.component.css'
 })
-export class HeaderSidenavbarComponent {
+export class HeaderSidenavbarComponent implements OnInit {
 
 
   //Declare Variables here---------------------------------------------------
@@ -31,10 +32,16 @@ export class HeaderSidenavbarComponent {
   @ViewChild('slider', { static: false }) slider?: ElementRef;
 
   //Inject Services here--------------------------------------------------
-
+  private commonServices = inject(CommonService)
 
   constructor() {
     this.windowWidth.set(window.innerWidth);
+  }
+
+  ngOnInit(): void {
+      this.commonServices.commonservice_currentSliverVisible.subscribe((visibility)=>{
+        this.sidebarVisible.set(visibility)
+      })
   }
 
   @HostListener('window:resize', ['$event'])
@@ -62,6 +69,10 @@ export class HeaderSidenavbarComponent {
   //Close the slider when cliking buttons
   closeSidebar(dataFromChild: boolean): void {
     this.sidebarVisible.set(dataFromChild)
+  }
+
+  onSwipe(visibility:boolean) {
+    this.commonServices.changeVisibility(visibility)
   }
 
 }

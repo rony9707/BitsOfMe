@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import { AppState } from '../../states/app.state';
 import { AuthService } from '../API/Auth/auth.service';
 import * as getUserAction from './../../states/getUser/getUser.action'
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class CommonService {
   }
 
   codeToRunDuringLogout() {
-    this.store.dispatch(getUserAction.logoutUser());    
+    this.store.dispatch(getUserAction.logoutUser());
     this.authService.$isLoggedIn.set(false);
     this.router.navigate(['/login']);
   }
@@ -71,6 +72,30 @@ export class CommonService {
       }
     };
   }
+
+
+  //Slider Open and Close with finger Gestures
+  private commonservice_sliderVisble = new BehaviorSubject<boolean>(false)
+
+  commonservice_currentSliverVisible = this.commonservice_sliderVisble.asObservable();
+
+  changeVisibility(message: boolean) {
+    this.commonservice_sliderVisble.next(message)
+  }
+
+
+  //To sent boolean data for Post Button Loader
+  private commonservice_isLoader = new BehaviorSubject<boolean>(false)
+
+  commonservice_currentIsLoader = this.commonservice_isLoader.asObservable();
+
+  changeIsLoader(message: boolean) {
+    this.commonservice_isLoader.next(message)
+  }
+
+
+
+
 
 
 

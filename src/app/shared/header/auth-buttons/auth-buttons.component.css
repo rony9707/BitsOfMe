@@ -29,6 +29,9 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.logout-btn-div{
+  margin-right: 10px;
+}
 
 .logout-btn {
   background-color: rgb(245, 113, 113);

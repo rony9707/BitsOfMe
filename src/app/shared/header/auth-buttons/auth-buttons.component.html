@@ -9,7 +9,9 @@
     <div class="pfp">
       <app-pfp></app-pfp>
     </div>
-    <button class="logout-btn" (click)="logout()">Logout</button>
+    <div class="logout-btn-div">
+      <button [appLoaderButtonDirective]="isLoading" class="logout-btn" (click)="logout()">Logout</button>
+    </div>
   </div>
   }
 </div>
