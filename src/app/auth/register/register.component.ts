@@ -10,6 +10,8 @@ import { AuthService } from '../../services/API/Auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
+import { Loader1Component } from '../../shared/components/loader1/loader1.component';
+import { LoaderButtonDirectiveDirective } from '../../shared/directives/loaderButton-directive.directive';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +22,8 @@ import { Subscription } from 'rxjs';
     FormsModule,
     ReactiveFormsModule,
     PasswordHideComponent,
-    PasswordShowComponent],
+    PasswordShowComponent,
+    LoaderButtonDirectiveDirective],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -38,6 +41,7 @@ export class RegisterComponent implements OnDestroy {
    containing at least one lowercase, one uppercase, one number, and one special character.`;
   countryCode = signal(countryCode)
   private registerSubscription?: Subscription
+  isLoading = false;
 
 
 
@@ -59,41 +63,43 @@ export class RegisterComponent implements OnDestroy {
     this.windowWidth.set(window.innerWidth);
 
     //Declare Form Group and Form Controls here
-    // this.registerForm = new FormGroup({
-    //   username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    //   password: new FormControl(
-    //     '', [Validators.required,
-    //     Validators.minLength(8),
-    //     Validators.maxLength(16),
-    //     Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/)]),
-    //   confirmPassword: new FormControl('', [Validators.required]),
-    //   fullname: new FormControl('', [Validators.required]),
-    //   dob: new FormControl('', [Validators.required]),
-    //   gender: new FormControl('', [Validators.required]),
-    //   aboutme: new FormControl('', [Validators.required]),
-    //   email: new FormControl('', [Validators.required, Validators.email]),
-    //   countryCode: new FormControl('', [Validators.required]),
-    //   phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
-    //   address: new FormControl('', [Validators.required]),
-    // })
-
     this.registerForm = new FormGroup({
-      username: new FormControl('rony9707', [Validators.required, Validators.maxLength(20)]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       password: new FormControl(
-        'Qwerty123.', [Validators.required,
+        '', [Validators.required,
         Validators.minLength(8),
         Validators.maxLength(16),
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/)]),
-      confirmPassword: new FormControl('Qwerty123.', [Validators.required]),
-      fullname: new FormControl('Agnibha Chowdhury', [Validators.required]),
-      dob: new FormControl('2024-12-11', [Validators.required]),
-      gender: new FormControl('Male', [Validators.required]),
-      aboutme: new FormControl('I am a cat', [Validators.required]),
-      email: new FormControl('chowdhury.agnibha.98@gmail.com', [Validators.required, Validators.email]),
-      countryCode: new FormControl('+91', [Validators.required]),
-      phoneNumber: new FormControl('7003652082', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
-      address: new FormControl('P 16 Iswar Gupta Road, Kolkata 28', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      fullname: new FormControl('', [Validators.required]),
+      dob: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [Validators.required]),
+      aboutme: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      countryCode: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+      address: new FormControl('', [Validators.required]),
     })
+
+
+    // this.registerForm = new FormGroup({
+    //   username: new FormControl('rony9707', [Validators.required, Validators.maxLength(20)]),
+    //   password: new FormControl(
+    //     'Qwerty123.', [Validators.required,
+    //     Validators.minLength(8),
+    //     Validators.maxLength(16),
+    //     Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/)]),
+    //   confirmPassword: new FormControl('Qwerty123.', [Validators.required]),
+    //   fullname: new FormControl('Agnibha Chowdhury', [Validators.required]),
+    //   dob: new FormControl('2024-12-11', [Validators.required]),
+    //   gender: new FormControl('Male', [Validators.required]),
+    //   aboutme: new FormControl('I am a cat', [Validators.required]),
+    //   email: new FormControl('chowdhury.agnibha.98@gmail.com', [Validators.required, Validators.email]),
+    //   countryCode: new FormControl('+91', [Validators.required]),
+    //   phoneNumber: new FormControl('7003652082', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
+    //   address: new FormControl('P 16 Iswar Gupta Road, Kolkata 28', [Validators.required]),
+    // })
+
 
   }
 
@@ -153,15 +159,22 @@ export class RegisterComponent implements OnDestroy {
 
 
   //Function which will help to type only and numbers
-  onlyNumbers(event: KeyboardEvent) {
-    var charCode = (event.which) ? event.which : event.keyCode;
-    if ((charCode > 47 && charCode < 58)) {
-      return true;
-    } else {
-      event.preventDefault();
-      return false;
+  onlyNumbers(event: Event, maxLength: number): void {
+    const inputElement = event.target as HTMLInputElement;
+    let value = inputElement.value;
+
+    // Remove any non-numeric characters
+    value = value.replace(/[^0-9]/g, '');
+
+    // Limit the input to the specified max length
+    if (value.length > maxLength) {
+      value = value.substring(0, maxLength);
     }
+
+    inputElement.value = value; // Update the input value
   }
+
+
 
   // Function to allow only alphabets and numbers, no spaces or special characters
   onlyAlphabetsAndNumbers(event: KeyboardEvent) {
@@ -317,6 +330,7 @@ export class RegisterComponent implements OnDestroy {
       return;
     }
     else if (this.registerForm.valid) {
+      this.isLoading = true;
 
       const formData = new FormData();
 
@@ -344,11 +358,13 @@ export class RegisterComponent implements OnDestroy {
       next: (value) => {
         this.common.showSuccessMessage('Success', value.message).then(() => {
           // Navigate to login form
+          this.isLoading = false;
           this.router.navigate(['/login'])
           this.resetForm();
         });
       },
       error: (err) => {
+        this.isLoading = false;
         this.common.showErrorMessage('Error', err.error.message)
       },
     })

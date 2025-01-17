@@ -9,7 +9,8 @@ import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker
 import { DebounceService } from '../../../../services/debounce/debounce.service';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../../../../services/common/common.service';
-
+import { LoaderButtonDirectiveDirective } from '../../../../shared/directives/loaderButton-directive.directive';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -19,7 +20,8 @@ import { CommonService } from '../../../../services/common/common.service';
     CommonModule,
     AttachItemsComponent,
     CloseButtonComponent,
-    EmojiPickerComponent],
+    EmojiPickerComponent,
+    LoaderButtonDirectiveDirective],
   templateUrl: './create-posts-content.component.html',
   styleUrl: './create-posts-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +30,7 @@ export class CreatePostsContentComponent implements OnInit {
   //Inject Services here
   private logger = inject(LoggerService)
   private commonServices = inject(CommonService)
+  private cdr=  inject(ChangeDetectorRef)
 
 
 
@@ -38,6 +41,7 @@ export class CreatePostsContentComponent implements OnInit {
   imageURL = signal('');
   showEmojiPicker = signal(true);
   selectedFiles: File[] = [];
+  isLoading=false;
 
   //Output to sent to Parent
   @Output() postClicked = new EventEmitter<void>();
@@ -52,6 +56,11 @@ export class CreatePostsContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.emitSelectedOption();
+
+    this.commonServices.commonservice_currentIsLoader.subscribe((isVisi)=>{
+      this.isLoading=isVisi
+      this.cdr.detectChanges();
+    })
   }
 
   //Appends the selected emoji in the textare
@@ -95,37 +104,45 @@ export class CreatePostsContentComponent implements OnInit {
     const files = event.target.files;
     if (files && files.length > 0) {
       Array.from(files).forEach((file: any) => {
-        // Use the checkFileFormat function to validate the file format
-        if (this.commonServices.checkFileFormat(file)) {
-          // Create a URL for the uploaded file
-          const imageUrl = URL.createObjectURL(file);
-          const imageTitle = file.name;
-
-          // Create a new object with the image URL and a default title (you can modify this as needed)
-          const imageObject = {
-            uploadedImages: imageUrl,
-            title: imageTitle
-          };
-
-          // Push the image object to the array
-          this.myImages.push(imageObject);
+        // Check file size (5MB = 5 * 1024 * 1024 bytes)
+        const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+        if (file.size > maxSize) {
+          // Show error message if file exceeds size limit
+          this.commonServices.showErrorMessage('Error', 'File size exceeds 5MB. Please upload a smaller file.');
+          this.logger.log('File size exceeds 5MB. Please upload a smaller file.', 'error');
         } else {
-          // Log or show an error if the file type is not allowed
-          this.commonServices.showErrorMessage('Error', 'Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.')
-
-          this.logger.log(`Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.`, 'error');
+          // Use the checkFileFormat function to validate the file format
+          if (this.commonServices.checkFileFormat(file)) {
+            // Create a URL for the uploaded file
+            const imageUrl = URL.createObjectURL(file);
+            const imageTitle = file.name;
+  
+            // Create a new object with the image URL and a default title (you can modify this as needed)
+            const imageObject = {
+              uploadedImages: imageUrl,
+              title: imageTitle
+            };
+  
+            // Push the image object to the array
+            this.myImages.push(imageObject);
+          } else {
+            // Log or show an error if the file type is not allowed
+            this.commonServices.showErrorMessage('Error', 'Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.');
+            this.logger.log('Invalid file format. Only .jpeg, .jpg, .png, and .webp are allowed.', 'error');
+          }
         }
       });
     }
-
+  
     const input = event.target as HTMLInputElement;
     if (input?.files) {
       this.selectedFiles = Array.from(input.files); // Convert FileList to Array
       this.emitSelectedFiles();
     } else {
-      this.logger.log(`No Files Selected`, 'error');
+      this.logger.log('No Files Selected', 'error');
     }
   }
+  
 
 
 
@@ -145,6 +162,7 @@ export class CreatePostsContentComponent implements OnInit {
 
   uploadPost() {
     this.postClicked.emit();
+    this.commonServices.changeIsLoader(true)
   }
 
   public emitMessage() {

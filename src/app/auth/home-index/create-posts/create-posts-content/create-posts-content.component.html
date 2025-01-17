@@ -65,5 +65,7 @@
 
 </div>
 
-<button [disabled]="!postContent.value.trim() && myImages.length === 0" class="post"
+<div class="post-button-container">
+  <button [appLoaderButtonDirective]="isLoading" [disabled]="!postContent.value.trim() && myImages.length === 0" class="post"
   (click)="uploadPost()">Post</button>
+</div>

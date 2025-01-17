@@ -50,7 +50,7 @@
   <!-- Remember Username or Password -->
   <div class="login-div">
     <button class="forget-password" type="button" (click)="forgetPassword(loginForm.get('username')?.value)">Forget Password</button>
-    <button class="login" [disabled]="loginForm.invalid" type="submit">Login</button>
+    <button   [appLoaderButtonDirective]="isLoading" class="login" [disabled]="loginForm.invalid" type="submit">Login</button>
   </div>
 </form>
 

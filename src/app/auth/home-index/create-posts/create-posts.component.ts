@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CreatePostsHeaderComponent } from './create-posts-header/create-posts-header.component';
 import { CreatePostsContentComponent } from './create-posts-content/create-posts-content.component';
 import { postDetails } from './create-post.interface';
@@ -17,7 +17,7 @@ import { CommonService } from '../../../services/common/common.service';
   templateUrl: './create-posts.component.html',
   styleUrl: './create-posts.component.css'
 })
-export class CreatePostsComponent implements OnDestroy {
+export class CreatePostsComponent implements OnDestroy, OnInit {
 
   private createPostSubscription?: Subscription
 
@@ -33,6 +33,8 @@ export class CreatePostsComponent implements OnDestroy {
   $user: Observable<UserProfile | null>;
   $error: Observable<string | null>;
 
+  isLoading=false
+
 
   private store = inject(Store<AppState>);
   private postService = inject(postService);
@@ -47,6 +49,12 @@ export class CreatePostsComponent implements OnDestroy {
     this.$error = this.store.select(getUserSelector.selectUserError);
     this.userSubscription = this.$user.subscribe((user) => {
       this.postDetails.username = user?.db_username
+    })
+  }
+
+  ngOnInit(): void {
+    this.commonService.commonservice_currentIsLoader.subscribe((isVisi) => {
+      this.isLoading = isVisi
     })
   }
 
@@ -79,7 +87,6 @@ export class CreatePostsComponent implements OnDestroy {
 
 
   onPostClicked() {
-
     const formDataToSendToBackend = new FormData();
 
     // Append images
@@ -100,20 +107,21 @@ export class CreatePostsComponent implements OnDestroy {
         }
       }
     }
-
     //Sent Data to backend
     this.createPost(formDataToSendToBackend)
+   
   }
 
 
   createPost(formDataToSendToBackend: FormData) {
     this.createPostSubscription = this.postService.createPosts(formDataToSendToBackend).subscribe({
       next: (value) => {
-        this.commonService.showSuccessMessage('Success', value.message).then(
-
-        )
+        this.commonService.showSuccessMessage('Success', value.message).then(() => {
+          this.commonService.changeIsLoader(false); // Hide loader
+        });
       },
       error: (err) => {
+        this.commonService.changeIsLoader(false); 
         console.log(err)
         this.commonService.showErrorMessage('Error', err.error.message)
       },

@@ -11,11 +11,12 @@ import { SongService } from '../../../music/Music-Services/song.service';
 import { CommonService } from '../../../services/common/common.service';
 import { PfpComponent } from "../../components/pfp/pfp.component";
 import { broadCastChannel } from '../../../app.component';
+import { LoaderButtonDirectiveDirective } from '../../directives/loaderButton-directive.directive';
 
 @Component({
   selector: 'app-auth-buttons',
   standalone: true,
-  imports: [RouterModule, CommonModule, PfpComponent],
+  imports: [RouterModule, CommonModule, PfpComponent,LoaderButtonDirectiveDirective],
   templateUrl: './auth-buttons.component.html',
   styleUrl: './auth-buttons.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,6 +25,7 @@ export class AuthButtonsComponent implements OnDestroy {
 
 
   private logoutSubscription?: Subscription
+  isLoading=false;
 
 
   public authService = inject(AuthService)
@@ -49,9 +51,12 @@ export class AuthButtonsComponent implements OnDestroy {
 
 
   logout() {
+    this.isLoading=true;
     this.logoutSubscription = this.authService.logoutUser().subscribe({
       next: (value) => {
         this.commonservices.showSuccessMessage("Log out", value.message).then(() => {
+
+          this.isLoading=false;
 
           this.songServices.toggleMusic(false); //Stop song when logout
 
