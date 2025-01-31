@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { UserProfile } from '../../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../../states/getUser/getUser.selector'
 import { postVisibility } from '../../../../shared/enums/postS.enum';
+import { PostManagerService } from '../create-post.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class CreatePostsHeaderComponent implements OnInit {
   $error: Observable<string | null>;
 
   private store = inject(Store<AppState>);
+  public postManagerService = inject(PostManagerService)
 
   constructor() {
     this.$user = this.store.select(getUserSelector.getAllUser);

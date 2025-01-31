@@ -9,6 +9,7 @@ import { Observable, take } from 'rxjs';
 import { UserProfile } from './user/user-profile/user-profile.interface';
 import { AuthService } from './services/API/Auth/auth.service';
 import { CommonService } from './services/common/common.service';
+import { lyrics } from './music/music-assets/MusicLysics/lyrics';
 
 export const broadCastChannel = new BroadcastChannel("authentication")
 
@@ -40,7 +41,7 @@ export class AppComponent {
     //If in any route except root and page is reloaded,make a Auth call to the server
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        if (routerEvent.url != '/' && this.authService.isAuthenticated) {
+        if ((routerEvent.url != '/' && this.authService.isAuthenticated) || routerEvent.url== '/music') {
           //If No User data is present, then dispath the User action
           this.$user.pipe(take(1)).subscribe((user) => {
             if (!user) {
@@ -51,7 +52,8 @@ export class AppComponent {
       }
     })
 
-    this.songServices.setSongs(['https://dl.dropboxusercontent.com/scl/fi/s76vxgn0794imk3y870ab/Preet.mp3?rlkey=9wsj6txwvcnvhc5ugz4uwv16q&e=1&st=3cy1eanf&dl=0'])
+    this.songServices.setSongs(['https://dl.dropbox.com/scl/fi/o6jnyr7fbgv2s0wekjjih/paradox-128-ytshorts.savetube.me.mp3?rlkey=839eb70vjeag2850csk7w5cjq&e=1&st=t8kdosn2&dl=0'])
+    this.songServices.setImage('https://images.alphacoders.com/138/1383009.jpg')
 
 
     broadCastChannel.onmessage = (event) => {

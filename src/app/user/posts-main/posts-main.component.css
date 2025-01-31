@@ -1,0 +1,28 @@
+.search-posts-div{
+    width: 100%;
+    display: flex;
+}
+
+.search-posts{
+    width: 70%;
+    display: grid;
+    place-items: center;
+}
+
+.filter-posts{
+    width: 30%;
+}
+
+
+@media(max-width:800px) {
+
+    .search-posts{
+        width: 100%;
+    }
+
+    .filter-posts{
+        width: 0%;
+    }
+    
+    
+  }

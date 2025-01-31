@@ -70,7 +70,6 @@ export class AuthService {
 
   //Get User Data After Login
   getUser(): Observable<UserProfile> {
-    console.log("Get User is called")
     return this.http.get<UserProfile>(this.userDataURL, {
       withCredentials: true,
     })

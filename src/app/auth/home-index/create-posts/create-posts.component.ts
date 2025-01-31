@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CreatePostsHeaderComponent } from './create-posts-header/create-posts-header.component';
 import { CreatePostsContentComponent } from './create-posts-content/create-posts-content.component';
 import { postDetails } from './create-post.interface';
@@ -9,6 +9,7 @@ import { UserProfile } from '../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../states/getUser/getUser.selector'
 import { postService } from '../../../services/API/Post/post.service';
 import { CommonService } from '../../../services/common/common.service';
+import { PostManagerService } from './create-post.service';
 
 @Component({
   selector: 'app-create-posts',
@@ -39,6 +40,8 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   private store = inject(Store<AppState>);
   private postService = inject(postService);
   private commonService = inject(CommonService)
+  private postManagerService = inject(PostManagerService)
+  private changeDet = inject(ChangeDetectorRef)
 
 
   private userSubscription: Subscription;
@@ -53,9 +56,22 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.commonService.commonservice_currentIsLoader.subscribe((isVisi) => {
-      this.isLoading = isVisi
-    })
+
+      // Subscribe to success and error messages
+  this.postManagerService.successMessage$.subscribe((message) => {
+    if (message) {
+      this.commonService.showSuccessMessage('Success', message);
+      this.postManagerService.resetState(); 
+    }
+  });
+
+  this.postManagerService.errorMessage$.subscribe((errorMessage) => {
+    if (errorMessage) {
+      this.commonService.showErrorMessage('Error', errorMessage);
+      this.postManagerService.resetState(); 
+    }
+  });
+
   }
 
   ngOnDestroy(): void {
@@ -109,23 +125,14 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
     }
     //Sent Data to backend
     this.createPost(formDataToSendToBackend)
+
+    
    
   }
 
 
   createPost(formDataToSendToBackend: FormData) {
-    this.createPostSubscription = this.postService.createPosts(formDataToSendToBackend).subscribe({
-      next: (value) => {
-        this.commonService.showSuccessMessage('Success', value.message).then(() => {
-          this.commonService.changeIsLoader(false); // Hide loader
-        });
-      },
-      error: (err) => {
-        this.commonService.changeIsLoader(false); 
-        console.log(err)
-        this.commonService.showErrorMessage('Error', err.error.message)
-      },
-    })
+    this.postManagerService.createPost(formDataToSendToBackend);
   }
 
 

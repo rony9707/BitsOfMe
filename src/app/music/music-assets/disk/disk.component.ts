@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { MusicDiskComponent } from '../../../shared/svg/music-disk/music-disk.component';
+import { SongService } from '../../Music-Services/song.service';
 
 @Component({
   selector: 'app-disk',
   standalone: true,
-  imports: [],
+  imports: [MusicDiskComponent],
   templateUrl: './disk.component.html',
   styleUrl: './disk.component.css'
 })
 export class DiskComponent implements OnInit {
   imageUrl?: string;
 
+  public songService = inject(SongService)
+
   ngOnInit() {
     // Imagine this URL comes from an API
-    this.imageUrl = 'https://img.freepik.com/free-photo/close-up-kitten-exploring-nature_23-2150782371.jpg';
+    this.imageUrl = 'https://images.alphacoders.com/138/1383009.jpg';
   }
 }

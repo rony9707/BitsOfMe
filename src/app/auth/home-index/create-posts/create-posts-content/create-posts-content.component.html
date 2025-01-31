@@ -1,5 +1,6 @@
 <textarea #postContent class='post-text' type="text" autofocus placeholder="Hi, What u wanna share?" (focus)="onFocus()"
   (blur)="onBlur()" (input)="onInput(postContent)" name="message" [(ngModel)]="message"
+  [disabled]="postManagerService.post_fields_disabled_status()"
   (input)="adjustHeight($event)"></textarea>
 
 @if(myImages.length>0){
@@ -20,8 +21,11 @@
     <!-- Close button -->
     <!-- <img rel="prefetch" class="remove-img-btn" (click)="removeImage(image.uploadedImages)" src="assets/SVG/close-btn.svg"
       alt="CloseButton" /> -->
-    <app-close-button class="remove-img-btn" [fillColor]="'#FF0000'" (click)="removeImage(image.uploadedImages)"
-      alt="CloseButton"></app-close-button>
+      @if(!postManagerService.post_fields_disabled_status()){
+        <app-close-button class="remove-img-btn" [fillColor]="'#FF0000'" (click)="removeImage(image.uploadedImages)"
+        alt="CloseButton"></app-close-button>
+      }
+
   </div>
   }
 
@@ -32,7 +36,7 @@
 
 
 <div class="extra-info">
-  <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"
+  <select [disabled]="postManagerService.post_fields_disabled_status()" id="visibility" class="visibility-select-box" [(ngModel)]="selectedOption"
     (ngModelChange)="emitSelectedOption()">
     @for (option of selectBoxOptions(); track option.hobbie) {
     @if(option.name != 'music' && option.name != 'mygames'){
@@ -45,10 +49,10 @@
 
   <div class="emoji-picker-class">
 
-    <label for="attach_img" style="display:grid;place-items:center">
+    <label  for="attach_img" style="display:grid;place-items:center">
       <svg-attach-items class="attachFiles"></svg-attach-items>
     </label>
-    <input style="display:none" id="attach_img" type="file" accept="image/*" multiple
+    <input [disabled]="postManagerService.post_fields_disabled_status()" style="display:none" id="attach_img" type="file" accept="image/*" multiple
       (change)="onImageUpload($event)" />
 
     <!-- <button class="emoji-picker-btn" [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}"
@@ -59,7 +63,7 @@
     <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
     } -->
 
-    <app-emoji-picker (emojiSelected)="addEmoji($event)" [isTextareaFocused]="showEmojiPicker()"></app-emoji-picker>
+    <app-emoji-picker [disabled_status]="postManagerService.post_fields_disabled_status()" (emojiSelected)="addEmoji($event)" [isTextareaFocused]="showEmojiPicker()"></app-emoji-picker>
 
   </div>
 

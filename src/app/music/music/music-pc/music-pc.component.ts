@@ -8,11 +8,21 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { VolumeControlComponent } from "./volume-control/volume-control.component";
 import { SongProgressbarComponent } from "./song-progressbar/song-progressbar.component";
+import { SongLyricsComponent } from './song-lyrics/song-lyrics.component';
 
 @Component({
   selector: 'app-music-pc',
   standalone: true,
-  imports: [DiskComponent, PlayComponent, PauseComponent, CommonModule, FormsModule, VolumeControlComponent, SongProgressbarComponent],
+  imports: [
+    DiskComponent, 
+    PlayComponent, 
+    PauseComponent, 
+    CommonModule, 
+    FormsModule, 
+    VolumeControlComponent, 
+    SongProgressbarComponent,
+   SongLyricsComponent
+  ],
   templateUrl: './music-pc.component.html',
   styleUrl: './music-pc.component.css'
 })

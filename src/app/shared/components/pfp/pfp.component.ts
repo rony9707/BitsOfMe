@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { UserProfile } from '../../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../../states/getUser/getUser.selector'
 import { AsyncPipe } from '@angular/common';
+import { AuthService } from '../../../services/API/Auth/auth.service';
 
 @Component({
   selector: 'app-pfp',
@@ -20,6 +21,7 @@ export class PfpComponent {
   $error: Observable<string | null>;
 
   private store = inject(Store<AppState>);
+  public authService = inject(AuthService)
 
 
   constructor() {

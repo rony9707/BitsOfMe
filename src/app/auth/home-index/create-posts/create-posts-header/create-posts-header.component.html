@@ -7,7 +7,7 @@
       {{user.db_fullname}}
     </div>
     <div class="visibility">
-      <select id="visibility" class="visibility-select-box" [(ngModel)]="selectedVisibility"
+      <select [disabled]="postManagerService.post_fields_disabled_status()" id="visibility" class="visibility-select-box" [(ngModel)]="selectedVisibility"
         (ngModelChange)="onVisibilityChange()">
         <option *ngFor="let option of visibilityOptions" [value]="option.value">
           {{ option.label }}

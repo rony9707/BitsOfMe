@@ -2,7 +2,6 @@
   width: 100%;
   display: grid;
   place-items: center;
-  margin-bottom: 20px;
 }
 
 input{
@@ -16,6 +15,14 @@ input{
 }
 
 @media(max-width:800px) {
+
+  :host{
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    display: grid;
+    place-items: center;
+  }
+  
 
   input{
     width: 80%;

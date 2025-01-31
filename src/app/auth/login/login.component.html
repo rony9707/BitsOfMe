@@ -3,7 +3,7 @@
   <!-- Username or Email -->
   <div class="input-box">
     <input #usernameInput (focus)="inputFocus(usernameLabel)" (blur)="inputBlur(usernameLabel, usernameInput)"
-      type="text" formControlName="username" maxlength="20" />
+      type="text" formControlName="username" />
     <label #usernameLabel [ngClass]="{'focused': loginForm.get('username')?.value}">
       Enter your username or email
     </label>

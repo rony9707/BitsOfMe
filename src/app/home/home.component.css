@@ -40,4 +40,6 @@
 
 .login-register{
   height: calc(100vh - 80px);
+  touch-action: pan-y !important;
+  user-select: text !important;
 }

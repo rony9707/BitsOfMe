@@ -1,1 +1,3 @@
+@if((authService.isAuthenticated)){
 <img class="pfp" [src]="($user | async)?.db_phofilePic_100" [alt]="($user | async)?.db_phofilePic_100" routerLinkActive="highlighted" [routerLink]="'/user/' + ($user | async)?.db_username">
+}

@@ -8,7 +8,6 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects'; //NGRX STORE DEV TOOLS FOR CHROME
 import { getUserEffect } from './states/getUser/getUser.effects';
 import { getUserReducer } from './states/getUser/getUser.reducer';
-import { authInterceptor } from './services/API/Auth/auth.interceptor';
 import * as Hammer from 'hammerjs'; // Import Hammer.js
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { MyHammerConfig } from './services/hammerjs/hammer.service';

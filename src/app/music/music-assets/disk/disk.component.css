@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1vw solid #000000; /* Scales with viewport width */
+  border: 1vw solid #ffffff54; /* Scales with viewport width */
   /* clip-path: circle(10% at 70% 30%); */
 }
 
@@ -26,5 +26,5 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--main-background-color);
-  border: .5vw solid #87ff6e; /* Scales with viewport width */
+  border: .5vw solid #ffffff54; /* Scales with viewport width */
 }

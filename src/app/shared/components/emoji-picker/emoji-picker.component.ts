@@ -17,6 +17,7 @@ export class EmojiPickerComponent implements OnChanges {
 
   @Output() emojiSelected = new EventEmitter<string>();
   @Input() isTextareaFocused: boolean = false;
+  @Input() disabled_status: boolean = true;
 
   showEmojiPicker = signal(false);
   emojiButton = signal('😊');

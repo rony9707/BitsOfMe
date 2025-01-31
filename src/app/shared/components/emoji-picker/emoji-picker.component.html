@@ -1,5 +1,7 @@
 <button class="emoji-picker-btn"
-    [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}" (mouseenter)="showEmojiPicker() ? null : emojiRandom()"
+    [disabled]="disabled_status"
+    [ngStyle]="showEmojiPicker() ? { filter: 'unset', transform: 'scale(1.1)' } : {}" 
+    (mouseenter)="!disabled_status && !showEmojiPicker() ? emojiRandom() : null"
     (click)="toggleEmojiPicker()">{{emojiButton()}}</button>
 @if(showEmojiPicker()==true) {
 <div #emojiPicker>

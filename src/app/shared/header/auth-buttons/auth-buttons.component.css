@@ -83,10 +83,16 @@ button:hover {
 
   .pfp-logout {
     width: 100%;
+    gap: unset;
   }
 
 
   .logout-btn {
+    width: 100%;
+  }
+
+  .logout-btn-div{
+    margin-right: 20px;
     width: 100%;
   }
 

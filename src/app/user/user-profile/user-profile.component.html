@@ -1,40 +1,64 @@
-<div class="user-profile-left-main common-main" [class.fontColorChange]="isHovered()">
-  <div class="left-section-main">
-    <div class="pfp-username">
-      <div class="pfp-username-sub">
-        <img class="pfp" [src]="($user | async)?.db_phofilePic_100" alt="cat">
-        <div class="username">
-          <span class="username-span">&#64;username</span>
-          <br>
-          <div class="username-data-span">
-            {{($user | async)?.db_username}}
-          </div>
-        </div>
+@if(($user | async); as user) {
+  <div class="upper-part">
+    <div class="pfp-div">
+      <img [src]="user?.db_phofilePic" alt="cat">
+    </div>
+    <div class="about-me-div">
+      <div class="about-me">
+        <div class="title">About Me</div>
+        <span>{{user?.db_aboutUser}}</span>
       </div>
     </div>
-
-    <div class="title-wrapper">
-      @if(($user | async); as user) {
-      <ng-container *ngFor="let field of fields">
-        <div class="title">
-          {{ field.label }}
-        </div>
-        <div class="title-data title-common" [ngClass]="field.class ? field.class : ''">
-          {{ user[field.key] }}
-        </div>
-      </ng-container>
-      } @else {
-      <div>{{ ($error | async) }}</div>
-      }
+  </div>
+  <div class="lower-part">
+    <div class="row">
+      <div class="field">
+        <strong class="title">Username:</strong> {{ user.db_username }}
+      </div>
+      <div class="field">
+        <strong  class="title"> Full Name:</strong> {{ user.db_fullname }}
+      </div>
     </div>
-    
+  
+    <div class="row">
+      <div class="field">
+        <strong  class="title">Email:</strong> {{ user.db_email }}
+      </div>
+      <div class="field">
+        <strong  class="title">Phone:</strong> {{ user.db_phoneNumber }}
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="field">
+        <strong class="title">Gender:</strong> {{ user.db_gender }}
+      </div>
+      <div class="field">
+        <strong class="title">Date of Birth:</strong> {{ user.db_dob }}
+      </div>
+    </div>
+  
+    <div class="row full-width">
+      <div class="field">
+        <strong class="title">Address:</strong> {{ user.db_address }}
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="field">
+        <strong class="title">Account Created:</strong> {{ user.db_dtecre.replace(' at', ' -') }}
+      </div>
+      <div class="field">
+        <strong class="title">Last Modified:</strong> {{ user.db_dtemod.replace(' at', ' -')}}
+      </div>
+    </div>
+  
+    <div class="row full-width">
+      <div class="field">
+        <strong class="title">Last Login:</strong> {{ user.db_dteLastLogin.replace(' at', ' -') }}
+      </div>
+    </div>
   </div>
-</div>
-<div class="user-profile-right-main common-main" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
-  <div class="right-section-text">
-    Welcome, {{ ($user | async)?.db_fullname }}!
-    <br>
-    Here's your profile.
-  </div>
-</div>
-<div class="absolute-background"></div>
+  } @else {
+  <div>{{ ($error | async) }}</div>
+  }

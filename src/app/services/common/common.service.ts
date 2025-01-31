@@ -84,15 +84,6 @@ export class CommonService {
   }
 
 
-  //To sent boolean data for Post Button Loader
-  private commonservice_isLoader = new BehaviorSubject<boolean>(false)
-
-  commonservice_currentIsLoader = this.commonservice_isLoader.asObservable();
-
-  changeIsLoader(message: boolean) {
-    this.commonservice_isLoader.next(message)
-  }
-
 
 
 

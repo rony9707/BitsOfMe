@@ -38,6 +38,8 @@
 .common-home-index-sub{
   background-color: var(--main-background-color);
   scrollbar-width: thin; 
+  touch-action: pan-y !important;
+  user-select: text !important;
 }
 
 .divider-text {

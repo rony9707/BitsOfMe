@@ -53,6 +53,7 @@ export class SongProgressbarComponent implements OnInit, AfterViewInit, OnDestro
     //this.updateSliderBackground(newProgress);
     this.songProgress.set(newProgress);
     this.songServices.seekToPosition(newProgress);
+
   }
 
   private updateSliderBackground(progress: number): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnDestroy, OnInit, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { menuItems } from '../../../../shared/BitsOfLifeData/bits-data';
 import { CommonModule } from '@angular/common';
@@ -6,11 +6,11 @@ import { AttachItemsComponent } from '../../../../shared/svg/attach-items/attach
 import { LoggerService } from '../../../../services/logger/logger.service';
 import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-button.component';
 import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
-import { DebounceService } from '../../../../services/debounce/debounce.service';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../../../../services/common/common.service';
 import { LoaderButtonDirectiveDirective } from '../../../../shared/directives/loaderButton-directive.directive';
 import { ChangeDetectorRef } from '@angular/core';
+import { PostManagerService } from '../create-post.service';
 
 
 @Component({
@@ -26,11 +26,12 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './create-posts-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreatePostsContentComponent implements OnInit {
+export class CreatePostsContentComponent implements OnInit, OnDestroy {
   //Inject Services here
   private logger = inject(LoggerService)
   private commonServices = inject(CommonService)
   private cdr=  inject(ChangeDetectorRef)
+  public postManagerService = inject(PostManagerService)
 
 
 
@@ -53,14 +54,34 @@ export class CreatePostsContentComponent implements OnInit {
   // Array to store both images and their titles
   myImages: { uploadedImages: string; title: string }[] = [];
 
+  //The subscription
+  private subscriptions: Subscription = new Subscription();
+
 
   ngOnInit(): void {
     this.emitSelectedOption();
 
-    this.commonServices.commonservice_currentIsLoader.subscribe((isVisi)=>{
-      this.isLoading=isVisi
-      this.cdr.detectChanges();
-    })
+      // Subscribe to the service's message and selectedFiles
+      const messageSub = this.postManagerService.message$.subscribe((msg) => {
+        this.message.set(msg); // Update the component's message
+      });
+  
+      const selectedFilesSub = this.postManagerService.selectedFilesSubject$.subscribe((files) => {
+        this.myImages = files; // Update the component's selectedFiles
+      });
+  
+      const loadingSub = this.postManagerService.isLoading$.subscribe((isLoading) => {
+        this.isLoading = isLoading;
+      });
+  
+      // Add subscriptions to the `subscriptions` object
+      this.subscriptions.add(messageSub);
+      this.subscriptions.add(selectedFilesSub);
+      this.subscriptions.add(loadingSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   //Appends the selected emoji in the textare
@@ -162,7 +183,6 @@ export class CreatePostsContentComponent implements OnInit {
 
   uploadPost() {
     this.postClicked.emit();
-    this.commonServices.changeIsLoader(true)
   }
 
   public emitMessage() {

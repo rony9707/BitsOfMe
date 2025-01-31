@@ -33,4 +33,5 @@ https://www.svgbackgrounds.com/elements/animated-svg-preloaders/
 https://cubic-bezier.com/#.17,.67,.83,.67
 https://www.toptal.com/developers/cssminifier
 https://esbuild.github.io/analyze/
-
+https://cssicon.space/#/
+https://uiverse.io/

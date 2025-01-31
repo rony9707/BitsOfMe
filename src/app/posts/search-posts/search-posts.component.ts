@@ -37,9 +37,22 @@ export class SearchPostsComponent implements OnDestroy {
   }
 
   //Input box Input event listener
-  searchText(e:HTMLInputElement){
-    this.debounceService.sentToDebouncer(e.value)
+  searchText(e: HTMLInputElement) {
+    const currentValue = e.value;
+    const trimmedValue = currentValue.trim(); // Remove leading and trailing spaces
+  
+    // If the current input (with spaces) is different from the trimmed input, 
+    // it means trailing spaces were added, so do nothing.
+    if (currentValue !== trimmedValue) {
+      return;
+    }
+  
+    // Call debounce service only when meaningful text is entered or cleared
+    if (trimmedValue.length > 0 || currentValue.length === 0) {
+      this.debounceService.sentToDebouncer(currentValue);
+    }
   }
+  
 
   //Emit the data to the parent
   public emitSearchInput(inputString:string) {
