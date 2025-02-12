@@ -1,6 +1,10 @@
 import { inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { postService } from '../../../services/API/Post/post.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../states/app.state';
+import { loadPosts } from '../../../states/getPosts/posts.action';
+import { initialPostsState } from '../../../states/getPosts/posts.reducer';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +28,7 @@ export class PostManagerService implements OnDestroy{
 
 
   private postService = inject(postService);
+  private store= inject(Store<AppState>);
 
   ngOnDestroy(): void {
     this.postSubscription.unsubscribe()
@@ -44,6 +49,8 @@ export class PostManagerService implements OnDestroy{
         this.selectedFilesSubject.next([]); // Clears the selected files array
         this.message.next(''); // Clears the selected files array
 
+        //Load the posts state after a successfull post
+        this.store.dispatch(loadPosts(initialPostsState));
       },
       error: (error) => {
         this.isLoadingSubject.next(false);

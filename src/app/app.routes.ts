@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CreatePostsComponent } from './auth/home-index/create-posts/create-posts.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-import { CanActivateUser, userResolve } from './services/Authguard/authguard.service';
+import { CanActivateUser, userAndPostsResolve } from './services/Authguard/authguard.service';
 import { CanActivateUserOpposite } from './services/Authguard/authguard_opposite.service';
 import { Error404Component } from './shared/components/error404/error404.component';
 
@@ -33,7 +33,11 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () => import('./user/posts-main/posts-main.component').then(m => m.PostsMainComponent),
-            resolve: { user: userResolve }
+            resolve: { user_posts_Data: userAndPostsResolve }
+          },
+          {
+            path: 'my-posts',
+            loadComponent: () => import('./posts/my-posts/my-posts.component').then(m => m.MyPostsComponent),
           },
           {
             path: 'user/:usernameID',

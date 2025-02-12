@@ -1,54 +1,132 @@
-
-:host{
-    display: flex;
+:host {
+  display: flex;
 }
 
-.all-posts{
-    width: 70%;
+.all-posts {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.all-friends {
+  width: 30%;
+  height: 100%;
+}
+
+
+@media (max-width: 1000px) {
+  .all-friends {
+    width: 20%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+  }
+}
+
+@media (max-width: 800px) {
+  :host {
     align-items: center;
+  }
+
+  .all-posts {
+    width: 100%;
+  }
+
+  .all-friends {
+    width: 0%;
+  }
+
+  .post-template-main {
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+  }
 }
 
-.all-friends{
-    width: 30%;
-    height: 100%;
-}
+
+
+/* ------------------------------------------------------------------------------------------- */
+
+/* POSTS CSS---------------------------------------------------------------- */
 
 .post-template-main:first-child {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
-.post-template-main{
-    width: 70%;
-    height: 700px;
-    background-color: aquamarine;
-    margin: 15px 0px 15px 0px;
-    border-radius: .6rem;
-    display: grid;
-    place-items: center;
-    font-size: 30px;
-    color: black;
+.post-template-main {
+  width: 90%;
+  min-height: 100px;
+  background-color: rgba(105, 105, 105);
+  margin: 15px 0px 15px 0px;
+  border-radius: 0.6rem;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.post-template-header {
+  height: 110px;
+  background-color: rgba(105, 105, 105, 0.832);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
 }
 
 
-@media(max-width:800px) {
+.pfp-div img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0px 0px 0px 10px;
+}
 
-    :host{
-        align-items: center;
-    }
+.about-user-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60px;
+  margin: 0px 0px 10px 15px;
+}
 
-    .all-posts{
-        width: 100%;
-    }
+.username{
+  font-weight: 700;
+  color:bisque;
+  cursor: default;
+  font-size: 20px;
+}
 
-    .all-friends{
-        width: 0%;
-    }
+.post-creation-date{
+  font-size: 15px;
+  opacity: .7;
+  cursor: default;
+}
 
-    .post-template-main{
-        width: 100%;
-        margin: 10px 0px 10px 0px;
-    }
+
+.post-template-main-content{
+  width: 100%;
+  min-height: 0px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(105, 105, 105, 0.832);
+}
+
+
+
+.tooltip {
+  position: fixed;
+  background: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+@media (max-width: 800px) {
+  .post-template-main {
+    width: 100%;
+    margin: 10px 0px 10px 0px;
   }
+}

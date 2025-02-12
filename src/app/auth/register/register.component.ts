@@ -73,7 +73,7 @@ export class RegisterComponent implements OnDestroy {
       confirmPassword: new FormControl('', [Validators.required]),
       fullname: new FormControl('', [Validators.required]),
       dob: new FormControl('', [Validators.required]),
-      gender: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [Validators.required,Validators.pattern('Male|Female')]),
       aboutme: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       countryCode: new FormControl('', [Validators.required]),
@@ -92,7 +92,7 @@ export class RegisterComponent implements OnDestroy {
     //   confirmPassword: new FormControl('Qwerty123.', [Validators.required]),
     //   fullname: new FormControl('Agnibha Chowdhury', [Validators.required]),
     //   dob: new FormControl('2024-12-11', [Validators.required]),
-    //   gender: new FormControl('Male', [Validators.required]),
+    //   gender: new FormControl('Male', [Validators.required,Validators.pattern('Male|Female')]),
     //   aboutme: new FormControl('I am a cat', [Validators.required]),
     //   email: new FormControl('chowdhury.agnibha.98@gmail.com', [Validators.required, Validators.email]),
     //   countryCode: new FormControl('+91', [Validators.required]),
@@ -158,21 +158,19 @@ export class RegisterComponent implements OnDestroy {
   }
 
 
-  //Function which will help to type only and numbers
-  onlyNumbers(event: Event, maxLength: number): void {
+  //Function so that u can type for only 10 numbers
+  onTenNumbers(event: Event, maxLength: number): void {
     const inputElement = event.target as HTMLInputElement;
-    let value = inputElement.value;
-
-    // Remove any non-numeric characters
-    value = value.replace(/[^0-9]/g, '');
-
-    // Limit the input to the specified max length
-    if (value.length > maxLength) {
-      value = value.substring(0, maxLength);
+    let inputValue = inputElement.value;
+  
+    if (inputValue.length > maxLength) {
+      inputValue = inputValue.slice(0, maxLength);
+      inputElement.value = inputValue; 
     }
-
-    inputElement.value = value; // Update the input value
+  
+    this.registerForm.controls['phoneNumber'].setValue(inputValue, { emitEvent: false });
   }
+  
 
 
 

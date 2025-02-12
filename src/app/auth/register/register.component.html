@@ -313,10 +313,10 @@
             <input class="phone-number-input" #phoneNumberInput (focus)="inputFocus(phoneNumberLabel)"
               (blur)="inputBlur(phoneNumberLabel, phoneNumberInput)"  
               type="number"
-              formControlName="phoneNumber" maxlength="10" 
-              (input)="onlyNumbers($event, 10)"/>
+              formControlName="phoneNumber"
+              (input)="onTenNumbers($event, 10)"/>
             <label class="phone-number-label" #phoneNumberLabel
-              [ngClass]="{'focused': registerForm.get('phoneNumber')?.value}">Enter your Phone
+              [ngClass]="{'focused': registerForm.get('phoneNumber')?.value}">Enter a valid Phone
               Number</label>
           </div>
         </div>

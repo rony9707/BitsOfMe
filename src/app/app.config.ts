@@ -11,6 +11,8 @@ import { getUserReducer } from './states/getUser/getUser.reducer';
 import * as Hammer from 'hammerjs'; // Import Hammer.js
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { MyHammerConfig } from './services/hammerjs/hammer.service';
+import { PostEffects } from './states/getPosts/posts.effects';
+import { postReducer } from './states/getPosts/posts.reducer';
 
 
 
@@ -24,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore(), //NGRX STORE
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
-    provideEffects(getUserEffect),
+    provideEffects(getUserEffect,PostEffects),
     provideState({ name: 'user', reducer: getUserReducer }),
+    provideState({ name: 'posts', reducer: postReducer }),
   ]
 };

@@ -1,0 +1,13 @@
+<div #postTextEl
+     id="post-text-{{ post._id }}" 
+     class="post-text" 
+     [ngClass]="{ 'expanded': expanded }" 
+     [innerHTML]="post.db_postText || '' | postsFormatText">
+</div>
+
+
+@if(showMore) {
+  <button class="see-more" (click)="toggleExpand()">
+    {{ expanded ? 'Show Less' : 'Show More' }}
+  </button>
+}

@@ -48,7 +48,7 @@ export class LoginComponent implements OnDestroy {
   constructor() {
     this.loginForm = new FormGroup({
       username: new FormControl(localStorage.getItem('rememberMeUsername'), [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('Qwerty123.', [Validators.required]),
       rememberMe: new FormControl(localStorage.getItem('rememberMeCheckbox') === 'true')//Here conversion is done from string to boolean as in local stroage stores data in string
     })
   }

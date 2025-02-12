@@ -6,6 +6,7 @@ import { AppState } from '../../states/app.state';
 import { AuthService } from '../API/Auth/auth.service';
 import * as getUserAction from './../../states/getUser/getUser.action'
 import { BehaviorSubject } from 'rxjs';
+import { clearPostsWhenLogout } from '../../states/getPosts/posts.action';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,7 @@ export class CommonService {
 
   codeToRunDuringLogout() {
     this.store.dispatch(getUserAction.logoutUser());
+    this.store.dispatch(clearPostsWhenLogout());
     this.authService.$isLoggedIn.set(false);
     this.router.navigate(['/login']);
   }
@@ -82,6 +84,41 @@ export class CommonService {
   changeVisibility(message: boolean) {
     this.commonservice_sliderVisble.next(message)
   }
+
+
+  //convert time for show posts
+  // Convert time for showing posts
+postTimeAgo(postDateString: string): string {
+    // Convert "10th Feb, 2025 at 16:00:09 IST" to "10 Feb 2025 16:00:09"
+    let formattedDate = postDateString
+        .replace(/(\d+)(st|nd|rd|th)/, '$1') // Remove ordinal suffix (th, st, nd, rd)
+        .replace("at", "") // Remove "at"
+        .trim(); // Remove extra spaces
+
+    // Parse the date correctly by appending IST manually
+    const postDate = new Date(formattedDate + " GMT+0530"); // Ensuring IST is considered
+
+    if (isNaN(postDate.getTime())) {
+        return "Invalid date format";
+    }
+
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInDays >= 1) {
+        return postDateString; // Show original timestamp if more than 1 day old
+    } else if (diffInHours >= 1) {
+        return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    } else if (diffInMinutes >= 1) {
+        return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
+    } else {
+        return 'Just now';
+    }
+}
+
 
 
 

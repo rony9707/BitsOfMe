@@ -1,11 +1,41 @@
-
-
 <div class="all-posts">
-    @for(i of array;track i){
-        <div class="post-template-main" > 
-            {{i}} {{data}}
+@for(post of allPosts; track post._id){
+  <div class="post-template-main"> 
+    <div class="post-template-header">
+      <div class="pfp-div">
+        <img [src]="post.db_username_pfp" />
+      </div>
+      <div class="about-user-div">
+        <div class="username">{{post.db_username}}</div>
+        <div class="post-creation-date" 
+             (mouseenter)="showCreatePostTime(post.db_postCreationDate, $event)" 
+             (mouseleave)="hideCreatePostTime()">
+          {{ post.db_postCreationDate | postsTimeAgo }}
         </div>
-    }
+        @if(tooltipVisible){
+          <div class="tooltip" [style.top.px]="tooltipY" [style.left.px]="tooltipX">
+            {{ tooltipText }}
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="post-template-main-content">
+        
+      @if(post.db_postText) {
+        <app-post-text [post]="post"></app-post-text>
+     }
+
+      @if(post.db_postPics!.length>0){
+          <!-- Image content here -->
+         <app-post-images [images]="post.db_postPics"></app-post-images>
+
+      }
+    </div>
+  </div>
+}
+
+
 </div>
 <div class="all-friends">
     

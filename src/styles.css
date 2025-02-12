@@ -50,13 +50,13 @@
 /* CSS for embedding link */
 .embedded-link{
   color:rgb(0, 0, 0);
-  background-color: rgb(177, 234, 255);
+  background-color: #BFEA7C;
   border-radius: 5px;
-  padding: 2px 2px 0px 2px;
+  padding: 2px 5px 2px 5px;
 }
 
 /* CSS for Post uploaded images */
-.post-image{
+.post-image1{
   width: 300px;
   border-radius: 5px;
   border: 2px solid var(--footer-main-color);

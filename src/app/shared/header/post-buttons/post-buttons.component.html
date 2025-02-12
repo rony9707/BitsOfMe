@@ -1,4 +1,4 @@
 <button (click)="closeSidebar()" [routerLinkActiveOptions]="{exact:true}" routerLink="" routerLinkActive="selected">Home</button>
 <button (click)="closeSidebar()" [routerLink]="'/user/' + ($user | async)?.db_username" routerLinkActive="selected">My Profile</button>
-<button (click)="closeSidebar()" routerLinkActive="selected">My Posts</button>
+<button (click)="closeSidebar()" routerLink="my-posts" routerLinkActive="selected">My Posts</button>
 <button (click)="closeSidebar()" routerLink="/create-a-post" routerLinkActive="selected">Create a Post</button>

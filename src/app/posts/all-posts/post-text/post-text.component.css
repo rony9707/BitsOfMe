@@ -1,0 +1,46 @@
+.post-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Show only 3 lines initially */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em; /* Adjust based on font-size */
+  margin: 8px;
+}
+
+.post-text.expanded {
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.see-more {
+  background: transparent;
+  border: 0;
+  display: inline-block;
+  color: #000000; /* Blue color similar to links */
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  padding: 0;
+  transition: .3s;
+  margin-left: 7px;
+}
+
+.see-more:hover {
+  text-decoration: underline;
+  transition: .3s;
+}
+
+.see-more:focus {
+  outline: none;
+}
+
+
+.youtube-embed {
+  width: 100%;
+}
+.youtube-embed iframe {
+  width: 100%;
+  height: 315px;
+}

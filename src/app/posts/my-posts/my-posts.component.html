@@ -1,0 +1,17 @@
+<div class="search-posts-div">
+    <div class="search-posts">
+        <app-search-posts (searchInputEmitter)="searchInput($event)"></app-search-posts>
+    </div>
+    <div class="filter-posts"></div>
+</div>
+
+
+@if (($myPosts | async); as posts;) {
+  @if (posts.length > 0) {
+    <app-all-posts [allPosts]="posts"></app-all-posts>
+  } @else {
+    <p>No data available</p>
+  }
+} @else {
+  <p>Loading...</p>
+}

@@ -10,6 +10,7 @@ export const menuItems = [
   { name: 'cooking', hobbie: 'Cooking'  },
   { name: 'sports', hobbie: 'Sports'  },
   { name: 'mygames', hobbie: 'My Games'  },
+  { name: 'entertainment', hobbie: 'Entertainment'  }
 ];
 
 

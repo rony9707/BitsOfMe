@@ -54,7 +54,6 @@ export class SongService implements OnDestroy{
       if (this.lyrics.length > 5) {
         this.lyrics.shift();
       }
-      console.log(this.lyrics)
   
       this.lyricsSubject.next([...this.lyrics]); // Emit new lyrics
     }

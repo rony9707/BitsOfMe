@@ -7,8 +7,8 @@ export const selectGetUserFeature = createFeatureSelector<getUserState>('user');
 
 export const getAllUser = createSelector(
   selectGetUserFeature,
-  (state: getUserState) => state.user
-)
+  (state: getUserState) => state.user ?? null
+);
 
 export const selectUserError = createSelector(
   selectGetUserFeature,

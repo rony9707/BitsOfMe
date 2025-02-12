@@ -41,7 +41,7 @@ export class AppComponent {
     //If in any route except root and page is reloaded,make a Auth call to the server
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        if ((routerEvent.url != '/' && this.authService.isAuthenticated) || routerEvent.url== '/music') {
+        if ((routerEvent.url != '/' && this.authService.isAuthenticated) || routerEvent.url== '/music'|| routerEvent.url== '/my-posts' ) {
           //If No User data is present, then dispath the User action
           this.$user.pipe(take(1)).subscribe((user) => {
             if (!user) {

@@ -1,7 +1,8 @@
-@if ($error | async) {
+@if (($userError | async) || ($postsError | async) ) {
 <div>YOU ARE NOT LOGGED IN</div>
 }
-@else if (user) {
+@else if (user || posts) {
+    <!-- Search Bar -->
 <div class="search-posts-div">
     <div class="search-posts">
         <app-search-posts (searchInputEmitter)="searchInput($event)"></app-search-posts>
@@ -11,6 +12,7 @@
     </div>
 </div>
 
-<app-all-posts [data]="'cat'"></app-all-posts>
+  <!-- Show all posts -->
+<app-all-posts [allPosts]="posts"></app-all-posts> 
 
 }
