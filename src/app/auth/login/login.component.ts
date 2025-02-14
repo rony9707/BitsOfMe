@@ -11,7 +11,7 @@ import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 import { broadCastChannel } from '../../app.component';
-import { LoaderButtonDirectiveDirective } from '../../shared/directives/loaderButton-directive.directive';
+import { LoaderButtonDirectiveDirective } from '../../shared/directives/loader-Directive/loaderButton-directive.directive';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class LoginComponent implements OnDestroy {
   constructor() {
     this.loginForm = new FormGroup({
       username: new FormControl(localStorage.getItem('rememberMeUsername'), [Validators.required]),
-      password: new FormControl('Qwerty123.', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
       rememberMe: new FormControl(localStorage.getItem('rememberMeCheckbox') === 'true')//Here conversion is done from string to boolean as in local stroage stores data in string
     })
   }

@@ -20,3 +20,8 @@ export const loadPostsFailure = createAction(
 export const clearPostsWhenLogout = createAction(
   '[AuthButton Component] crearPostsWhenLogout'
 )
+
+export const deleteSinglePost = createAction(
+  '[AllPost Component] DeleteSinglePostFromStore',
+  props<{ postID: string }>() // Accept postID
+);

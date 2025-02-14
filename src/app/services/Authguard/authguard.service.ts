@@ -75,72 +75,33 @@ export const CanActivateUser = (): Observable<boolean> => {
 
 
 //User Resolve Route Guar
-export const userAndPostsResolve = (): Observable<{ user: UserProfile | null; posts: getPosts[] }> => {
+export const userResolve = (): Observable<UserProfile | null> => {
   const store = inject(Store);
-  const authService = inject(AuthService);
-  const PostService = inject(postService); // Fixed case issue
 
-  // Fetch User if not already in Store
-  const user$ = store.pipe(
+  return store.pipe(
     select(getUserSelector.getAllUser),
-    //tap((user) => console.log("User from selector before API call:", user)), // Debugging
-    take(1),
+    tap((user) => {
+      if (!user) {
+        // Dispatch action to fetch user data if not found
+        store.dispatch(getUserAction.getUser());
+      }
+    }),
     switchMap((user) => {
       if (user) {
-       // console.log("User already present in store.");
-        return of(user);
+        return of(user); // Emit the user if present in the store
+      } else {
+        // Allow the route to proceed even if user is null initially
+        return store.pipe(
+          select(getUserSelector.getAllUser),
+          take(1), // Wait for one emission
+          delay(1000), // Add a small delay to give time for the user data to load
+          catchError((error) => {
+            console.error('Error fetching user:', error);
+            return of(null); // Return null in case of error
+          })
+        );
       }
-      return authService.getUser().pipe(
-        tap((fetchedUser) => {
-          if (fetchedUser) {
-           // console.log("User fetched from API:", fetchedUser);
-            authService.$isLoggedIn.set(true);
-            store.dispatch(getUserAction.getUserSuccess({ user: fetchedUser })); // Update Store
-          }
-        }),
-        catchError((error) => {
-          //console.error("Error fetching user, allowing navigation:", error);
-          authService.$isLoggedIn.set(false);
-          store.dispatch(getUserAction.getUserError({ errorMessage: 'Failed to fetch user' }));
-          return of(null);
-        })
-      );
-    })
-  );
-
-  // Fetch Posts if not already in Store
-  const posts$ = store.pipe(
-    select(getPostsSelector.selectAllPosts),
-    //tap((posts) => console.log("Posts from selector before API call:", posts)), // Debugging
-    take(1),
-    switchMap((posts) => {
-      // if (posts.length > 0) {
-      //   return of(posts);
-      // }
-
-      return PostService.getPosts(initialPostsState.filters).pipe(
-        tap((fetchedPosts) => {
-          // if (fetchedPosts.length > 0) {
-            store.dispatch(getPostsAction.loadPostsSuccess({ posts: fetchedPosts })); // Update Store
-          // }
-        }),
-        catchError((error) => {
-          authService.$isLoggedIn.set(false);
-            store.dispatch(getPostsAction.loadPostsFailure({ error: 'Failed to fetch posts' })); // Dispatch error
-          return of([]);
-        })
-      );
-    })
-  );
-
-  // Combine Results
-  return combineLatest([user$, posts$]).pipe(
-    // tap(([user, posts]) => console.log("Final resolved values:", { user, posts })), // Debugging
-    map(([user, posts]) => ({ user, posts })),
-    delay(2000),
-    catchError(() => {
-      authService.$isLoggedIn.set(false);
-      return of({ user: null, posts: [] });
-    })
+    }),
+    take(1) // Ensure the observable completes after one emission
   );
 };

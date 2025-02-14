@@ -33,10 +33,10 @@ export class HomeIndexComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    // Subscribe to router events to track the current route
+  // Subscribe to router events to track the current route
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isOnRootRoute = event.url === '/';
+        this.isOnRootRoute = event.url === '/' || event.url === '/my-posts';
       }
     });
   }

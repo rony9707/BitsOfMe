@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
 import { Subscription } from 'rxjs';
 import { Loader1Component } from '../../shared/components/loader1/loader1.component';
-import { LoaderButtonDirectiveDirective } from '../../shared/directives/loaderButton-directive.directive';
+import { LoaderButtonDirectiveDirective } from '../../shared/directives/loader-Directive/loaderButton-directive.directive';
 
 @Component({
   selector: 'app-register',

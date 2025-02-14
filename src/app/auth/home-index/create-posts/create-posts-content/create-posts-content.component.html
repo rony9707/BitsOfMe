@@ -49,7 +49,7 @@
 
   <div class="emoji-picker-class">
 
-    <label  for="attach_img" style="display:grid;place-items:center">
+    <label appTooltip="Attach Images!"  for="attach_img" style="display:grid;place-items:center">
       <svg-attach-items class="attachFiles"></svg-attach-items>
     </label>
     <input [disabled]="postManagerService.post_fields_disabled_status()" style="display:none" id="attach_img" type="file" accept="image/*" multiple
@@ -63,7 +63,7 @@
     <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
     } -->
 
-    <app-emoji-picker [disabled_status]="postManagerService.post_fields_disabled_status()" (emojiSelected)="addEmoji($event)" [isTextareaFocused]="showEmojiPicker()"></app-emoji-picker>
+    <app-emoji-picker appTooltip="Emojis!" [disabled_status]="postManagerService.post_fields_disabled_status()" (emojiSelected)="addEmoji($event)" [isTextareaFocused]="showEmojiPicker()"></app-emoji-picker>
 
   </div>
 

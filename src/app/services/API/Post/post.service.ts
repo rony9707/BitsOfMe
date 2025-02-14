@@ -21,6 +21,7 @@ export class postService {
   baseURL = environment.apiUrl
   createPostURL = `${this.baseURL}/post/createpost`
   getPostsURL = `${this.baseURL}/post/getPosts`
+  deletePostURL = `${this.baseURL}/post/deletePost`
 
 
   //Create Posts for users
@@ -41,6 +42,13 @@ export class postService {
     });
 
     return this.http.get<getPosts[]>(this.getPostsURL, { params ,withCredentials: true, });
+  }
+
+    //Get Posts for users
+  deletePost(postID: object) {
+    return this.http.post<any>(this.deletePostURL, postID, {
+      withCredentials: true
+    })
   }
 
 

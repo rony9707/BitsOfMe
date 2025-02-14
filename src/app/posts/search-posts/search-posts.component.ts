@@ -2,11 +2,13 @@ import { Component, EventEmitter, inject, OnDestroy, Output, signal } from '@ang
 import { FormsModule } from '@angular/forms';
 import { DebounceService } from '../../services/debounce/debounce.service';
 import { Subscription } from 'rxjs';
+import { CloseButtonComponent } from '../../shared/svg/close-button/close-button.component';
+import { CommonService } from '../../services/common/common.service';
 
 @Component({
   selector: 'app-search-posts',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CloseButtonComponent],
   templateUrl: './search-posts.component.html',
   styleUrl: './search-posts.component.css'
 })
@@ -19,6 +21,7 @@ export class SearchPostsComponent implements OnDestroy {
 
   //Inject Services here-----------------------------
   debounceService = inject(DebounceService)
+  public commongServices= inject(CommonService)
 
 
   constructor(){
@@ -63,6 +66,14 @@ export class SearchPostsComponent implements OnDestroy {
     // Join the array into a comma-separated string
     const commaSeparatedString = inputData.join(',');
     this.searchInputEmitter.emit(commaSeparatedString);
+  }
+
+  clearSearchText(el:HTMLInputElement){
+    if(el.value.length>0){
+    el.value=''
+    this.searchInput.set(''); // Reset input
+    this.searchInputEmitter.emit(''); // Emit empty string to indicate clearing
+    }
   }
 
 }

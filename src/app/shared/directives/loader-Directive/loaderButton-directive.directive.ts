@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, Renderer2, ViewContainerRef, ComponentFactoryResolver, inject } from '@angular/core';
-import { Loader1Component } from '../components/loader1/loader1.component';
+import { Loader1Component } from '../../components/loader1/loader1.component';
 
 @Directive({
   selector: '[appLoaderButtonDirective]',

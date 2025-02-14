@@ -15,27 +15,33 @@ export class LoggerService {
     return `${hours}:${minutes}:${seconds}`;
   }
 
-  log(message: string| unknown, typeConsole: string): void {
+  log(message: string | unknown, typeConsole: string): void {
     const timestamp = this.getCurrentTime();
+    let style = '';
 
     switch (typeConsole.toLowerCase()) {
       case 'log':
-        console.log(`[${timestamp}] [LOG]: ${message}`);
+        style = 'color: green; font-weight: bold;';
+        console.log(`%c[${timestamp}] [LOG]:`, style, message);
         break;
       case 'warn':
-        console.warn(`[${timestamp}] [WARN]: ${message}`);
+        style = 'color: orange; font-weight: bold;';
+        console.warn(`%c[${timestamp}] [WARN]:`, style, message);
         break;
       case 'error':
-        console.error(`[${timestamp}] [ERROR]: ${message}`);
+        style = 'color: red; font-weight: bold; background: black; padding: 2px;';
+        console.error(`%c[${timestamp}] [ERROR]:`, style, message);
         break;
       case 'info':
-        console.info(`[${timestamp}] [INFO]: ${message}`);
+        style = 'color: blue; font-weight: bold;';
+        console.info(`%c[${timestamp}] [INFO]:`, style, message);
         break;
       case 'table':
         console.table(message);
         break;
       default:
-        console.log(`[${timestamp}] [LOG]: ${message}`);
+        style = 'color: gray; font-weight: bold;';
+        console.log(`%c[${timestamp}] [LOG]:`, style, message);
         break;
     }
   }

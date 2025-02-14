@@ -5,8 +5,12 @@ import swal from 'sweetalert2';
 import { AppState } from '../../states/app.state';
 import { AuthService } from '../API/Auth/auth.service';
 import * as getUserAction from './../../states/getUser/getUser.action'
-import { BehaviorSubject } from 'rxjs';
-import { clearPostsWhenLogout } from '../../states/getPosts/posts.action';
+import { BehaviorSubject, distinctUntilChanged, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { clearPostsWhenLogout, loadPosts, loadPostsSuccess } from '../../states/getPosts/posts.action';
+import { getPosts } from '../../shared/interface/getPosts-interface';
+import { selectAllPosts } from '../../states/getPosts/posts.selector';
+import { GetPostsFilter } from '../../shared/interface/getPostParams-interface';
+import { postService } from '../API/Post/post.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +24,7 @@ export class CommonService {
   private store = inject(Store<AppState>);
   public router = inject(Router)
   public authService = inject(AuthService)
+  public postService = inject(postService)
 
   embedLink(text: string): string {
     const urlPattern = /(https?:\/\/[^\s]+)/g;
@@ -86,45 +91,72 @@ export class CommonService {
   }
 
 
-  //convert time for show posts
-  // Convert time for showing posts
-postTimeAgo(postDateString: string): string {
-    // Convert "10th Feb, 2025 at 16:00:09 IST" to "10 Feb 2025 16:00:09"
-    let formattedDate = postDateString
-        .replace(/(\d+)(st|nd|rd|th)/, '$1') // Remove ordinal suffix (th, st, nd, rd)
-        .replace("at", "") // Remove "at"
-        .trim(); // Remove extra spaces
+  //Share Filter Params
+  private commonservice_filterParams = new BehaviorSubject<GetPostsFilter>({limit:10, page:1})
 
-    // Parse the date correctly by appending IST manually
-    const postDate = new Date(formattedDate + " GMT+0530"); // Ensuring IST is considered
+  commonservice_currentFilterParams = this.commonservice_filterParams.asObservable();
 
-    if (isNaN(postDate.getTime())) {
-        return "Invalid date format";
-    }
+  changeFilter(filter: GetPostsFilter) {
+    this.commonservice_filterParams.next(filter)
+  }
 
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInDays >= 1) {
-        return postDateString; // Show original timestamp if more than 1 day old
-    } else if (diffInHours >= 1) {
-        return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-    } else if (diffInMinutes >= 1) {
-        return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
-    } else {
-        return 'Just now';
-    }
+
+
+  //Function to filter posts store
+searchPostsByFilters(filters: GetPostsFilter): Observable<getPosts[]> {
+  const { limit = 10, page, db_postTopic, tags, db_postVisibility, db_username } = filters;
+  const tagsArray = tags ? tags.split(',').map(tag => new RegExp(tag.trim(), 'i')) : [];
+
+  return this.store.select(selectAllPosts).pipe(
+    take(1),
+    switchMap((posts) => {
+      // Filter existing posts based on the search criteria
+      const filteredPosts = posts.filter(post => {
+        return (
+          (!db_postTopic || post.db_postTopic.includes(db_postTopic)) &&
+          (!db_postVisibility || post.db_postVisibility === db_postVisibility) &&
+          (!db_username || post.db_username === db_username) &&
+          (tagsArray.length === 0 || post.db_tags.some(tag => tagsArray.some(regex => regex.test(tag))))
+        );
+      });
+
+      // If we already have enough posts in the store, return them without calling the API
+      if (filteredPosts.length >= limit) {
+        return of(filteredPosts);
+      }
+
+      // Calculate remaining posts to fetch
+      const remainingCount = limit - filteredPosts.length;
+
+      // Call the API only if additional posts are needed
+      return this.postService.getPosts({ ...filters, limit: remainingCount }).pipe(
+        map((newPosts) => {
+          // Remove duplicates: filter out posts already in the store
+          const trulyNewPosts = newPosts.filter(newPost =>
+            !filteredPosts.some(existingPost => existingPost._id === newPost._id)
+          );
+
+          if (trulyNewPosts.length > 0) {
+            // Dispatch new posts only if we received new ones
+            this.store.dispatch(loadPostsSuccess({ posts: [...posts, ...trulyNewPosts] }));
+          } 
+
+          // Return updated posts list
+          return [...filteredPosts, ...trulyNewPosts];
+        })
+      );
+    })
+  );
 }
 
 
 
 
 
-
-
+  getAllPosts(): Observable<getPosts[]> {
+    return this.store.select(selectAllPosts);
+  }
 
 
 }

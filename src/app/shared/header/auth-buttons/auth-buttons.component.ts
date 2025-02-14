@@ -11,7 +11,7 @@ import { SongService } from '../../../music/Music-Services/song.service';
 import { CommonService } from '../../../services/common/common.service';
 import { PfpComponent } from "../../components/pfp/pfp.component";
 import { broadCastChannel } from '../../../app.component';
-import { LoaderButtonDirectiveDirective } from '../../directives/loaderButton-directive.directive';
+import { LoaderButtonDirectiveDirective } from '../../directives/loader-Directive/loaderButton-directive.directive';
 
 @Component({
   selector: 'app-auth-buttons',

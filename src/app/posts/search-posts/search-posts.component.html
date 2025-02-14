@@ -1,1 +1,7 @@
-<input type="text" #searchPost (input)="searchText(searchPost)" placeholder="Search Posts..." [(ngModel)]="searchInput"/>
+<div class="search-container">
+  <input type="text" #searchPost (input)="searchText(searchPost)" 
+         placeholder="Search Posts..." [(ngModel)]="searchInput"/>
+  <div class="delete-search-text" (click)="clearSearchText(searchPost)" >
+    <app-close-button></app-close-button>
+  </div>
+</div>

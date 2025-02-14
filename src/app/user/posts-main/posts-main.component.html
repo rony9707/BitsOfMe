@@ -1,7 +1,7 @@
 @if (($userError | async) || ($postsError | async) ) {
 <div>YOU ARE NOT LOGGED IN</div>
 }
-@else if (user || posts) {
+@else if (user) {
     <!-- Search Bar -->
 <div class="search-posts-div">
     <div class="search-posts">
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-  <!-- Show all posts -->
-<app-all-posts [allPosts]="posts"></app-all-posts> 
+  <!-- Show  posts -->
+<router-outlet></router-outlet>
 
 }

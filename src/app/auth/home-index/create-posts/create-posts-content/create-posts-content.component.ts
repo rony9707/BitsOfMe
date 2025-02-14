@@ -8,9 +8,10 @@ import { CloseButtonComponent } from '../../../../shared/svg/close-button/close-
 import { EmojiPickerComponent } from '../../../../shared/components/emoji-picker/emoji-picker.component';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../../../../services/common/common.service';
-import { LoaderButtonDirectiveDirective } from '../../../../shared/directives/loaderButton-directive.directive';
 import { ChangeDetectorRef } from '@angular/core';
 import { PostManagerService } from '../create-post.service';
+import { LoaderButtonDirectiveDirective } from '../../../../shared/directives/loader-Directive/loaderButton-directive.directive';
+import { TooltipDirective } from '../../../../shared/directives/tooltip-Directive/tooltip.directive';
 
 
 @Component({
@@ -21,7 +22,9 @@ import { PostManagerService } from '../create-post.service';
     AttachItemsComponent,
     CloseButtonComponent,
     EmojiPickerComponent,
-    LoaderButtonDirectiveDirective],
+    LoaderButtonDirectiveDirective,
+    TooltipDirective
+    ],
   templateUrl: './create-posts-content.component.html',
   styleUrl: './create-posts-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

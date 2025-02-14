@@ -26,8 +26,7 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   postDetails: postDetails = {
     posttext: '',
     visibility: '',
-    postTopic: '',
-    username: ''
+    postTopic: ''
   }
   selectedFiles: File[] = [];
 
@@ -44,15 +43,11 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   private changeDet = inject(ChangeDetectorRef)
 
 
-  private userSubscription: Subscription;
-
 
   constructor() {
     this.$user = this.store.select(getUserSelector.getAllUser);
     this.$error = this.store.select(getUserSelector.selectUserError);
-    this.userSubscription = this.$user.subscribe((user) => {
-      this.postDetails.username = user?.db_username
-    })
+
   }
 
   ngOnInit(): void {
@@ -75,9 +70,6 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
     if (this.createPostSubscription) {
       this.createPostSubscription.unsubscribe();
     }
@@ -125,9 +117,7 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
     }
     //Sent Data to backend
     this.createPost(formDataToSendToBackend)
-
-    
-   
+  
   }
 
 

@@ -1,6 +1,6 @@
 <div *ngIf="($myPosts | async) as posts; else loading">
   <ng-container *ngIf="posts.length > 0; else noData">
-    <app-all-posts [allPosts]="posts" [canDeleted]="true"></app-all-posts>
+    <app-all-posts [allPosts]="posts"></app-all-posts>
   </ng-container>
 </div>
 

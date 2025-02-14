@@ -13,6 +13,7 @@ import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angul
 import { MyHammerConfig } from './services/hammerjs/hammer.service';
 import { PostEffects } from './states/getPosts/posts.effects';
 import { postReducer } from './states/getPosts/posts.reducer';
+import { authInterceptor } from './services/API/Auth/auth.interceptor';
 
 
 
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(HammerModule),
     { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
-    provideHttpClient(),
+    provideHttpClient(), 
     provideStore(), //NGRX STORE
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
     provideEffects(getUserEffect,PostEffects),
