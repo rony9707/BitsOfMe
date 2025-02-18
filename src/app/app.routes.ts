@@ -42,6 +42,7 @@ export const routes: Routes = [
               {
                 path:'my-posts',
                 loadComponent: () => import('./posts/my-posts/my-posts.component').then(m => m.MyPostsComponent),
+                canActivate: [CanActivateUser]
               }
             ]
           },

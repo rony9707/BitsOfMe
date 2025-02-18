@@ -16,11 +16,12 @@ import { postService } from '../../services/API/Post/post.service';
 import { deleteSinglePost, loadPosts } from '../../states/getPosts/posts.action';
 import { LoaderButtonDirectiveDirective } from '../../shared/directives/loader-Directive/loaderButton-directive.directive';
 import { TooltipDirective } from '../../shared/directives/tooltip-Directive/tooltip.directive';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-posts',
   standalone: true,
-  imports: [CommonModule,PostsTimeAgoPipe,
+  imports: [CommonModule, PostsTimeAgoPipe,
     PostImagesComponent,
     PostTextComponent,
     AsyncPipe,
@@ -33,13 +34,13 @@ import { TooltipDirective } from '../../shared/directives/tooltip-Directive/tool
 
 
 export class AllPostsComponent implements AfterViewInit {
-  
+
   $user: Observable<UserProfile | null>;
 
   //Decleare Variables here
-  @Input() allPosts?: getPosts[] = []; 
-  @Input() canDeleted?: boolean=false; 
-  
+  @Input() allPosts?: getPosts[] = [];
+  @Input() canDeleted?: boolean = false;
+
   tooltipVisible = false;
   tooltipText = '';
   tooltipX = 0;
@@ -50,18 +51,18 @@ export class AllPostsComponent implements AfterViewInit {
 
 
   @ViewChild('postText') postText!: ElementRef;
-  
+
 
   //Inject Services here------------
   public commonServices = inject(CommonService);
   private store = inject(Store<AppState>);
-  public postServices=inject(postService)
+  public postServices = inject(postService)
 
-    constructor() {
-      // Select user profile from store
-      this.$user = this.store.select(getUserSelector.getAllUser);
+  constructor() {
+    // Select user profile from store
+    this.$user = this.store.select(getUserSelector.getAllUser);
 
-    }
+  }
 
   ngAfterViewInit() {
     if (this.allPosts) {
@@ -92,28 +93,52 @@ export class AllPostsComponent implements AfterViewInit {
   }
 
   deletePost(postID: string) {
-  this.isLoading[postID] = true;
+    this.isLoading[postID] = true;
 
-  //post id to be sent to backend
-  const postId={
-    postID:postID
-  }
-  
-
-  //Data sent to backend
-  this.postServices.deletePost(postId).subscribe({
-    next: (deletePostResponse) => {
-      this.commonServices.showSuccessMessage('Success', deletePostResponse.message).then(() => {
-        this.isLoading[postID] = false;
-        this.store.dispatch(deleteSinglePost({ postID }));
-      });
-    },
-    error: (err) => {
-      this.isLoading[postID] = false;
-      this.commonServices.showErrorMessage('Error', err.error.message);
+    //post id to be sent to backend
+    const postId = {
+      postID: postID
     }
-  });
-}
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePostInBackend(postId)
+      }
+      if (result.isDismissed) {
+        this.isLoading[postID] = false;
+      }
+    })
+  }
+
+
+
+  deletePostInBackend(postId: { postID: string }) {
+    // Extract postID from the object
+    const { postID } = postId;
+
+    this.postServices.deletePost(postId).subscribe({
+      next: (deletePostResponse) => {
+        this.commonServices.showSuccessMessage('Success', deletePostResponse.message).then(() => {
+          this.isLoading[postID] = false;
+          this.store.dispatch(deleteSinglePost({ postID }));
+        });
+      },
+      error: (err) => {
+        this.isLoading[postID] = false;
+        this.commonServices.showErrorMessage('Error', err.error.message);
+      }
+    });
+  }
+
 
 
 }

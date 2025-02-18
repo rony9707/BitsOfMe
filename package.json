@@ -25,6 +25,7 @@
     "@ngrx/effects": "^18.0.0",
     "@ngrx/store": "^18.0.0",
     "@ngrx/store-devtools": "^18.0.0",
+    "gallery-ang": "^0.0.15",
     "hammerjs": "^2.0.8",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.6.13",
