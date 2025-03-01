@@ -33,7 +33,8 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   $user: Observable<UserProfile | null>;
   $error: Observable<string | null>;
 
-  isLoading=false
+  isLoading = false
+  username?: string;
 
 
   private store = inject(Store<AppState>);
@@ -47,25 +48,24 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
   constructor() {
     this.$user = this.store.select(getUserSelector.getAllUser);
     this.$error = this.store.select(getUserSelector.selectUserError);
-
   }
 
   ngOnInit(): void {
 
-      // Subscribe to success and error messages
-  this.postManagerService.successMessage$.subscribe((message) => {
-    if (message) {
-      this.commonService.showSuccessMessage('Success', message);
-      this.postManagerService.resetState(); 
-    }
-  });
+    // Subscribe to success and error messages
+    this.postManagerService.successMessage$.subscribe((message) => {
+      if (message) {
+        this.commonService.showSuccessMessage('Success', message);
+        this.postManagerService.resetState();
+      }
+    });
 
-  this.postManagerService.errorMessage$.subscribe((errorMessage) => {
-    if (errorMessage) {
-      this.commonService.showErrorMessage('Error', errorMessage);
-      this.postManagerService.resetState(); 
-    }
-  });
+    this.postManagerService.errorMessage$.subscribe((errorMessage) => {
+      if (errorMessage) {
+        this.commonService.showErrorMessage('Error', errorMessage);
+        this.postManagerService.resetState();
+      }
+    });
 
   }
 
@@ -117,7 +117,7 @@ export class CreatePostsComponent implements OnDestroy, OnInit {
     }
     //Sent Data to backend
     this.createPost(formDataToSendToBackend)
-  
+
   }
 
 

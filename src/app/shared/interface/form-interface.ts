@@ -4,7 +4,7 @@ export interface IForm{
   formTitle: string
   formControls: IFormControl[]
   submitBtn?: string
-  resetBtn: string
+  resetBtn?: string
 }
 
 export interface IFormControl {
@@ -22,5 +22,8 @@ export interface IValidator {
   validatorName: string
   required?: boolean
   message: string
+  minLength?: number
+  maxLength?: number
   email?: string
+  pattern?: string
 }

@@ -3,19 +3,21 @@ import { AllPostsComponent } from '../all-posts/all-posts.component';
 import { getPosts } from '../../shared/interface/getPosts-interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../states/app.state';
-import { loadPosts } from '../../states/getPosts/posts.action';
-import { filter, map, Observable, startWith, Subscription, switchMap, take } from 'rxjs';
-import { selectAllPosts } from '../../states/getPosts/posts.selector';
+import { delay, filter, map, Observable, startWith, Subscription, switchMap, take } from 'rxjs';
+//import { selectAllPosts } from '../../states/getPosts/posts.selector';
 import { UserProfile } from '../../user/user-profile/user-profile.interface';
 import * as getUserSelector from './../../states/getUser/getUser.selector';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from '../../services/common/common.service';
+import { selectAllUserPosts, selectUserPostsPage } from '../../states/getPosts/posts.selector';
+import { loadUserPosts } from '../../states/getPosts/posts.action';
+
 
 @Component({
   selector: 'app-my-posts',
   standalone: true,
-  imports: [AllPostsComponent, AsyncPipe, CommonModule],
+  imports: [AllPostsComponent, CommonModule],
   templateUrl: './my-posts.component.html',
   styleUrl: './my-posts.component.css'
 })
@@ -24,12 +26,15 @@ export class MyPostsComponent implements OnInit, OnDestroy {
   // Observable streams for posts and user profile data.
   $myPosts: Observable<getPosts[]>;
   $user: Observable<UserProfile | null>;
+  userPage$: Observable<number | undefined>;
 
   // Local component state and variables.
   username?: string;
   isLoading = true;
   searchQuery?: string;
   private searchSubscription!: Subscription;
+  userPage: number | undefined = 1;
+
 
   // Inject dependencies: NgRx store, ActivatedRoute, and a common service.
   private store = inject(Store<AppState>);
@@ -43,13 +48,22 @@ export class MyPostsComponent implements OnInit, OnDestroy {
     // Retrieve posts from the store.
     // Use 'startWith' to emit undefined initially (indicating a loading state)
     // and ensure the stream always returns an array.
-    this.$myPosts = this.store.select(selectAllPosts).pipe(
+    this.$myPosts = this.store.select(selectAllUserPosts).pipe(
       startWith(undefined), // Emit undefined at the start to signal loading.
       map(posts => posts ?? []) // Return an empty array if posts is null or undefined.
     );
+
+    this.userPage$ = this.store.select(selectUserPostsPage);
   }
 
   ngOnInit(): void {
+
+
+    this.userPage$.subscribe((page) => {
+      this.userPage = page;
+    })
+
+
     // Once a valid user is available, check if posts have been loaded.
     // If not, dispatch an action to load posts for that user.
     this.$user.pipe(
@@ -63,22 +77,28 @@ export class MyPostsComponent implements OnInit, OnDestroy {
     ).subscribe(posts => {
       if (!posts || posts.length === 0) {
         // If there are no posts, dispatch an action to load them.
-        this.store.dispatch(loadPosts({ filters: { limit: 5, page: 1, db_username: this.username } }));
+        this.store.select(selectAllUserPosts)
+          .pipe(take(1))
+          .subscribe(posts => {
+
+            if (!posts || posts.length === 0) {  // Check explicitly for undefined or empty array
+              this.store.dispatch(loadUserPosts({
+                filters: { limit: 5, page: this.userPage, db_username: this.username }
+              }));
+            }
+          });
       }
     });
 
     // Subscribe to query parameters to handle search filters and pagination.
     // If a 'tags' parameter exists, use the search service; otherwise, fetch all posts.
-    this.searchSubscription = this.commonServices.commonservice_currentFilterParams.subscribe((params)=>{
-      const limit = params.limit;
-      const page = params.page;
-      const db_username = params.db_username;
-      const tags = params.tags;
-      // Update the posts observable based on whether a tag filter is applied.
-      this.$myPosts = tags
-        ? this.commonServices.searchPostsByFilters(params)
-        : this.commonServices.getAllPosts();
-    })
+    this.searchSubscription = this.commonServices.commonservice_currentFilterParams.subscribe((params) => {
+      this.$myPosts = params.tags
+        ? this.commonServices.searchPostsByFilters(params, 'user')
+        : this.commonServices.getAllUserPosts();
+
+    });
+
 
   }
 
@@ -87,5 +107,8 @@ export class MyPostsComponent implements OnInit, OnDestroy {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
+
+    // Reset filter params to avoid persisting previous search state
+    this.commonServices.changeFilter({})
   }
 }

@@ -1,22 +1,24 @@
-import { inject, Injectable, OnDestroy, signal } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { inject, Injectable, OnDestroy, OnInit, signal } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { postService } from '../../../services/API/Post/post.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../states/app.state';
-import { loadPosts } from '../../../states/getPosts/posts.action';
 import { initialPostsState } from '../../../states/getPosts/posts.reducer';
+import { loadPublicPosts, loadUserPosts } from '../../../states/getPosts/posts.action';
+import { UserProfile } from '../../../user/user-profile/user-profile.interface';
+import * as getUserSelector from './../../../states/getUser/getUser.selector'
 
 @Injectable({
   providedIn: 'root',
 })
-export class PostManagerService implements OnDestroy{
+export class PostManagerService implements  OnDestroy {
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   private successMessageSubject = new BehaviorSubject<string | null>(null);
   private errorMessageSubject = new BehaviorSubject<string | null>(null);
   private postSubscription!: Subscription;
 
   private message = new BehaviorSubject<string>('');
-  private selectedFilesSubject =  new BehaviorSubject<{ uploadedImages: string; title: string }[]>([]); // Initialize with empty array
+  private selectedFilesSubject = new BehaviorSubject<{ uploadedImages: string; title: string }[]>([]); // Initialize with empty array
 
   isLoading$ = this.isLoadingSubject.asObservable();
   successMessage$ = this.successMessageSubject.asObservable();
@@ -28,14 +30,27 @@ export class PostManagerService implements OnDestroy{
 
 
   private postService = inject(postService);
-  private store= inject(Store<AppState>);
+  private store = inject(Store<AppState>);
+  $user: Observable<UserProfile | null>;
+
+  username?: string;
+
+  constructor() {
+    this.$user = this.store.select(getUserSelector.getAllUser);
+  }
 
   ngOnDestroy(): void {
     this.postSubscription.unsubscribe()
   }
-  
+
 
   createPost(formData: FormData) {
+
+    this.$user.subscribe((user) => {
+      this.username = user?.db_username
+      console.log(this.username)
+    })
+
     this.isLoadingSubject.next(true);
     this.post_fields_disabled_status.set(true)
 
@@ -50,7 +65,14 @@ export class PostManagerService implements OnDestroy{
         this.message.next(''); // Clears the selected files array
 
         //Load the posts state after a successfull post
-        this.store.dispatch(loadPosts(initialPostsState));
+        this.store.dispatch(loadPublicPosts({
+          filters: initialPostsState.publicFilters
+        }));
+        this.store.dispatch(loadUserPosts({
+          filters: { limit: 5, page: 1, db_username: this.username }
+        }));
+
+
       },
       error: (error) => {
         this.isLoadingSubject.next(false);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'app-password-show',
@@ -10,4 +10,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class PasswordShowComponent {
 
+  @Input()color= ''
 }

@@ -1,13 +1,1 @@
-<div *ngIf="($myPosts | async) as posts; else loading">
-  <ng-container *ngIf="posts.length > 0; else noData">
-    <app-all-posts [allPosts]="posts"></app-all-posts>
-  </ng-container>
-</div>
-
-<ng-template #noData>
-  <p>No data available</p>
-</ng-template>
-
-<ng-template #loading>
-  <p>Loading...</p>
-</ng-template>
+<app-all-posts [allPosts]="$myPosts"></app-all-posts>

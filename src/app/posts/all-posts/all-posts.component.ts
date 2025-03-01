@@ -6,140 +6,47 @@ import { CommonService } from '../../services/common/common.service';
 import { PostImagesComponent } from './post-images/post-images.component';
 import { PostTextComponent } from './post-text/post-text.component';
 import { PostsTimeAgoPipe } from '../../pipes/posts-time-ago.pipe';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, timer } from 'rxjs';
 import { UserProfile } from '../../user/user-profile/user-profile.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../states/app.state';
 import * as getUserSelector from './../../states/getUser/getUser.selector';
 import { CloseButtonComponent } from '../../shared/svg/close-button/close-button.component';
 import { postService } from '../../services/API/Post/post.service';
-import { deleteSinglePost, loadPosts } from '../../states/getPosts/posts.action';
 import { LoaderButtonDirectiveDirective } from '../../shared/directives/loader-Directive/loaderButton-directive.directive';
 import { TooltipDirective } from '../../shared/directives/tooltip-Directive/tooltip.directive';
 import Swal from 'sweetalert2';
+import { deleteSinglePublicPost, deleteSingleUserPost } from '../../states/getPosts/posts.action';
+import { SinglePostComponent } from './single-post/single-post.component';
+import { PostsSkeletonComponent } from "../../shared/components/posts-skeleton/posts-skeleton.component";
+import { NoMorePostsComponent } from "../../shared/components/no-more-posts/no-more-posts.component";
 
 @Component({
   selector: 'app-all-posts',
   standalone: true,
-  imports: [CommonModule, PostsTimeAgoPipe,
-    PostImagesComponent,
-    PostTextComponent,
-    AsyncPipe,
-    CloseButtonComponent,
-    LoaderButtonDirectiveDirective,
-    TooltipDirective],
+  imports: [CommonModule,
+    SinglePostComponent,
+    PostsSkeletonComponent, NoMorePostsComponent],
   templateUrl: './all-posts.component.html',
   styleUrl: './all-posts.component.css',
 })
 
 
-export class AllPostsComponent implements AfterViewInit {
-
-  $user: Observable<UserProfile | null>;
+export class AllPostsComponent {
 
   //Decleare Variables here
-  @Input() allPosts?: getPosts[] = [];
+  @Input() allPosts?: Observable<getPosts[]>;
   @Input() canDeleted?: boolean = false;
 
-  tooltipVisible = false;
-  tooltipText = '';
-  tooltipX = 0;
-  tooltipY = 0;
-  expandedPosts: { [key: string]: boolean } = {}; // Track expansion state per post
-  showMoreButtons: { [key: string]: boolean } = {}; // Track if "Show More" is needed per post
-  isLoading: { [key: string]: boolean } = {};
+  // delayedPosts$?: Observable<getPosts[]>;
 
-
-  @ViewChild('postText') postText!: ElementRef;
-
-
-  //Inject Services here------------
-  public commonServices = inject(CommonService);
-  private store = inject(Store<AppState>);
-  public postServices = inject(postService)
-
-  constructor() {
-    // Select user profile from store
-    this.$user = this.store.select(getUserSelector.getAllUser);
-
-  }
-
-  ngAfterViewInit() {
-    if (this.allPosts) {
-      this.allPosts.forEach((post) => {
-        const postTextElement = document.getElementById(`post-text-${post._id}`);
-        if (postTextElement && postTextElement.scrollHeight > postTextElement.clientHeight) {
-          this.showMoreButtons[post._id] = true;
-        } else {
-          this.showMoreButtons[post._id] = false;
-        }
-      });
-    }
-  }
-
-  toggleExpand(postId: string) {
-    this.expandedPosts[postId] = !this.expandedPosts[postId];
-  }
-
-  showCreatePostTime(createTime: string, event: MouseEvent) {
-    this.tooltipText = createTime.replace("at", "");
-    this.tooltipX = event.clientX + 10;
-    this.tooltipY = event.clientY + 10;
-    this.tooltipVisible = true;
-  }
-
-  hideCreatePostTime() {
-    this.tooltipVisible = false;
-  }
-
-  deletePost(postID: string) {
-    this.isLoading[postID] = true;
-
-    //post id to be sent to backend
-    const postId = {
-      postID: postID
-    }
-
-
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won\'t be able to revert this!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deletePostInBackend(postId)
-      }
-      if (result.isDismissed) {
-        this.isLoading[postID] = false;
-      }
-    })
-  }
-
-
-
-  deletePostInBackend(postId: { postID: string }) {
-    // Extract postID from the object
-    const { postID } = postId;
-
-    this.postServices.deletePost(postId).subscribe({
-      next: (deletePostResponse) => {
-        this.commonServices.showSuccessMessage('Success', deletePostResponse.message).then(() => {
-          this.isLoading[postID] = false;
-          this.store.dispatch(deleteSinglePost({ postID }));
-        });
-      },
-      error: (err) => {
-        this.isLoading[postID] = false;
-        this.commonServices.showErrorMessage('Error', err.error.message);
-      }
-    });
-  }
-
-
+  // ngOnInit() {
+  //   if (this.allPosts) {
+  //     this.delayedPosts$ = timer(5000).pipe( // Add 2s delay
+  //       switchMap(() => this.allPosts!)
+  //     );
+  //   }
+  // }
 
 }
 

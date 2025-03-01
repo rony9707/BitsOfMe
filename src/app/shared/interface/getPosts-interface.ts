@@ -8,6 +8,7 @@ export interface getPosts {
   db_postText?: string;
   db_postVisibility: 'public' | 'private';
   db_postCreationDate: string;
+  db_postCreationDateUTC:Date;
   db_postModificationDate: string;
   db_tags: string[];
   db_postPics?: string[];

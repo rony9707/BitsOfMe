@@ -1,50 +1,22 @@
 <div class="all-posts">
-@for(post of allPosts; track post._id){
-  <div class="post-template-main"> 
-    <div class="post-template-header">
-      <div class="pfp-div">
-        <img [src]="post.db_username_pfp" />
-      </div>
-      <div class="about-user-div">
-        <div class="username">{{post.db_username}}</div>
-        <div class="post-creation-date" 
-             (mouseenter)="showCreatePostTime(post.db_postCreationDate, $event)" 
-             (mouseleave)="hideCreatePostTime()">
-          {{ post.db_postCreationDate | postsTimeAgo }}
-        </div>
-        <div style="font-size: 12px; opacity: .7; margin-left: 2px; cursor: default;margin-top: 5px;">
-          {{post.db_postTopic}}
-        </div>
-        @if(tooltipVisible){
-          <div class="tooltip" [style.top.px]="tooltipY" [style.left.px]="tooltipX">
-            {{ tooltipText }}
-          </div>
-        }
-      </div>
-
-      @if(($user | async)?.db_username == post.db_username){
-      <div class="can-deleted-div" appTooltip="Delete Post!" >
-          <app-close-button [appLoaderButtonDirective]="isLoading[post._id]" (click)="deletePost(post._id)" [fillColor]="'#ffffff'"></app-close-button>
-      </div>
+  @if (allPosts | async; as posts;) {
+    @if (posts.length > 0) {
+      @for (post of posts; track post._id) {
+        <app-single-post [post]="post"></app-single-post>
       }
+    } @else {
+      <app-no-more-posts></app-no-more-posts>
+    }
+  }
+  @else {
+    <div style="width: 100%;display:flex;flex-direction:column">
+    @for (i of [0, 1, 2, 3, 4]; track i) {
+    <app-posts-skeleton></app-posts-skeleton>
+    }
     </div>
-
-    <div class="post-template-main-content">
-        
-      @if(post.db_postText) {
-        <app-post-text [post]="post"></app-post-text>
-     }
-
-      @if(post.db_postPics!.length>0){
-          <!-- Image content here -->
-         <app-post-images [images]="post.db_postPics"></app-post-images>
-      }
-    </div>
-  </div>
-}
-
-
+  }
 </div>
+
 <div class="all-friends">
     
 </div>

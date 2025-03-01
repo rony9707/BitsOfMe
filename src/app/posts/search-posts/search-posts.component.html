@@ -1,5 +1,5 @@
 <div class="search-container">
-  <input type="text" #searchPost (input)="searchText(searchPost)" 
+  <input type="text" id="searchPost" #searchPost (input)="searchText(searchPost)" 
          placeholder="Search Posts..." [(ngModel)]="searchInput"/>
   @if(searchPost.value.length!=0){
     <div class="delete-search-text" (click)="clearSearchText(searchPost)" >

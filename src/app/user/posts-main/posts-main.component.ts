@@ -15,11 +15,11 @@ import { CommonService } from '../../services/common/common.service';
 @Component({
   selector: 'app-posts-main',
   standalone: true,
-  imports: [CommonModule, SearchPostsComponent,RouterOutlet],
+  imports: [CommonModule, SearchPostsComponent, RouterOutlet],
   templateUrl: './posts-main.component.html',
   styleUrls: ['./posts-main.component.css'],
 })
-export class PostsMainComponent implements OnInit{
+export class PostsMainComponent implements OnInit {
   //Declare Variables
   user: UserProfile | null = null;
   $userError: Observable<string | null>;
@@ -49,35 +49,35 @@ export class PostsMainComponent implements OnInit{
 
   //Search Input Data from from Search Posts Component. This function is debounced.
   searchInput(searchTags: string) {
-  const queryParamsUserUserName: GetPostsFilter = {
-    limit: 10,
-    page: 1,
-    db_postVisibility: 'public',
-    db_username: this.user?.db_username || '', // Ensure it's a string
-    tags: searchTags
-  };
+    const queryParamsUserUserName: GetPostsFilter = {
+      limit: 50,
+      page: 1,
+      db_postVisibility: 'public',
+      db_username: this.user?.db_username || '', // Ensure it's a string
+      tags: searchTags
+    };
 
-  const queryParams: GetPostsFilter = {
-    limit: 10,
-    page: 1,
-    db_postVisibility: 'public',
-    tags: searchTags
-  };
+    const queryParams: GetPostsFilter = {
+      limit: 50,
+      page: 1,
+      db_postVisibility: 'public',
+      tags: searchTags
+    };
 
-  // Get the current route path
+    // Get the current route path
     const currentRoute = this.activatedRoute.firstChild?.snapshot.url.map(segment => segment.path).join('/') || '';
 
-  // Determine which query params to pass
-  const paramsToPass = currentRoute === 'my-posts' ? queryParamsUserUserName : queryParams;
+    // Determine which query params to pass
+    const paramsToPass = currentRoute === 'my-posts' ? queryParamsUserUserName : queryParams;
 
-  // Navigate while merging query params
-  this.commonServices.changeFilter(paramsToPass)
-  // this.router.navigate([], {
-  //   relativeTo: this.activatedRoute,
-  //   queryParams: paramsToPass,
-  //   queryParamsHandling: 'merge', // Keeps existing query params
-  // });
-}
+    // Navigate while merging query params
+    this.commonServices.changeFilter(paramsToPass)
+    // this.router.navigate([], {
+    //   relativeTo: this.activatedRoute,
+    //   queryParams: paramsToPass,
+    //   queryParamsHandling: 'merge', // Keeps existing query params
+    // });
+  }
 
 
 }

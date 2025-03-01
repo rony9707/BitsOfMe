@@ -1,0 +1,113 @@
+:host {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.skeleton-main:first-child {
+  margin-top: 30px;
+}
+
+.skeleton-main {
+  background-color: rgba(105, 105, 105);
+  width: 80%;
+  height: 500px;
+  border-radius: .6rem;
+}
+
+.skeleton-circle-info{
+  position: relative;
+  height: 110px;
+  background-color: rgba(105, 105, 105, 0.832);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+}
+
+.skeleton-circle{
+  background-color: #e2e8f0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0px 0px 0px 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton-circle::after{
+  content: "";
+  animation: p-skeleton-animation 1.2s infinite;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+  background: linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,0.4),rgba(255,255,255,0));
+}
+
+@keyframes p-skeleton-animation {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+.skeleton-info{
+  flex: 1;
+  background-color: #e2e8f0;
+  height: 80px;
+  margin: 0px 10px 0px 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-info::after{
+  content: "";
+  animation: p-skeleton-animation 1.2s infinite;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+  background: linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,0.4),rgba(255,255,255,0));
+}
+
+.skeleton-images{
+  background-color: #e2e8f0;
+  height: calc(500px - 150px);
+  margin: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-images::after{
+  content: "";
+  animation: p-skeleton-animation 1.2s infinite;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+  background: linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,0.4),rgba(255,255,255,0));
+}
+
+
+@media (max-width: 800px) {
+  .skeleton-main {
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+  }
+}

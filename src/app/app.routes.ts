@@ -5,6 +5,7 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
 import { CanActivateUser, userResolve } from './services/Authguard/authguard.service';
 import { CanActivateUserOpposite } from './services/Authguard/authguard_opposite.service';
 import { Error404Component } from './shared/components/error404/error404.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 
 
@@ -20,6 +21,10 @@ export const routes: Routes = [
       {
         path: 'register',
         loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent)
+      },
+      {
+        component: ResetPasswordComponent,
+        path: 'reset-password/:username/:token'
       },
       {
         path: '',

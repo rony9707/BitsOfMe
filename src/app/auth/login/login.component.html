@@ -26,9 +26,9 @@
 
     <!-- Password Hide and Show -->
     @if(passwordEyeFlag()){
-    <app-password-show (click)="passwordEye()" class="password-eye"></app-password-show>
+    <app-password-show [color]="'#ffffff'" (click)="passwordEye()" class="password-eye"></app-password-show>
     }@else{
-    <app-password-hide (click)="passwordEye()" class="password-eye"></app-password-hide>
+    <app-password-hide [color]="'#ffffff'" (click)="passwordEye()" class="password-eye"></app-password-hide>
     }
 
 
@@ -43,14 +43,16 @@
 
   <!-- Remember Username or Password -->
   <div class="remember-me-div">
-    <input type="checkbox" class="remember-me"  formControlName="rememberMe" id="remember-me-label" />
+    <input type="checkbox" class="remember-me" formControlName="rememberMe" id="remember-me-label" />
     <label class="remember-me-label" for="remember-me-label">Remember my username or email</label>
   </div>
 
   <!-- Remember Username or Password -->
   <div class="login-div">
-    <button class="forget-password" type="button" (click)="forgetPassword(loginForm.get('username')?.value)">Forget Password</button>
-    <button   [appLoaderButtonDirective]="isLoading" class="login" [disabled]="loginForm.invalid" type="submit">Login</button>
+    <button class="forget-password" type="button" (click)="forgetPassword(loginForm.get('username')?.value)">Forget
+      Password</button>
+    <button [appLoaderButtonDirective]="isLoading" class="login" [disabled]="loginForm.invalid"
+      type="submit">Login</button>
   </div>
 </form>
 

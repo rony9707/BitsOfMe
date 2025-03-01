@@ -4,6 +4,7 @@ import { DebounceService } from '../../services/debounce/debounce.service';
 import { Subscription } from 'rxjs';
 import { CloseButtonComponent } from '../../shared/svg/close-button/close-button.component';
 import { CommonService } from '../../services/common/common.service';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'app-search-posts',
@@ -22,6 +23,7 @@ export class SearchPostsComponent implements OnDestroy {
   //Inject Services here-----------------------------
   debounceService = inject(DebounceService)
   public commongServices= inject(CommonService)
+  public searchService = inject(SearchService)
 
 
   constructor(){
@@ -54,6 +56,7 @@ export class SearchPostsComponent implements OnDestroy {
     if (trimmedValue.length > 0 || currentValue.length === 0) {
       this.debounceService.sentToDebouncer(currentValue);
     }
+    this.searchService.setSearchResults(e.value)
   }
   
 
@@ -73,6 +76,7 @@ export class SearchPostsComponent implements OnDestroy {
     el.value=''
     this.searchInput.set(''); // Reset input
     this.searchInputEmitter.emit(''); // Emit empty string to indicate clearing
+    this.searchService.setSearchResults(el.value)
     }
   }
 

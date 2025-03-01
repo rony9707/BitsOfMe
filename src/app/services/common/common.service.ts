@@ -6,11 +6,12 @@ import { AppState } from '../../states/app.state';
 import { AuthService } from '../API/Auth/auth.service';
 import * as getUserAction from './../../states/getUser/getUser.action'
 import { BehaviorSubject, distinctUntilChanged, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
-import { clearPostsWhenLogout, loadPosts, loadPostsSuccess } from '../../states/getPosts/posts.action';
+import { clearPostsWhenLogout, loadPublicPosts, loadPublicPostsSuccess, loadUserPosts, loadUserPostsSuccess } from '../../states/getPosts/posts.action';
 import { getPosts } from '../../shared/interface/getPosts-interface';
-import { selectAllPosts } from '../../states/getPosts/posts.selector';
+//import { selectAllPosts } from '../../states/getPosts/posts.selector';
 import { GetPostsFilter } from '../../shared/interface/getPostParams-interface';
 import { postService } from '../API/Post/post.service';
+import { selectAllPublicPosts, selectAllUserPosts } from '../../states/getPosts/posts.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -92,7 +93,7 @@ export class CommonService {
 
 
   //Share Filter Params
-  private commonservice_filterParams = new BehaviorSubject<GetPostsFilter>({limit:10, page:1})
+  private commonservice_filterParams = new BehaviorSubject<GetPostsFilter>({limit:5, page:1})
 
   commonservice_currentFilterParams = this.commonservice_filterParams.asObservable();
 
@@ -104,45 +105,47 @@ export class CommonService {
 
 
   //Function to filter posts store
-searchPostsByFilters(filters: GetPostsFilter): Observable<getPosts[]> {
-  const { limit = 10, page, db_postTopic, tags, db_postVisibility, db_username } = filters;
+  searchPostsByFilters(filters: GetPostsFilter, context: 'public' | 'user'): Observable<getPosts[]> {
+  const { limit = 5, page, db_postTopic, tags, db_postVisibility, db_username } = filters;
   const tagsArray = tags ? tags.split(',').map(tag => new RegExp(tag.trim(), 'i')) : [];
+  // Select filters based on context
+  const selectedPosts$ = context === 'public'
+    ? this.store.select(selectAllPublicPosts)
+    : this.store.select(selectAllUserPosts);
 
-  return this.store.select(selectAllPosts).pipe(
+  return selectedPosts$.pipe(
     take(1),
     switchMap((posts) => {
-      // Filter existing posts based on the search criteria
-      const filteredPosts = posts.filter(post => {
-        return (
-          (!db_postTopic || post.db_postTopic.includes(db_postTopic)) &&
-          (!db_postVisibility || post.db_postVisibility === db_postVisibility) &&
-          (!db_username || post.db_username === db_username) &&
-          (tagsArray.length === 0 || post.db_tags.some(tag => tagsArray.some(regex => regex.test(tag))))
-        );
-      });
+      // Filter posts based on criteria
+      const filteredPosts = posts.filter(post => 
+        (!db_postTopic || post.db_postTopic.includes(db_postTopic)) &&
+        (!db_postVisibility || post.db_postVisibility === db_postVisibility) &&
+        (!db_username || post.db_username === db_username) &&
+        (tagsArray.length === 0 || post.db_tags.some(tag => tagsArray.some(regex => regex.test(tag))))
+      );
 
-      // If we already have enough posts in the store, return them without calling the API
+      // **Prevent unnecessary API calls**: If we already have enough posts, return them
       if (filteredPosts.length >= limit) {
         return of(filteredPosts);
       }
 
-      // Calculate remaining posts to fetch
       const remainingCount = limit - filteredPosts.length;
+      if (remainingCount <= 0) return of(filteredPosts);
 
-      // Call the API only if additional posts are needed
+      // **Check if an API call is already in progress**
       return this.postService.getPosts({ ...filters, limit: remainingCount }).pipe(
+        take(1), // Prevent multiple emissions
         map((newPosts) => {
-          // Remove duplicates: filter out posts already in the store
-          const trulyNewPosts = newPosts.filter(newPost =>
+          const trulyNewPosts = newPosts.filter(newPost => 
             !filteredPosts.some(existingPost => existingPost._id === newPost._id)
           );
-
           if (trulyNewPosts.length > 0) {
-            // Dispatch new posts only if we received new ones
-            this.store.dispatch(loadPostsSuccess({ posts: [...posts, ...trulyNewPosts] }));
-          } 
+            const action = context === 'public'
+              ? loadPublicPostsSuccess({ posts: [...posts, ...trulyNewPosts] })
+              : loadUserPostsSuccess({ posts: [...posts, ...trulyNewPosts] });
+            this.store.dispatch(action);
+          }
 
-          // Return updated posts list
           return [...filteredPosts, ...trulyNewPosts];
         })
       );
@@ -150,13 +153,17 @@ searchPostsByFilters(filters: GetPostsFilter): Observable<getPosts[]> {
   );
 }
 
+  
 
 
-
-
-  getAllPosts(): Observable<getPosts[]> {
-    return this.store.select(selectAllPosts);
+  getAllPublicPosts(): Observable<getPosts[]> {
+    return this.store.select(selectAllPublicPosts);
   }
+  
+  getAllUserPosts(): Observable<getPosts[]> {
+    return this.store.select(selectAllUserPosts);
+  }
+  
 
 
 }

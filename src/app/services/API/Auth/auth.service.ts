@@ -33,6 +33,9 @@ export class AuthService {
   loginURL = `${this.baseURL}/user/login`
   userDataURL = `${this.baseURL}/user/getUser`
   logoutURL = `${this.baseURL}/user/logout`
+  forgotPasswordURL = `${this.baseURL}/user/forgotPassword`
+  resetPasswordURL = `${this.baseURL}/user/reset-password`
+  updatePasswordURL = `${this.baseURL}/user/resetPassword`
 
 
   $user: Observable<UserProfile | null>;
@@ -58,6 +61,25 @@ export class AuthService {
   loginUser(user: LoginFormInterface) {
     return this.http.post<any>(this.loginURL, user, {
       withCredentials: true
+    })
+  }
+
+  //Forgot Password
+  forgotPassword(email: object) {
+    return this.http.post<any>(this.forgotPasswordURL, email, {
+      withCredentials: true
+    })
+  }
+
+  resetPasswordGet(username: string | null, token: string | null) {
+    const resetPasswordURL = `${this.resetPasswordURL}/${username}/${token}`;
+    return this.http.get(resetPasswordURL, {
+      withCredentials: true
+    })
+  }
+
+  updatePassword(userNewPassword:object) {
+    return this.http.put<any>(this.updatePasswordURL, userNewPassword, {
     })
   }
 

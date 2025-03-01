@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { loadPosts, loadPostsSuccess, loadPostsFailure } from './posts.action';
+import { loadPostsFailure, loadPublicPosts, loadPublicPostsSuccess, loadUserPosts, loadUserPostsSuccess } from './posts.action';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { postService } from '../../services/API/Post/post.service';
@@ -10,26 +10,38 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class PostEffects {
+  postsService = inject(postService);
+  actions$ = inject(Actions);
+  private logger = inject(LoggerService);
 
-  postsService=inject(postService)
-  actions$=inject(Actions)
-  private logger = inject(LoggerService)
-  router=inject(Router)
-
-  loadPosts$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(loadPosts),
-    mergeMap(({ filters }) =>
-      this.postsService.getPosts(filters || {}).pipe( // Ensure filters exist
-        map((posts) => loadPostsSuccess({ posts })),
-        catchError((error) => {
-          this.logger.log(error.message, 'error');
-          return of(loadPostsFailure({ error }));
-        })
+  loadPublicPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadPublicPosts),
+      mergeMap(({ filters }) =>
+        this.postsService.getPosts(filters).pipe(
+          map((posts) => loadPublicPostsSuccess({ posts })),
+          catchError((error) => {
+            this.logger.log(error.message, 'error');
+            return of(loadPostsFailure({ error }));
+          })
+        )
       )
     )
-  )
-);
+  );
 
-
+  loadUserPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUserPosts),
+      mergeMap(({ filters }) =>
+        this.postsService.getPosts(filters).pipe(
+          map((posts) => loadUserPostsSuccess({ posts })),
+          catchError((error) => {
+            this.logger.log(error.message, 'error');
+            return of(loadPostsFailure({ error }));
+          })
+        )
+      )
+    )
+  );
 }
+

@@ -128,9 +128,9 @@
 
         <!-- Password Hide and Show -->
         @if(passwordEyeFlag()){
-        <app-password-show (click)="passwordEye()" class="password-eye"></app-password-show>
+        <app-password-show [color]="'#ffffff'" (click)="passwordEye()" class="password-eye"></app-password-show>
         }@else{
-        <app-password-hide (click)="passwordEye()" class="password-eye"></app-password-hide>
+        <app-password-hide [color]="'#ffffff'" (click)="passwordEye()" class="password-eye"></app-password-hide>
         }
 
         <!-- Invalid Text -->
